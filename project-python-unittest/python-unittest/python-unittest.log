@@ -1,0 +1,13 @@
+[2014-06-24 16:03:59] TestDeviceManagementServer.py(__init__:27)[ERROR] DeviceManagementServer setup:%d format: a number is required, not str
+[2014-06-24 16:03:59] main.py(<module>:83)[ERROR] exception, DeviceManagementServer setup:
+[2014-06-24 16:03:59] main.py(<module>:85)[DEBUG] clean environment
+[2014-06-24 16:04:00] TestDeviceManagementServer.py(__init__:27)[ERROR] DeviceManagementServer setup:%d format: a number is required, not str
+[2014-06-24 16:04:00] main.py(deleteDeviceAndCleanData:71)[ERROR] exception,DeviceManagementServer setup:
+[2014-06-24 16:04:00] MysqlConnector.py(getConnection:19)[DEBUG] connect to MySQL at127.0.0.13306rootAptx4869juzz4v2
+[2014-06-24 16:04:00] MysqlConnector.py(getConnection:26)[DEBUG] connectted
+[2014-06-24 16:04:00] MysqlConnector.py(getConnection:19)[DEBUG] connect to MySQL at127.0.0.13306rootAptx4869juzz4v2
+[2014-06-24 16:04:00] MysqlConnector.py(getConnection:26)[DEBUG] connectted
+[2014-06-24 16:04:00] TestMysqlDataVerifier.py(cleanDeviceInfo:185)[DEBUG] deleted device=((82L, 'unittest-amtk', 'core-generated-82', '10.101.0.181', 40L, 40L, 3L, 111L, None, None, '\x00', '\x00', None, None, '{"port":"80","login":"admin","password":"","address":"Beijing"}', None, '', None, 0L, 10L, 0L), (83L, 'unittest-amtk', 'core-generated-83', '10.101.0.181', 40L, 40L, 3L, 111L, None, None, '\x00', '\x00', None, None, '{"port":"80","login":"admin","password":"","address":"Beijing"}', None, '', None, 0L, 10L, 0L), (84L, 'unittest-amtk', 'core-generated-84', '10.101.0.181', 40L, 40L, 3L, 111L, None, None, '\x00', '\x00', None, None, '{"port":"80","login":"admin","password":"","address":"Beijing"}', None, '', None, 0L, 10L, 0L), (85L, 'unittest-amtk', 'core-generated-85', '10.101.0.181', 40L, 40L, 3L, 111L, None, None, '\x00', '\x00', None, None, '{"port":"80","login":"admin","password":"","address":"Beijing"}', None, '', None, 0L, 10L, 0L))
+[2014-06-24 16:04:00] MysqlConnector.py(getConnection:19)[DEBUG] connect to MySQL at127.0.0.13306rootAptx4869juzz4v2
+[2014-06-24 16:04:00] MysqlConnector.py(getConnection:26)[DEBUG] connectted
+[2014-06-24 16:04:00] TestMysqlDataVerifier.py(cleanDeviceInfo:188)[DEBUG] clean device, result=()
