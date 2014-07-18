@@ -11,7 +11,7 @@ addDevice = "addDevice"
 updateDevice = "updateDevice"
 deleteDevice = "deleteDevice"
 streamControl = "streamControl"
-
+frame = "frame"
 
 #the device's name we added for testing
 addedDeviceName="unittest-amtk"

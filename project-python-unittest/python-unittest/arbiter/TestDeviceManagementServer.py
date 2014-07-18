@@ -8,14 +8,17 @@ Created on 2014-6-18
 from CoreServices import DeviceManagementService
 from arbiter.utils.ConfigurationReader import Config
 from CoreServices.ttypes import DeviceDetails
-from arbiter.utils import ThriftClient, LogUtil
+from arbiter.utils import ThriftClient
 from arbiter.utils.Constants import arbiter
 from arbiter.utils.Constants import addDevice
 from arbiter.utils.Constants import updateDevice
 from arbiter.utils.Constants import deleteDevice
-
+from arbiter.utils.Constants import frame
+from arbiter.utils.Constants import streamControl
+import logging
+from arbiter.TestDeviceManagementServer import log
 #log = logging.getLogger("TestDeviceManagementServer")
-log = LogUtil.getLog("TestDeviceManagementServer")
+log = logging.getLogger("TestDeviceManagementServer")
 class DeviceManagementServer():
     client = None 
     def __init__(self):
@@ -44,7 +47,68 @@ class DeviceManagementServer():
             log.debug("add device success")
         except :
             raise Exception("add device to Arbiter fail")
-        
+    
+    def TestVideoStrategy(self):
+        sum = 0
+        try:
+            log.debug('The Test Strategy')
+            chunk_size = Config().getFromConfig(frame,"chunk-size")
+            Config().writeToConfig(addDevice, "cloud-recording-enabled",1)
+            deviceDetail1 = self.getDeviceDetails(updateDevice)
+            #开启时间监控~
+            istrue = True
+            while istrue:
+                births = time.localtime(time.time())
+                datess = time.strftime("%d%m%Y%H%M%S",births)
+                tim_mins = time.strftime("%M",births)
+                tim_sec = time.strftime('%S',births)
+                if eval(tim_mins%chunk_size)==0 and tim_sec=="00":
+                    if sum==0:
+                        Config().writeToConfig(streamControl, "liveview-begin-time",datess)#记录开始时间
+                    #开启存储
+                    result = self.client.updateDevice(deviceDetail1)
+                    sum = sum + 1
+                    time.sleep(eval(chunk_size)*60*2)
+                    Config().writeToConfig(addDevice, "cloud-recording-enabled",0)
+                    deviceDetail2 = self.getDeviceDetails(updateDevice)
+                    self.client.updateDevice(deviceDetail2)
+                    if sum == 2:
+                        Config().writeToConfig(streamControl, "liveview-end-time",time.strftime("%d%m%Y%H%M%S",time.localtime(time.time())))#记录结束时间
+                        istrue = False
+                    time.sleep(eval(chunk_size)*60*1)
+        except :
+            raise Exception("The Test Strategy start fail")
+    
+    def testPhotoStrategy(self):
+        sum = 0
+        try:
+            log.debug('The Test Strategy')
+            interval = Config().getFromConfig(addDevice,"snapshot-recording-interval")
+            Config().writeToConfig(addDevice, "snapshot-recording-enabled",1)
+            deviceDetail1 = self.getDeviceDetails(updateDevice)
+            #开启时间监控~
+            istrue = True
+            while istrue:
+                births = time.localtime(time.time())
+                datess = time.strftime("%d%m%Y%H%M%S",births)
+                tim_sec = time.strftime('%S',births)
+                if eval(tim_sec%interval)==0:
+                    if sum==0:
+                        Config().writeToConfig(frame, "photo-begin-time",datess)#记录开始时间
+                    #开启存储
+                    result = self.client.updateDevice(deviceDetail1)
+                    sum = sum + 1
+                    time.sleep(eval(interval)*6)#等待30s后停止存储照片
+                    Config().writeToConfig(addDevice, "snapshot-recording-enabled",0)
+                    deviceDetail2 = self.getDeviceDetails(updateDevice)
+                    self.client.updateDevice(deviceDetail2)
+                    time.sleep(eval(interval)*4)#等待20s后再次循环，重复：存储——等待——停止
+                    if sum == 2:
+                        Config().writeToConfig(frame, "photo-end-time",time.strftime("%d%m%Y%H%M%S",time.localtime(time.time())))#记录结束时间
+                        istrue = False
+        except :
+            raise Exception("The Test Strategy start fail")
+    
     def testDeleteDevice(self):
         try:
             log.debug("test delete device")
