@@ -6,9 +6,10 @@ Created on 2014-7-17
 from DeviceCommsAPI import DeviceDataReceiverService
 from arbiter.utils.ConfigurationReader import Config
 from arbiter.utils import ThriftClient
-from arbiter.utils.Constants import arbiter,deleteDevice
+from arbiter.utils.Constants import arbiter,deleteDevice,streamControl
 import json
 import logging
+import uuid
 from arbiter.TestDeviceDataReceiverService import log
 
 log = logging.getLogger("TestDeviceDataReceiverService")
@@ -36,7 +37,9 @@ class DeviceDataReceiverService():
     def sendEventToArbiter(self):
         try:
            devId = Config().getFromConfig(deleteDevice,"device-id")
-           stringData = {eventId:'95754ca2-4037-4747-ab38',deviceId:devId,channelId:0}
+           uuId = uuid.uuid1()
+           Config().writeToConfig(streamControl,"event-id",uuId)
+           stringData = {eventId:uuId,deviceId:devId,channelId:0}
            sdate = json.dump(stringData)
            istrue = self.client.sendEventData(None,devId,'CAPTURE_EVENT_VIDEO',None,None,sdate,None)
            if istrue:

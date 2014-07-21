@@ -12,9 +12,10 @@ from arbiter.TestDeviceDataReceiverService import DeviceDataReceiverService
 from arbiter.TestRecordingServerService import RecordingServerService
 from arbiter.TestDeviceServerService import DeviceServerService
 from arbiter.utils import LogUtil
+import logging
 import sys
 import time
-log = LogUtil.getLog("MainClass")
+log = logging.getLogger("MainClass")
 class MainClass(object):
     '''
     classdocs
@@ -42,10 +43,15 @@ class MainClass(object):
         #-->查看ds_device_info表中device是否添加到DS了-->查看channel_device_map表中的对应关系建立的是否正确
         self.dms.testAddDevice()
         self.stepOne()
+        #2
         self.stepTwo()
+        #3
         self.stepThree()
+        #4
         self.stepFour()
+        #5
         self.stepFive()
+        #6
         self.stepSix()       
        
         
@@ -82,30 +88,44 @@ class MainClass(object):
         self.ds.testDeviceFrameRate()#测试帧率
     
     def stepThree(self):
+        '''
+          test set chunk-size function
+        '''
         self.ccs.testSetChunkSize()
-        
+    
+    
     def stepFour(self):
+        '''
+          test video 
+        '''  
         self.dms.TestVideoStrategy()
         time.sleep(10)
         self.scs.checkVideoListSize()
-        self.res.testGetVideoStreamList()  # this step never end
+        self.res.testGetVideoStreamList() 
         
     def stepFive(self):
+        '''
+          test photo
+        '''
         self.dms.testPhotoStrategy()
         self.scs.checkPhotoUrlSize()
-        self.res.testGetPhotoStreamList()  # this step never end
+        self.res.testGetPhotoStreamList()  
         
-    def stepSix(self):   #这个方法还要做修改~,eventId 在每次循环都要更改，现在还未实现
+    def stepSix(self):
+        '''
+          test video-event,cycles time is 6
+        '''
         isTrue = True
         num = 0
         while isTrue:
+            log.debug('The %d cycles start:',num)
             self.drs.sendEventToArbiter()
-            time.sleep(5)
-            self.res.testGetVideoStreamList()
+            time.sleep(3)
+            self.res.testGetEventStreamList()
+            log.debug('The %d cycles end:',num)
             num = num + 1
             if num == 6:
                 isTrue = False
-        pass
     
     def testLiveView(self, scs, dataVerifier):
         #更新设备-->查看devices表中更新是否成功-->查看ds_device_info更新是否成功-->
