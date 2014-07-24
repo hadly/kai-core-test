@@ -7,22 +7,25 @@ from arbiter.utils.MysqlOperator import Mysql
 from arbiter.utils.ConfigurationReader import Config
 from arbiter.utils import ThriftClient, Constants,MysqlConnector
 from DeviceCommsAPI import DeviceServerService
+from arbiter.utils.Constants import deleteDevice
 import logging
 import json
-from arbiter.TestDeviceServerService import log
-
 log = logging.getLogger("TestDeviceServerService")
-class DeviceServerService():
+class DeviceServerServiceClient():
     client = None 
     con = None
     def __init__(self):
         try:
             self.con = MysqlConnector.getConnection()
-            self.deviceId = Config().getFormConfig(Constants.deleteDevice,"device-id")
+            self.deviceId = Config().getFromConfigs(deleteDevice,"device-id")
             dsServerInfo = Mysql(self.con).getDsServerInfo(self.deviceId)
-            host = dsServerInfo[0][2]
-            port = dsServerInfo[0][3]
-            self.client = ThriftClient.getThriftClient(host, port, DeviceServerService)
+            if len(dsServerInfo)!=0:
+                host = dsServerInfo[0][2]
+                print host
+                port = dsServerInfo[0][3]
+                print port
+                self.client = ThriftClient.getThriftClient(host, port, DeviceServerService)
+                print self.client
         except Exception, e:
             log.error("DeviceServerService setup:%s",e)
             raise Exception("DeviceServerService setup error")
@@ -37,23 +40,26 @@ class DeviceServerService():
         try:
             log.debug('this test begin DS')
             num = 0
+            print self.client
             devices = self.client.getDevices()
-            for i in devices:
-                log.debug('devicesId==i?')
-                if i==self.deviceId:
-                    num = num + 1
+            print devices            
+            if len(devices)>0:
+                for i in devices:
+                    log.debug('devicesId==i?')
+                    if i==self.deviceId:
+                        num = num + 1
             if num > 0:
                 log.debug('this device in DS')
             else:
                 log.debug('this device not in DS')  
         except Exception,e:
-            log.error('testDeviceisinDs have exception=%s',e)
+            log.debug('testDeviceisinDs have exception=%s',e)
             raise Exception("testDeviceisinDs exception")  
          
     
     #here are some auxiliary methods
-    #frame-rate  ---  测试所得帧率
-    #rated-frames --- 额定帧率
+    #frame-rate  ---  
+    #rated-frames --- 
     def testDeviceFrameRate(self):
         try:
             log.debug('this test is test frame-rate==rated-frames')
@@ -62,8 +68,8 @@ class DeviceServerService():
             fra = de["frame-rate"]
             print de["frame-rate"]
             Config().writeToConfig(Constants.frame,"frame-rate",fra)
-            rate = Config().getFromConfig(Constants.frame,"rated-frames")
-            percent = Config().getFromConfig(Constants.frame,"percent")
+            rate = Config().getFromConfigs(Constants.frame,"rated-frames")
+            percent = Config().getFromConfigs(Constants.frame,"percent")
             if fra <= rate*(1+percent) and fra >= rate*(1-percent):
                 log.debug('this frame-rate is true,the Device video is true')
             else:

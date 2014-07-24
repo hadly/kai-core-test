@@ -9,19 +9,18 @@ from arbiter.utils.ConfigurationReader import Config
 from arbiter.utils import ThriftClient, Constants
 from arbiter.utils.Constants import arbiter
 import logging
-from arbiter.TestConfigControlService import log
 
 log = logging.getLogger('testConfigControlService')
-class ConfigControlService():
+class ConfigControlServiceClient():
     client = None 
     def __init__(self):
         try:
-            host = Config().getFromConfig(arbiter, "arbiter-server-host")
-            port = Config().getFromConfig(arbiter, "device-management-server-port")
+            host = Config().getFromConfigs(arbiter, "arbiter-server-host")
+            port = Config().getFromConfigs(arbiter, "device-management-server-port")
             self.client = ThriftClient.getThriftClient(host, port, ConfigControlService)
         except Exception, e:
             log.error("ConfigControlService setup:%s",e)
-            raise Exception("ConfigControlService setup:")
+            raise Exception("ConfigControlService Exception")
     
     def tearDown(self):
         ThriftClient.closeThriftClient()
@@ -32,7 +31,7 @@ class ConfigControlService():
         '''
         try:
             log.debug('test setChunkSize')
-            size = Config().getFromConfig(Constants.frame,"chunk-size")
+            size = Config().getFromConfigs(Constants.frame,"chunk-size")
             result = self.client.setChunkSize(size)
             if result == True:
                 log.debug('this function set chunk-size is success!')

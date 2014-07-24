@@ -16,15 +16,14 @@ from arbiter.utils.Constants import deleteDevice
 from arbiter.utils.Constants import frame
 from arbiter.utils.Constants import streamControl
 import logging
-from arbiter.TestDeviceManagementServer import log
 #log = logging.getLogger("TestDeviceManagementServer")
 log = logging.getLogger("TestDeviceManagementServer")
 class DeviceManagementServer():
     client = None 
     def __init__(self):
         try:
-            host = Config().getFromConfig(arbiter, "arbiter-server-host")
-            port = Config().getFromConfig(arbiter, "device-management-server-port")
+            host = Config().getFromConfigs(arbiter, "arbiter-server-host")
+            port = Config().getFromConfigs(arbiter, "device-management-server-port")
             self.client = ThriftClient.getThriftClient(host, port, DeviceManagementService)
         except Exception, e:
             log.error("DeviceManagementServer setup:%s",e)
@@ -52,7 +51,7 @@ class DeviceManagementServer():
         sum = 0
         try:
             log.debug('The Test Strategy')
-            chunk_size = Config().getFromConfig(frame,"chunk-size")
+            chunk_size = Config().getFromConfigs(frame,"chunk-size")
             Config().writeToConfig(addDevice, "cloud-recording-enabled",1)
             deviceDetail1 = self.getDeviceDetails(updateDevice)
             #开启时间监控~
@@ -83,7 +82,7 @@ class DeviceManagementServer():
         sum = 0
         try:
             log.debug('The Test Strategy')
-            interval = Config().getFromConfig(addDevice,"snapshot-recording-interval")
+            interval = Config().getFromConfigs(addDevice,"snapshot-recording-interval")
             Config().writeToConfig(addDevice, "snapshot-recording-enabled",1)
             deviceDetail1 = self.getDeviceDetails(updateDevice)
             #开启时间监控~
@@ -112,7 +111,7 @@ class DeviceManagementServer():
     def testDeleteDevice(self):
         try:
             log.debug("test delete device")
-            deviceId = Config().getFromConfig(deleteDevice, "device-id")
+            deviceId = Config().getFromConfigs(deleteDevice, "device-id")
             result = self.client.deleteDevice(deviceId)
             log.debug("remove device=" + deviceId + ",result=" + (str)(result))            
             if result == False:

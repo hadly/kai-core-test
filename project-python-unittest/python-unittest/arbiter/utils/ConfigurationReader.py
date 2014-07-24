@@ -20,6 +20,8 @@ class Config():
     def getFromConfig(self, section, key):
         return self.config.get(section, key)
         
+    def getFromConfigs(self, section, key):
+        return self.config.get(section, key)
     
     def writeToConfig(self, section, key, value):
         self.config.set(section, key, value)

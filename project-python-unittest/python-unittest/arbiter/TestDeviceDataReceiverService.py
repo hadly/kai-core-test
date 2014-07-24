@@ -10,10 +10,9 @@ from arbiter.utils.Constants import arbiter,deleteDevice,streamControl
 import json
 import logging
 import uuid
-from arbiter.TestDeviceDataReceiverService import log
 
 log = logging.getLogger("TestDeviceDataReceiverService")
-class DeviceDataReceiverService():
+class DeviceDataReceiverServiceClient():
     '''
     classdocs
     '''
@@ -24,8 +23,8 @@ class DeviceDataReceiverService():
         Constructor
         '''
         try:
-            host = Config().getFromConfig(arbiter, "arbiter-server-host")
-            port = Config().getFromConfig(arbiter, "device-management-server-port")
+            host = Config().getFromConfigs(arbiter, "arbiter-server-host")
+            port = Config().getFromConfigs(arbiter, "device-management-server-port")
             self.client = ThriftClient.getThriftClient(host, port, DeviceDataReceiverService)
         except Exception, e:
             log.error("DeviceManagementServer setup:%s",e)
@@ -36,7 +35,7 @@ class DeviceDataReceiverService():
         
     def sendEventToArbiter(self):
         try:
-           devId = Config().getFromConfig(deleteDevice,"device-id")
+           devId = Config().getFromConfigs(deleteDevice,"device-id")
            uuId = uuid.uuid1()
            Config().writeToConfig(streamControl,"event-id",uuId)
            stringData = {eventId:uuId,deviceId:devId,channelId:0}

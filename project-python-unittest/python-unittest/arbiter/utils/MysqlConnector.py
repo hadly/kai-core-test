@@ -11,11 +11,11 @@ import logging
 log = logging.getLogger("MysqlConnector")
 def getConnection():
     global conn
-    mhost = Config().getFromConfig(arbiter, "mysql-host")
-    mport = Config().getFromConfig(arbiter, "mysql-port")
-    muser = Config().getFromConfig(arbiter, "mysql-user")
-    mpasswd = Config().getFromConfig(arbiter, "mysql-pwd")
-    mdb = Config().getFromConfig(arbiter, "mysql-database")
+    mhost = Config().getFromConfigs(arbiter, "mysql-host")
+    mport = Config().getFromConfigs(arbiter, "mysql-port")
+    muser = Config().getFromConfigs(arbiter, "mysql-user")
+    mpasswd = Config().getFromConfigs(arbiter, "mysql-pwd")
+    mdb = Config().getFromConfigs(arbiter, "mysql-database")
     log.debug("connect to MySQL at"+ mhost + mport + muser + mpasswd + mdb)
     conn= MySQLdb.connect(
                           host=mhost,

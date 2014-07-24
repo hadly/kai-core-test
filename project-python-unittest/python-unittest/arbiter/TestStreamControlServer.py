@@ -8,17 +8,17 @@ from CoreServices import StreamControlService
 from arbiter.utils.ConfigurationReader import Config
 from arbiter.utils import ThriftClient, Constants
 from arbiter.utils.Constants import arbiter
+from arbiter.utils import LogUtil
 import logging
-from arbiter.TestStreamControlServer import log
 
 log = logging.getLogger("TestStreamControlServer")
-class StreamControlServer():
+class StreamControlServerClient():
     client = None 
     
     def __init__(self):
         try:
-            host = Config().getFromConfig(arbiter, "arbiter-server-host")
-            port = Config().getFromConfig(arbiter, "stream-control-server-port")
+            host = Config().getFromConfigs(arbiter, "arbiter-server-host")
+            port = Config().getFromConfigs(arbiter, "stream-control-server-port")
             self.client = ThriftClient.getThriftClient(host, port, StreamControlService)
         except Exception, e:
             log.error("StreamControlServer setup:%s",e)
@@ -30,9 +30,9 @@ class StreamControlServer():
     def testLiveViewResult(self):
         try:
             log.debug("test begin liveview")
-            beginTime = Config().getFromConfig(Constants.streamControl, "liveview-begin-time")
-            endTime = Config().getFromConfig(Constants.streamControl, "liveview-end-time")
-            type = Config().getFromConfig(Constants.streamControl, "type")
+            beginTime = Config().getFromConfigs(Constants.streamControl, "liveview-begin-time")
+            endTime = Config().getFromConfigs(Constants.streamControl, "liveview-end-time")
+            type = Config().getFromConfigs(Constants.streamControl, "type")
             urls = self.getUrlList(beginTime=beginTime,endTime=endTime,type=type)
             if urls!=None:
                 url = urls[0]
@@ -51,10 +51,10 @@ class StreamControlServer():
          
     def getUrlList(self,beginTime,endTime,type):
         try:
-            sessionId = Config().getFromConfig(Constants.streamControl, "session-id")
-            ttl = (long)(Config().getFromConfig(Constants.streamControl, "ttl"))
-            channelId = Config().getFromConfig(Constants.streamControl, "channel-id")
-            deviceId = Config().getFromConfig(Constants.deleteDevice, "device-id")
+            sessionId = Config().getFromConfigs(Constants.streamControl, "session-id")
+            ttl = (long)(Config().getFromConfigs(Constants.streamControl, "ttl"))
+            channelId = Config().getFromConfigs(Constants.streamControl, "channel-id")
+            deviceId = Config().getFromConfigs(Constants.deleteDevice, "device-id")
             urls = self.client.beginStreamSession(sessionId, ttl, type, None, deviceId, channelId, beginTime, endTime)
             return urls
         except Exception,e:
@@ -63,9 +63,9 @@ class StreamControlServer():
     #here are some auxiliary methods
     def checkVideoListSize(self):
         try:
-            beginTime = Config().getFromConfig(Constants.streamControl, "liveview-begin-time")
-            endTime = Config().getFromConfig(Constants.streamControl, "liveview-end-time")
-            type = Config().getFromConfig(Constants.streamControl, "type")
+            beginTime = Config().getFromConfigs(Constants.streamControl, "liveview-begin-time")
+            endTime = Config().getFromConfigs(Constants.streamControl, "liveview-end-time")
+            type = Config().getFromConfigs(Constants.streamControl, "type")
             urls = self.getUrlList(beginTime=beginTime,endTime=endTime,type=type)
             if urls!=None:
                 if len(urls)==4:
@@ -77,9 +77,9 @@ class StreamControlServer():
         
     def checkPhotoUrlSize(self):#测试获得图片地址urlList的长度，与预期长度是否相等
         try:
-            beginTime = Config().getFromConfig(Constants.frame, "photo-begin-time")
-            endTime = Config().getFromConfig(Constants.frame, "photo-end-time")
-            type = Config().getFromConfig(Constants.frame, "type")
+            beginTime = Config().getFromConfigs(Constants.frame, "photo-begin-time")
+            endTime = Config().getFromConfigs(Constants.frame, "photo-end-time")
+            type = Config().getFromConfigs(Constants.frame, "type")
             urls = self.getUrlList(beginTime=beginTime,endTime=endTime,type=type)
             if urls!=None:
                 if len(urls)==12:

@@ -6,12 +6,11 @@ Created on 2014-6-19
 '''
 from arbiter.TestDeviceManagementServer import DeviceManagementServer
 from arbiter.TestMysqlDataVerifier import MysqlDataVerifier
-from arbiter.TestStreamControlServer import StreamControlServer
-from arbiter.TestConfigControlService import ConfigControlService
-from arbiter.TestDeviceDataReceiverService import DeviceDataReceiverService
-from arbiter.TestRecordingServerService import RecordingServerService
-from arbiter.TestDeviceServerService import DeviceServerService
-from arbiter.utils import LogUtil
+from arbiter.TestStreamControlServer import StreamControlServerClient
+from arbiter.TestConfigControlService import ConfigControlServiceClient
+from arbiter.TestDeviceDataReceiverService import DeviceDataReceiverServiceClient
+from arbiter.TestRecordingServerService import RecordingServerServiceClient
+from arbiter.TestDeviceServerService import DeviceServerServiceClient
 import logging
 import sys
 import time
@@ -27,11 +26,11 @@ class MainClass(object):
         '''
         self.dms = DeviceManagementServer()
         self.dataVerifier = MysqlDataVerifier()
-        self.scs = StreamControlServer()
-        self.ds = DeviceServerService()
-        self.ccs = ConfigControlService()
-        self.drs = DeviceDataReceiverService()
-        self.res = RecordingServerService()
+        self.scs = StreamControlServerClient()
+        self.ds = DeviceServerServiceClient()
+        self.ccs = ConfigControlServiceClient()
+        self.drs = DeviceDataReceiverServiceClient()
+        self.res = RecordingServerServiceClient()
     
     def beginTesting(self):
         '''
@@ -78,6 +77,7 @@ class MainClass(object):
         self.dataVerifier.testIfDeviceAddedToDs()
         #dataVerifier.testMatchUpInChannelDeviceMap()
         #测试DS中是否有该设备的存在
+        print self.ds
         self.ds.testDeviceisinDs()
     
     def stepTwo(self):

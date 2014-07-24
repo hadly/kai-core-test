@@ -12,7 +12,6 @@ from arbiter.utils.Constants import addedDeviceName
 from arbiter.utils.ConfigurationReader import Config
 import time
 import logging
-from arbiter.TestDeviceManagementServer import log
 
 log = logging.getLogger("TestMysqlDataVerifier")
 class MysqlDataVerifier():
@@ -135,7 +134,7 @@ class MysqlDataVerifier():
             #if this device updated correctly in devices
             hostUpdatedInDevices = False
             #get the updated host from configuration.cfg
-            intendedHost = Config().getFromConfig(Constants.updateDevice, "host")
+            intendedHost = Config().getFromConfigs(Constants.updateDevice, "host")
             if intendedHost !=  updatedHost:
                 hostUpdatedInDevices = True
             
@@ -168,7 +167,7 @@ class MysqlDataVerifier():
             device = Mysql(self.con).getDevice()
             log.debug("deleted device=%s",device)
             
-            deviceId = Config().getFromConfig(Constants.deleteDevice, "device-id")
+            deviceId = Config().getFromConfigs(Constants.deleteDevice, "device-id")
             dsDeviceInfo = Mysql(self.con).getDsDeviceInfo(deviceId)
             log.debug("deleted dsDeviceInfo=%s",dsDeviceInfo)
             log.debug("len-device=" + (str)(len(device)) + ",len-dsDevice_info=" + (str)(len(dsDeviceInfo)) )
@@ -183,7 +182,7 @@ class MysqlDataVerifier():
     def cleanDeviceInfo(self):
         device = Mysql(self.con).getDevice()
         log.debug("deleted device=%s",device)
-        deviceId = Config().getFromConfig(Constants.deleteDevice, "device-id")
+        deviceId = Config().getFromConfigs(Constants.deleteDevice, "device-id")
         result = Mysql(self.con).cleanDeviceInfo(deviceId)
         log.debug("clean device, result=%s",result)
     
@@ -191,7 +190,7 @@ class MysqlDataVerifier():
         '''
         check if added to stream_session_info correctly
         '''
-        deviceId = Config().getFromConfig(Constants.deleteDevice, "device-id")
+        deviceId = Config().getFromConfigs(Constants.deleteDevice, "device-id")
         streamSessionInfo = Mysql(self.con).getStreamSessionInfo(deviceId)
         log.debug("streamSessionInfo=%s",streamSessionInfo)
         if streamSessionInfo != None:
@@ -204,12 +203,12 @@ class MysqlDataVerifier():
         check if delete from stream_session_info correctly when the session is timeout
         '''
         #sleep sometime between check the streamSessionInfo
-        ttl = Config().getFromConfig(Constants.streamControl, "ttl")
+        ttl = Config().getFromConfigs(Constants.streamControl, "ttl")
         timeToSleep = int(ttl) + 10
         time.sleep(timeToSleep)
         log.debug("sleep %s seconds before test delete stream_session_info", timeToSleep)
         
-        deviceId = Config().getFromConfig(Constants.deleteDevice, "device-id")
+        deviceId = Config().getFromConfigs(Constants.deleteDevice, "device-id")
         streamSessionInfo = Mysql(self.con).getStreamSessionInfo(deviceId)
         log.debug("streamSessionInfo=%s",streamSessionInfo)
         if len(streamSessionInfo) == 0:
