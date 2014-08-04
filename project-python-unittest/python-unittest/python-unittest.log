@@ -1,60 +1,17 @@
-[2014-07-24 10:53:50] MysqlConnector.py(getConnection:19)[DEBUG] connect to MySQL at192.168.174.1283306rootAptx4869juzz4v2
-[2014-07-24 10:53:51] MysqlConnector.py(getConnection:26)[DEBUG] connectted
-[2014-07-24 10:53:51] MysqlConnector.py(getConnection:19)[DEBUG] connect to MySQL at192.168.174.1283306rootAptx4869juzz4v2
-[2014-07-24 10:53:51] MysqlConnector.py(getConnection:26)[DEBUG] connectted
-[2014-07-24 10:53:51] MysqlConnector.py(getConnection:19)[DEBUG] connect to MySQL at192.168.174.1283306rootAptx4869juzz4v2
-[2014-07-24 10:53:51] MysqlConnector.py(getConnection:26)[DEBUG] connectted
-[2014-07-24 10:53:51] MysqlConnector.py(getConnection:19)[DEBUG] connect to MySQL at192.168.174.1283306rootAptx4869juzz4v2
-[2014-07-24 10:53:51] MysqlConnector.py(getConnection:26)[DEBUG] connectted
-[2014-07-24 10:53:51] MysqlConnector.py(getConnection:19)[DEBUG] connect to MySQL at192.168.174.1283306rootAptx4869juzz4v2
-[2014-07-24 10:53:51] MysqlConnector.py(getConnection:26)[DEBUG] connectted
-[2014-07-24 10:53:51] TestDeviceManagementServer.py(testAddDevice:37)[DEBUG] test add device
-[2014-07-24 10:53:51] TestDeviceManagementServer.py(testAddDevice:40)[DEBUG] add device=DeviceDetails(alertFlag=None, eventSettings=None, functionalityId=None, alive=None, lng='116', id='', accountId='3', currentPositionId=None, port='80', liveview=None, snapshotRecordingInterval='5', deviceServerUrls='', modelId='111', host='192.168.200.116', key='', address='Beijing', lat='40', password='', name='MegaPixel', snapshotRecordingEnabled='0', cloudRecordingEnabled='0', action=None, login='admin', statusId=None),result=12
-[2014-07-24 10:53:51] TestDeviceManagementServer.py(testAddDevice:46)[DEBUG] add device success
-[2014-07-24 10:53:51] TestMysqlDataVerifier.py(testCorrectnessInDevices:33)[DEBUG] test if device added to table devices
-[2014-07-24 10:53:51] MysqlConnector.py(getConnection:19)[DEBUG] connect to MySQL at192.168.174.1283306rootAptx4869juzz4v2
-[2014-07-24 10:53:51] MysqlConnector.py(getConnection:26)[DEBUG] connectted
-[2014-07-24 10:53:51] TestMysqlDataVerifier.py(testCorrectnessInDevices:36)[DEBUG] devices=((12L, 'MegaPixel', 'core-generated-12', '192.168.200.116', 40L, 40L, 3L, 111L, None, None, '\x00', '\x00', None, None, '{"port":"80","login":"admin","password":"","address":"Beijing"}', None, '', None, 0L, 5L, 0L),)
-[2014-07-24 10:53:51] TestMysqlDataVerifier.py(testCorrectnessInDevices:39)[DEBUG] device name in devices=MegaPixel
-[2014-07-24 10:53:51] TestMysqlDataVerifier.py(testCorrectnessInDevices:42)[DEBUG] added to devices correctly
-[2014-07-24 10:53:51] TestMysqlDataVerifier.py(testCorrectnessInDsDeviceInfo:52)[DEBUG] test if device added to ds_device_info
-[2014-07-24 10:53:51] MysqlConnector.py(getConnection:19)[DEBUG] connect to MySQL at192.168.174.1283306rootAptx4869juzz4v2
-[2014-07-24 10:53:51] MysqlConnector.py(getConnection:26)[DEBUG] connectted
-[2014-07-24 10:53:51] MysqlConnector.py(getConnection:19)[DEBUG] connect to MySQL at192.168.174.1283306rootAptx4869juzz4v2
-[2014-07-24 10:53:51] MysqlConnector.py(getConnection:26)[DEBUG] connectted
-[2014-07-24 10:53:51] TestMysqlDataVerifier.py(testCorrectnessInDsDeviceInfo:59)[DEBUG] ds_device_info=((12L, 'core-generated-12', '{"name":"MegaPixel","servertype":"amtk-ipc","device_url":"http://#{device:host}:#{device:misc:port}/ \\r\\n","port":"80","password":"","address":"Beijing","num-channels":1,"host":"192.168.200.116","username":"admin","snapshot_recording_enabled":0,"snapshot_recording_interval":5,"cloud_recording_enabled":0}', 0, -1L),)
-[2014-07-24 10:53:51] TestMysqlDataVerifier.py(testCorrectnessInDsDeviceInfo:65)[DEBUG] device name in ds_device_info={"name":"MegaPixel","servertype":"amtk-ipc","device_url":"http://#{device:host}:#{device:misc:port}/ \r\n","port":"80","password":"","address":"Beijing","num-channels":1,"host":"192.168.200.116","username":"admin","snapshot_recording_enabled":0,"snapshot_recording_interval":5,"cloud_recording_enabled":0}
-[2014-07-24 10:53:51] TestMysqlDataVerifier.py(testCorrectnessInDsDeviceInfo:68)[DEBUG] added to dsDeviceInfo correctly
-[2014-07-24 10:53:51] TestMysqlDataVerifier.py(testIfDeviceAddedToDs:79)[DEBUG] test if device added to a DS
-[2014-07-24 10:53:51] TestMysqlDataVerifier.py(testIfDeviceAddedToDs:81)[DEBUG] sleep 40 seconds to wait DS register
-[2014-07-24 10:54:31] MysqlConnector.py(getConnection:19)[DEBUG] connect to MySQL at192.168.174.1283306rootAptx4869juzz4v2
-[2014-07-24 10:54:31] MysqlConnector.py(getConnection:26)[DEBUG] connectted
-[2014-07-24 10:54:31] MysqlConnector.py(getConnection:19)[DEBUG] connect to MySQL at192.168.174.1283306rootAptx4869juzz4v2
-[2014-07-24 10:54:31] MysqlConnector.py(getConnection:26)[DEBUG] connectted
-[2014-07-24 10:54:31] TestMysqlDataVerifier.py(testIfDeviceAddedToDs:88)[DEBUG] ds_device_info=((12L, 'core-generated-12', '{"name":"MegaPixel","servertype":"amtk-ipc","device_url":"http://#{device:host}:#{device:misc:port}/ \\r\\n","port":"80","password":"","address":"Beijing","num-channels":1,"host":"192.168.200.116","username":"admin","snapshot_recording_enabled":0,"snapshot_recording_interval":5,"cloud_recording_enabled":0}', 2, 21L),)
-[2014-07-24 10:54:31] TestMysqlDataVerifier.py(testIfDeviceAddedToDs:91)[DEBUG] added to DS correctly
-[2014-07-24 10:54:31] TestDeviceServerService.py(testDeviceisinDs:41)[DEBUG] this test begin DS
-[2014-07-24 10:54:31] TestDeviceServerService.py(testDeviceisinDs:56)[DEBUG] testDeviceisinDs have exception='NoneType' object has no attribute 'getDevices'
-[2014-07-24 10:54:31] main.py(<module>:153)[ERROR] exception, testDeviceisinDs exception
-[2014-07-24 10:54:31] main.py(<module>:155)[DEBUG] clean environment
-[2014-07-24 10:54:31] MysqlConnector.py(getConnection:19)[DEBUG] connect to MySQL at192.168.174.1283306rootAptx4869juzz4v2
-[2014-07-24 10:54:31] MysqlConnector.py(getConnection:26)[DEBUG] connectted
-[2014-07-24 10:54:31] MysqlConnector.py(getConnection:19)[DEBUG] connect to MySQL at192.168.174.1283306rootAptx4869juzz4v2
-[2014-07-24 10:54:31] MysqlConnector.py(getConnection:26)[DEBUG] connectted
-[2014-07-24 10:54:31] MysqlConnector.py(getConnection:19)[DEBUG] connect to MySQL at192.168.174.1283306rootAptx4869juzz4v2
-[2014-07-24 10:54:31] MysqlConnector.py(getConnection:26)[DEBUG] connectted
-[2014-07-24 10:54:31] MysqlConnector.py(getConnection:19)[DEBUG] connect to MySQL at192.168.174.1283306rootAptx4869juzz4v2
-[2014-07-24 10:54:31] MysqlConnector.py(getConnection:26)[DEBUG] connectted
-[2014-07-24 10:54:31] MysqlConnector.py(getConnection:19)[DEBUG] connect to MySQL at192.168.174.1283306rootAptx4869juzz4v2
-[2014-07-24 10:54:31] MysqlConnector.py(getConnection:26)[DEBUG] connectted
-[2014-07-24 10:54:31] TestDeviceManagementServer.py(testDeleteDevice:113)[DEBUG] test delete device
-[2014-07-24 10:54:32] TestDeviceManagementServer.py(testDeleteDevice:116)[DEBUG] remove device=12,result=True
-[2014-07-24 10:54:32] TestDeviceManagementServer.py(testDeleteDevice:119)[DEBUG] delete device success
-[2014-07-24 10:54:32] MysqlConnector.py(getConnection:19)[DEBUG] connect to MySQL at192.168.174.1283306rootAptx4869juzz4v2
-[2014-07-24 10:54:32] MysqlConnector.py(getConnection:26)[DEBUG] connectted
-[2014-07-24 10:54:32] MysqlConnector.py(getConnection:19)[DEBUG] connect to MySQL at192.168.174.1283306rootAptx4869juzz4v2
-[2014-07-24 10:54:32] MysqlConnector.py(getConnection:26)[DEBUG] connectted
-[2014-07-24 10:54:32] TestMysqlDataVerifier.py(cleanDeviceInfo:184)[DEBUG] deleted device=()
-[2014-07-24 10:54:32] MysqlConnector.py(getConnection:19)[DEBUG] connect to MySQL at192.168.174.1283306rootAptx4869juzz4v2
-[2014-07-24 10:54:32] MysqlConnector.py(getConnection:26)[DEBUG] connectted
-[2014-07-24 10:54:32] TestMysqlDataVerifier.py(cleanDeviceInfo:187)[DEBUG] clean device, result=()
+[2014-08-04 15:13:51] main.py(__init__:26)[DEBUG] ******** Main init begin**********
+[2014-08-04 15:13:51] main.py(__init__:33)[DEBUG] ******** Main init end**********
+[2014-08-04 15:13:51] TestDeviceManagementServer.py(testPhotoStrategy:105)[DEBUG] The Test Strategy
+[2014-08-04 15:13:51] TestDeviceManagementServer.py(testPhotoStrategy:111)[DEBUG] result:True
+[2014-08-04 15:14:35] TestDeviceManagementServer.py(testPhotoStrategy:127)[DEBUG] msg:sleep 60s
+[2014-08-04 15:15:35] TestDeviceManagementServer.py(testPhotoStrategy:133)[DEBUG] msg:sleep 60s
+[2014-08-04 15:16:35] TestDeviceManagementServer.py(testPhotoStrategy:135)[DEBUG] waiting  next~
+[2014-08-04 15:16:40] TestDeviceManagementServer.py(testPhotoStrategy:127)[DEBUG] msg:sleep 60s
+[2014-08-04 15:17:40] TestDeviceManagementServer.py(testPhotoStrategy:140)[INFO] testPhotoStrategy success!
+[2014-08-04 15:17:40] TestStreamControlServer.py(getUrlList:65)[DEBUG] ['http://192.168.200.18:18080/storage-image/9/0/2014-08-04/20140804151437.jpg']
+[2014-08-04 15:17:40] TestStreamControlServer.py(checkPhotoUrlSize:98)[INFO] the result is false
+[2014-08-04 15:17:40] MysqlConnector.py(getConnection:19)[DEBUG] connect to MySQL at192.168.200.183306rootAptx4869juzz4v2
+[2014-08-04 15:17:40] MysqlConnector.py(getConnection:26)[DEBUG] connectted
+[2014-08-04 15:17:40] MysqlConnector.py(getConnection:19)[DEBUG] connect to MySQL at192.168.200.183306rootAptx4869juzz4v2
+[2014-08-04 15:17:40] MysqlConnector.py(getConnection:26)[DEBUG] connectted
+[2014-08-04 15:17:40] TestRecordingServerService.py(testGetPhotoStreamList:82)[INFO] the time:20140804151437 add a picture successed
+[2014-08-04 15:17:40] main.py(<module>:159)[DEBUG] Congratulations!!! Your testing is successful.

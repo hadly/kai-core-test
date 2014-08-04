@@ -38,8 +38,9 @@ class MysqlDataVerifier():
             deviceName = device[0][1]
             log.debug("device name in devices=" + deviceName)
             if deviceName != addedDeviceName:
+                log.info('maybe device added fail')
                 raise Exception("maybe device added fail")
-            log.debug("added to devices correctly")
+            log.info("added to devices correctly/success")
         except Exception,e:
             log.error("exception, %s", e)
             raise Exception("maybe device added fail")
@@ -62,10 +63,10 @@ class MysqlDataVerifier():
             isDeviceExist = False
             if addedDeviceName in deviceInfo:
                 isDeviceExist = True
-            log.debug("device name in ds_device_info=%s",deviceInfo)
+            log.info("device name in ds_device_info=%s",deviceInfo)
             if isDeviceExist != True:
                 raise Exception("maybe ds_device_info added fail")
-            log.debug("added to dsDeviceInfo correctly")
+            log.info("added to dsDeviceInfo correctly/success!")
         except Exception,e:
             log.error("exception, %s", e)
             raise Exception("maybe ds_device_info added fail")
@@ -80,15 +81,15 @@ class MysqlDataVerifier():
             #sleep some time to wait the device added to DS
             log.debug("sleep 40 seconds to wait DS register")
             time.sleep(40)
-            
             device = Mysql(self.con).getDevice()
             deviceId = device[0][0]#the first filed in devices is deviceId
             dsDeviceInfo = Mysql(self.con).getDsDeviceInfo(deviceId)
             dsId = dsDeviceInfo[0][4]
             log.debug("ds_device_info=%s", dsDeviceInfo)
             if dsId == -1:
+                log.info('maybe device has not added to DS')
                 raise Exception("maybe device has not added to DS")
-            log.debug("added to DS correctly")
+            log.info("added to DS correctly")
         except Exception,e:
             log.error("exception, %s", e)
             raise Exception("maybe device has not added to DS")
@@ -149,10 +150,11 @@ class MysqlDataVerifier():
             
             #only if host updated in devices and ds_device_info, the update is successful
             if hostUpdatedInDevices == False | hostUpdatedInDsDevInfo == False:
+                log.info('device updated fail')
                 raise Exception("device updated fail")
             
             #self.assertEqual(hostUpdated, True,"maybe device update fail")
-            log.debug("device updated correctly")
+            log.info("device updated correctly")
         except Exception,e:
             log.error("exception, %s", e)
             raise Exception("")
@@ -172,8 +174,9 @@ class MysqlDataVerifier():
             log.debug("deleted dsDeviceInfo=%s",dsDeviceInfo)
             log.debug("len-device=" + (str)(len(device)) + ",len-dsDevice_info=" + (str)(len(dsDeviceInfo)) )
             if (len(device) == 0) & (len(dsDeviceInfo) == 0):
-                log.debug("device deleted correctly")
+                log.info("device deleted correctly/yes")
             else:
+                log.info('maybe device deleted fail')
                 raise Exception("maybe device deleted fail")
         except Exception,e:
             log.error("exception, %s", e)

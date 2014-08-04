@@ -6,6 +6,7 @@ Created on 2014-6-20
 from Constants import addedDeviceName
 from arbiter.utils import MysqlConnector
 
+
 class Mysql(object):
     
     con = None

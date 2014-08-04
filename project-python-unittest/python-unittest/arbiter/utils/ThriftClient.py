@@ -37,6 +37,7 @@ def getThriftClient(host,port,service):
     #print "[begin]----------------build a thrift client"
     # Make socket
     transport = TSocket.TSocket(host, port)
+#     transport.setTimeout(10000)
     # Buffering is critical. Raw sockets are very slow
 #     transport = TTransport.TBufferedTransport(transport)
     transport = TTransport.TFramedTransport(transport)

@@ -24,27 +24,29 @@ class DeviceDataReceiverServiceClient():
         '''
         try:
             host = Config().getFromConfigs(arbiter, "arbiter-server-host")
-            port = Config().getFromConfigs(arbiter, "device-management-server-port")
+            port = Config().getFromConfigs(arbiter, "data-receiver-port")
             self.client = ThriftClient.getThriftClient(host, port, DeviceDataReceiverService)
         except Exception, e:
-            log.error("DeviceManagementServer setup:%s",e)
+            log.error("DeviceManagementServer error:%s",e)
             raise Exception("DeviceDataReceiverService setup:")
         
     def tearDown(self):
         ThriftClient.closeThriftClient()
         
     def sendEventToArbiter(self):
+        log.debug('the tast sendEventToArbiter start!')
         try:
            devId = Config().getFromConfigs(deleteDevice,"device-id")
            uuId = uuid.uuid1()
-           Config().writeToConfig(streamControl,"event-id",uuId)
-           stringData = {eventId:uuId,deviceId:devId,channelId:0}
-           sdate = json.dump(stringData)
-           istrue = self.client.sendEventData(None,devId,'CAPTURE_EVENT_VIDEO',None,None,sdate,None)
+           Config().writeToConfig(streamControl,"event-id",str(uuId))
+           stringData = {"eventId":str(uuId),"deviceId":devId,"channelId":"0"}
+           sdate = json.dumps(stringData)
+           istrue = self.client.sendEventData(None,None,'CAPTURE_EVENT_VIDEO',None,None,sdate,None)
+           log.debug('isTrue:%s',istrue)
            if istrue:
-               log.debug('The process send Event to Arbiter is True') 
+               log.info('The process send Event to Arbiter is True') 
            else:
-               log.debug('The process is false')
+               log.info('The process is false')
         except Exception,e:
            log.error('The process have an error:%s',e)
            raise Exception('sendEventToArbiter Exception') 

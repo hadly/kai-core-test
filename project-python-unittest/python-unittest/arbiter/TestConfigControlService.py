@@ -16,10 +16,10 @@ class ConfigControlServiceClient():
     def __init__(self):
         try:
             host = Config().getFromConfigs(arbiter, "arbiter-server-host")
-            port = Config().getFromConfigs(arbiter, "device-management-server-port")
+            port = Config().getFromConfigs(arbiter, "config-control-server-port")
             self.client = ThriftClient.getThriftClient(host, port, ConfigControlService)
         except Exception, e:
-            log.error("ConfigControlService setup:%s",e)
+            log.error("ConfigControlService init error:%s",e)
             raise Exception("ConfigControlService Exception")
     
     def tearDown(self):
@@ -32,12 +32,14 @@ class ConfigControlServiceClient():
         try:
             log.debug('test setChunkSize')
             size = Config().getFromConfigs(Constants.frame,"chunk-size")
-            result = self.client.setChunkSize(size)
+#             print size
+            result = self.client.setChunkSize((int)(size))
+#             print result
             if result == True:
-                log.debug('this function set chunk-size is success!')
+                log.info('this function set chunk-size is success!')
             else:
-                log.debug('the test have error~~')
+                log.info('the test have error~~')
         except Exception,e:
-            log.error("testSetChunkSize exception:%s",e)
+            log.error("testSetChunkSize error:%s",e)
             raise Exception("testSetChunkSize exception")
                 
