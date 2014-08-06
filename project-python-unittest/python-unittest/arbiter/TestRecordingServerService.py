@@ -7,7 +7,7 @@ from arbiter.utils.MysqlOperator import Mysql
 from arbiter.utils.ConfigurationReader import Config
 from arbiter.utils import ThriftClient, Constants,MysqlConnector
 from RecordingCommsAPI import RecordingServerService
-from arbiter.utils.Constants import deleteDevice,streamControl,frame
+# from arbiter.utils.Constants import deleteDevice,streamControl
 import logging
 import json
 import time
@@ -18,7 +18,7 @@ class RecordingServerServiceClient():
     def __init__(self):
         try:
             self.con = MysqlConnector.getConnection()
-            self.deviceId = Config().getFromConfigs(deleteDevice,"device-id")
+            self.deviceId = Config().getFromConfigs(Constants.deleteDevice,"device-id")
             rsServerInfo = Mysql(self.con).getRsServerInfo(self.deviceId)
             if len(rsServerInfo)!=0:
                 host = rsServerInfo[0][1]
@@ -33,11 +33,12 @@ class RecordingServerServiceClient():
         
     def testGetVideoStreamList(self):
         try:
-            beginTime = Config().getFromConfigs(Constants.frame, "liveview-begin-time-eight")
-            chunkSize = Config().getFromConfigs(Constants.frame,"chunk-size")
-            percent = Config().getFromConfigs(Constants.frame,"rates")
-            frame_rate = Config().getFromConfigs(Constants.frame,"frame-rate")
-            endTime = Config().getFromConfigs(Constants.frame, "liveview-end-time-eight")
+            num = 0
+            beginTime = Config().getFromConfigs(Constants.videoStrategy, "liveview-begin-time-local")
+            chunkSize = Config().getFromConfigs(Constants.configControl,"chunk-size")
+            percent = Config().getFromConfigs(Constants.deviceFrameRate,"rates")
+            frame_rate = Config().getFromConfigs(Constants.deviceFrameRate,"frame-rate")
+            endTime = Config().getFromConfigs(Constants.videoStrategy, "liveview-end-time-local")
             info = {"storage-type":"video-recording", "stream-type":"http/h264","begin":beginTime,"end":endTime}
             streamInfo = json.dumps(info)
             log.debug(streamInfo) 
@@ -46,7 +47,6 @@ class RecordingServerServiceClient():
             for stream in streamList:
                 log.debug('*********************')
                 strJson = json.loads(stream)
-#                 log.debug('AAAAAAAAAAAAAAAAAAAAAAAAAA')
                 begin = strJson["from"]
                 end = strJson["to"]
                 dur = strJson["dur"]
@@ -56,19 +56,24 @@ class RecordingServerServiceClient():
                 if fn!='0' and size!='0':
                     log.debug('fps:%s',fps)
                     if abs(eval(chunkSize)-eval(dur)/60)<=(eval(chunkSize)*eval(percent)) and abs(eval(frame_rate)-eval(fps))<=(eval(frame_rate)*eval(percent)):
-                        log.info('this video from %s to %s is success',begin,end)
+                        log.debug('this video from %s to %s is success',begin,end)
+                        num += 1
                     else:
-                        log.info('this video from %s to %s is fail',begin,end)
+                        log.debug('this video from %s to %s is fail',begin,end)
                 else:
-                    log.info('this video"size from %s to %s is fail',begin,end)
+                    log.debug('this video"size from %s to %s is fail',begin,end)
+            if num == 4:
+                return True
+            return False
         except Exception,e:
             log.error('Error:%s',e)
-            raise Exception('testGetVideoStreamList exception')
+            return False
         
     def testGetPhotoStreamList(self):
         try:
-            beginTime = Config().getFromConfigs(Constants.frame, "photo-begin-time-eight")
-            endTime = Config().getFromConfigs(Constants.frame, "photo-end-time-eight")
+            num = 0
+            beginTime = Config().getFromConfigs(Constants.photoStrategy, "photo-begin-time-local")
+            endTime = Config().getFromConfigs(Constants.photoStrategy, "photo-end-time-local")
             info = {"storage-type":"image-recording", "stream-type":"http/jpeg","begin":beginTime,"end":endTime}
             streamInfo = json.dumps(info)
             streamList = self.client.getStreamList((int)(self.deviceId),0,streamInfo)
@@ -79,19 +84,23 @@ class RecordingServerServiceClient():
                 height = strJson['height']
                 size = strJson['size']
                 if eval(width)*eval(height)*eval(size)!=0:
-                    log.info('the time:%s add a picture successed',start)
+                    log.debug('the time:%s add a picture successed',start)
+                    num += 1
                 else:
-                    log.info('the test add a picture have an error at %s',start)       
+                    log.debug('the test add a picture have an error at %s',start)
+            if num == 12:
+                return True
+            return False
         except Exception,e:
             log.error('Error:%s',e)
-            raise Exception('testGetPhotoStreamList exception')
+            return False
         
     def testGetEventStreamList(self):
         try:
             log.debug('*******testGetEventStreamList begin******')
             eventId = Config().getFromConfigs(Constants.streamControl, "event-id")
-            chunkSize = Config().getFromConfigs(Constants.frame,"chunk-size")
-            percent = Config().getFromConfigs(Constants.frame,"percent")
+            chunkSize = Config().getFromConfigs(Constants.configControl,"chunk-size")
+            percent = Config().getFromConfigs(Constants.deviceFrameRate,"percent")
             info = {"storage-type":"event-recording", "stream-type":"http/h264", "event-id":eventId}
             streamInfo = json.dumps(info)
             log.debug('%s',self.client)
@@ -105,13 +114,16 @@ class RecordingServerServiceClient():
                 size = strJson['size']
                 if eval(fps)*eval(fn)*eval(size)!=0:
                     if abs(eval(chunkSize)-eval(dur)/60)<=eval(chunkSize*percent):
-                        log.info('Add an event success' )
+                        log.debug('Add an event success' )
+                        return True
                     else:
-                        log.info('The result error is relatively large, so the failure')
+                        log.debug('The result error is relatively large, so the failure')
+                        return False
                 else:
                     log.debug('Add an event error,have zero value')
+                    return False
             log.debug('*******testGetEventStreamList end******')       
         except Exception,e:
             log.error('Error:%s',e)
-            raise Exception('testGetEventStreamList exception')
+            return False
         

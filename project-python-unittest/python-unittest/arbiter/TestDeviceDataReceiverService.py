@@ -43,11 +43,9 @@ class DeviceDataReceiverServiceClient():
            sdate = json.dumps(stringData)
            istrue = self.client.sendEventData(None,None,'CAPTURE_EVENT_VIDEO',None,None,sdate,None)
            log.debug('isTrue:%s',istrue)
-           if istrue:
-               log.info('The process send Event to Arbiter is True') 
-           else:
-               log.info('The process is false')
+           return istrue
         except Exception,e:
            log.error('The process have an error:%s',e)
-           raise Exception('sendEventToArbiter Exception') 
+           log.debug('send Event To Arbiter fail')
+           return False
                 

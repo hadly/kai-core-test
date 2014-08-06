@@ -38,12 +38,14 @@ class MysqlDataVerifier():
             deviceName = device[0][1]
             log.debug("device name in devices=" + deviceName)
             if deviceName != addedDeviceName:
-                log.info('maybe device added fail')
-                raise Exception("maybe device added fail")
-            log.info("added to devices correctly/success")
+                log.debug('maybe device added fail')
+                return False
+            else:
+                log.debug("added to devices correctly/success")
+                return True
         except Exception,e:
             log.error("exception, %s", e)
-            raise Exception("maybe device added fail")
+            return False
     
     def testCorrectnessInDsDeviceInfo(self):
         '''
@@ -54,7 +56,6 @@ class MysqlDataVerifier():
             #get device's id whose name is "unittest-amtk" 
             device = Mysql(self.con).getDevice()
             deviceId = device[0][0]#the first filed in devices is deviceId
-            
             #select from ds_device_info to verify if there is a device named "unittest-amtk"        
             dsDeviceInfo = Mysql(self.con).getDsDeviceInfo(deviceId)
             log.debug("ds_device_info=%s", dsDeviceInfo)
@@ -63,13 +64,14 @@ class MysqlDataVerifier():
             isDeviceExist = False
             if addedDeviceName in deviceInfo:
                 isDeviceExist = True
-            log.info("device name in ds_device_info=%s",deviceInfo)
-            if isDeviceExist != True:
-                raise Exception("maybe ds_device_info added fail")
-            log.info("added to dsDeviceInfo correctly/success!")
+                log.debug("device name in ds_device_info=%s",deviceInfo)
+                log.debug("added to dsDeviceInfo correctly/success!")
+            else:
+                log.debug("device name not in ds_device_info")
+            return isDeviceExist
         except Exception,e:
             log.error("exception, %s", e)
-            raise Exception("maybe ds_device_info added fail")
+            return False
     
     def testIfDeviceAddedToDs(self):
         '''
@@ -87,12 +89,12 @@ class MysqlDataVerifier():
             dsId = dsDeviceInfo[0][4]
             log.debug("ds_device_info=%s", dsDeviceInfo)
             if dsId == -1:
-                log.info('maybe device has not added to DS')
-                raise Exception("maybe device has not added to DS")
-            log.info("added to DS correctly")
+                log.debug('maybe device has not added to DS')
+                return False
+            return True
         except Exception,e:
             log.error("exception, %s", e)
-            raise Exception("maybe device has not added to DS")
+            return False
         
     def testMatchUpInChannelDeviceMap(self):
         '''
@@ -150,11 +152,11 @@ class MysqlDataVerifier():
             
             #only if host updated in devices and ds_device_info, the update is successful
             if hostUpdatedInDevices == False | hostUpdatedInDsDevInfo == False:
-                log.info('device updated fail')
+                log.debug('device updated fail')
                 raise Exception("device updated fail")
             
             #self.assertEqual(hostUpdated, True,"maybe device update fail")
-            log.info("device updated correctly")
+            log.debug("device updated correctly")
         except Exception,e:
             log.error("exception, %s", e)
             raise Exception("")
@@ -174,9 +176,9 @@ class MysqlDataVerifier():
             log.debug("deleted dsDeviceInfo=%s",dsDeviceInfo)
             log.debug("len-device=" + (str)(len(device)) + ",len-dsDevice_info=" + (str)(len(dsDeviceInfo)) )
             if (len(device) == 0) & (len(dsDeviceInfo) == 0):
-                log.info("device deleted correctly/yes")
+                log.debug("device deleted correctly/yes")
             else:
-                log.info('maybe device deleted fail')
+                log.debug('maybe device deleted fail')
                 raise Exception("maybe device deleted fail")
         except Exception,e:
             log.error("exception, %s", e)
@@ -198,8 +200,10 @@ class MysqlDataVerifier():
         log.debug("streamSessionInfo=%s",streamSessionInfo)
         if streamSessionInfo != None:
             log.debug("add to stream_session_info success.")
+            return True
         else:
-            raise Exception("add to stream_session_info fail.")
+            log.debug("add to stream_session_info fail.")
+            return False
     
     def testIfDelFromStreamSessionInfo(self):
         '''
@@ -210,14 +214,15 @@ class MysqlDataVerifier():
         timeToSleep = int(ttl) + 10
         time.sleep(timeToSleep)
         log.debug("sleep %s seconds before test delete stream_session_info", timeToSleep)
-        
         deviceId = Config().getFromConfigs(Constants.deleteDevice, "device-id")
         streamSessionInfo = Mysql(self.con).getStreamSessionInfo(deviceId)
         log.debug("streamSessionInfo=%s",streamSessionInfo)
         if len(streamSessionInfo) == 0:
             log.debug("delete stream_session_info success.")
+            return True
         else:
-            raise Exception("delete from stream_session_info fail.")
+            log.debug("delete from stream_session_info fail.")
+            return False
         
         
     #----some auxiliary methods

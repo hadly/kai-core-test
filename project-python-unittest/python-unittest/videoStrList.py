@@ -76,7 +76,7 @@ if __name__ == '__main__':
 #     MainClass().TestVideoStr0()   #测试url 
 #     MainClass().TestVideoStr1()   #测试帧率，视频大小
 #     MainClass().TestVideoStr2()
-#     MainClass().TestVideoStr3()
-#     MainClass().TestVideoStr5()
+    MainClass().TestVideoStr3()
+    MainClass().TestVideoStr5()
 #     MainClass().TestEventStr9()
     

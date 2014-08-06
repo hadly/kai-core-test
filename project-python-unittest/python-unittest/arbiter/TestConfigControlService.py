@@ -31,15 +31,17 @@ class ConfigControlServiceClient():
         '''
         try:
             log.debug('test setChunkSize')
-            size = Config().getFromConfigs(Constants.frame,"chunk-size")
+            size = Config().getFromConfigs(Constants.configControl,"chunk-size")
 #             print size
             result = self.client.setChunkSize((int)(size))
 #             print result
-            if result == True:
-                log.info('this function set chunk-size is success!')
+            if result:
+                log.debug('this function set chunk-size is success!')
             else:
-                log.info('the test have error~~')
+                log.debug('the test have error~~')
+            return result
         except Exception,e:
             log.error("testSetChunkSize error:%s",e)
-            raise Exception("testSetChunkSize exception")
+            return False
+#             raise Exception("testSetChunkSize exception")
                 

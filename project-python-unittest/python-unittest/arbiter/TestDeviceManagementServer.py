@@ -13,7 +13,7 @@ from arbiter.utils.Constants import arbiter
 from arbiter.utils.Constants import addDevice
 from arbiter.utils.Constants import updateDevice
 from arbiter.utils.Constants import deleteDevice
-from arbiter.utils.Constants import frame
+from arbiter.utils.Constants import configControl,videoStrategy,photoStrategy
 from arbiter.utils.Constants import streamControl
 import logging
 import time
@@ -42,21 +42,23 @@ class DeviceManagementServer():
             #将得到的deviceId写到要更新和删除的配置文件
             Config().writeToConfig(updateDevice, "device-id", result)
             Config().writeToConfig(deleteDevice, "device-id", result)
-            if result == False:
-                log.info('add device to Arbiter fail')
-                raise Exception("add device to Arbiter fail")
-            log.info("add device success")
-        except :
-            raise Exception("add device to Arbiter fail")
+            if result:
+                log.debug("add device success")
+                return True
+            else:
+                log.debug('add device to Arbiter fail')
+                return False
+        except Exception,e:
+            log.error('Error:%s',e)
+            return False
     
     def TestVideoStrategy(self):
         sum = 0
         try:
             log.debug('The Test Strategy')
-            chunk_size = Config().getFromConfigs(frame,"chunk-size")
+            chunk_size = Config().getFromConfigs(configControl,"chunk-size")
             Config().writeToConfig(addDevice, "cloud-recording-enabled","true")
             deviceDetail1 = self.getDeviceDetails(updateDevice)
-#             print deviceDetail1
             result = self.client.updateDevice(deviceDetail1)
             if result and sum==0:
                 time.sleep(40)
@@ -65,20 +67,14 @@ class DeviceManagementServer():
             while istrue:
                 time_mrt = time.time()
                 births = time.localtime(time_mrt)
-#                 print "1"
                 datess = time.strftime("%d%m%Y%H%M%S",time.gmtime(time_mrt))
                 timess = time.strftime("%d%m%Y%H%M%S",births)
-#                 print "2"
                 tim_mins = time.strftime("%M",births)
-#                 print "3"
                 tim_sec = time.strftime('%S',births)
-#                 print '4'
-#                 log.debug('msg:sssssssssss') 
                 if eval(tim_mins)%(int)(chunk_size)==0 and tim_sec=="00":
                     if sum==0:
-                        Config().writeToConfig(streamControl, "liveview-begin-time",datess)#记录开始时间
-                        Config().writeToConfig(frame, "liveview-begin-time-eight",timess)
-                    #开启存储
+                        Config().writeToConfig(videoStrategy, "liveview-begin-time-UTC",datess)#记录开始时间
+                        Config().writeToConfig(videoStrategy, "liveview-begin-time-local",timess)
                     log.debug('msg:the next will sleep 2*60*3s~')
                     if sum!=0:
                         Config().writeToConfig(addDevice, "cloud-recording-enabled","true")
@@ -89,15 +85,17 @@ class DeviceManagementServer():
                     deviceDetail2 = self.getDeviceDetails(updateDevice)
                     self.client.updateDevice(deviceDetail2)
                     if sum == 2:
-                        Config().writeToConfig(streamControl, "liveview-end-time",time.strftime("%d%m%Y%H%M%S",time.gmtime()))#记录结束时间
-                        Config().writeToConfig(frame, "liveview-end-time-eight",time.strftime("%d%m%Y%H%M%S",time.localtime()))
+                        Config().writeToConfig(videoStrategy, "liveview-end-time-UTC",time.strftime("%d%m%Y%H%M%S",time.gmtime()))#记录结束时间
+                        Config().writeToConfig(videoStrategy, "liveview-end-time-local",time.strftime("%d%m%Y%H%M%S",time.localtime()))
                         istrue = False
                     time.sleep(eval(chunk_size)*30)
                     log.debug('msg:one cycle end time')
             log.info('TestVideoStrategy success!')
+            return True
         except Exception,e:
-            log.debug('msg:%s',e)
-            raise Exception("The Test Strategy start fail")
+            log.error('error:%s',e)
+            log.debug('The Test Strategy start fail')
+            return False
     
     def testPhotoStrategy(self):
         sum = 0
@@ -118,8 +116,8 @@ class DeviceManagementServer():
                 tim_sec = time.strftime('%S',time.localtime(timess))
                 if eval(str(timess))%eval(interval)==0:
                     if sum==0:
-                        Config().writeToConfig(frame, "photo-begin-time-eight",time.strftime("%d%m%Y%H%M%S",time.localtime(timess)))
-                        Config().writeToConfig(frame, "photo-begin-time",time.strftime("%d%m%Y%H%M%S",time.gmtime(timess)))#记录开始时间
+                        Config().writeToConfig(photoStrategy, "photo-begin-time-local",time.strftime("%d%m%Y%H%M%S",time.localtime(timess)))
+                        Config().writeToConfig(photoStrategy, "photo-begin-time-UTC",time.strftime("%d%m%Y%H%M%S",time.gmtime(timess)))#记录开始时间
                     if sum!=0:
                         Config().writeToConfig(addDevice, "snapshot-recording-enabled","true")
                         self.client.updateDevice(self.getDeviceDetails(updateDevice))
@@ -134,13 +132,15 @@ class DeviceManagementServer():
                         time.sleep(eval(interval)*12)#等待60s后再次循环，重复：存储——等待——停止
                         log.debug('waiting  next~')
                     if sum == 2:
-                        Config().writeToConfig(frame, "photo-end-time",time.strftime("%d%m%Y%H%M%S",time.gmtime()))#记录结束时间
-                        Config().writeToConfig(frame, "photo-end-time-eight",time.strftime("%d%m%Y%H%M%S",time.localtime()))
+                        Config().writeToConfig(photoStrategy, "photo-end-time-UTC",time.strftime("%d%m%Y%H%M%S",time.gmtime()))#记录结束时间
+                        Config().writeToConfig(photoStrategy, "photo-end-time-local",time.strftime("%d%m%Y%H%M%S",time.localtime()))
                         istrue = False
-            log.info('testPhotoStrategy success!')
+            log.debug('testPhotoStrategy success!')
+            return True
         except Exception,e:
             log.error('error:%s',e)
-            raise Exception("The Test Strategy start fail")
+            log.debug('The Test Strategy start fail')
+            return False
     
     def testDeleteDevice(self):
         try:
@@ -149,9 +149,9 @@ class DeviceManagementServer():
             result = self.client.deleteDevice(deviceId)
             log.debug("remove device=" + deviceId + ",result=" + (str)(result))            
             if result == False:
-                log.info('delete device fail')
+                log.debug('delete device fail')
                 raise Exception("delete device fail")
-            log.info("delete device success")
+            log.debug("delete device success")
         except Exception,e:
             log.error("delete device exception=%s", e)
             raise Exception("delete device exception")
@@ -163,9 +163,9 @@ class DeviceManagementServer():
             result = self.client.updateDevice(deviceDetails)
             log.debug("update device=%s,result=%s", deviceDetails, result)
             if result == False:
-                log.info('update device fail')
+                log.debug('update device fail')
                 raise Exception("update device fail")
-            log.info("update device success")
+            log.debug("update device success")
         except Exception,e:
             log.error("update exception, %s", e)
             raise Exception("update device fail")

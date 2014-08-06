@@ -38,82 +38,125 @@ class MainClass(object):
         ####1.添加设备过程
         #添加设备-->查看devices表中添加是否正确-->查看ds_device_info表中是否正确-->
         #-->查看ds_device_info表中device是否添加到DS了-->查看channel_device_map表中的对应关系建立的是否正确
-        self.dms.testAddDevice()
-        self.testAddDeviceIsSuccess()
-        #2
-        self.testLiveViewAndFrameRate()
-        #3
-        self.testChunkSize()
-        #4
-        self.testVideoStore()
-        #5
-        self.testPhotoStore()
-        #6
-        self.testVideoEvent()       
-       
-        
-#         ####7.更新设备
-#         self.dms.testUpdateDevice()
-#         self.testAddDeviceIsSuccess()
-#         self.testLiveViewAndFrameRate()
-#         self.testVideoStore()
-#         self.testPhotoStore()
-#         self.testVideoEvent()
-        
-#         ####8.删除设备
-#         #删除设备-->查看devices\ds_device_info等表中是否删除干净
-#         self.dms.testDeleteDevice()
-#         self.dataVerifier.testIfDeviceDeleted()
+        result = self.dms.testAddDevice()
+        if result:
+            addResult = self.testAddDeviceIsSuccess()
+            if addResult:
+                fail = 0
+                log.info("添加设备成功，开始常规功能测试,此过程预期几十分到好几十分，请耐心等待：")
+                log.info("开始视频直播测试")
+                resNum1 = self.testLiveViewAndFrameRate() #-1/1
+                if resNum1==-1:
+                    fail += 1
+                    log.info("testLiveViewAndFrameRate                                                false")
+                log.info("开始更新ChunkSize测试")
+                resNum2 = self.testChunkSize() #-1/1
+                if resNum2 == -1:
+                    fail += 1
+                    log.info("testChunkSize                                                           false")
+                log.info("开始视频存储测试")
+                resNum3 = self.testVideoStore()#-1/1
+                if resNum3 == -1:
+                    fail += 1
+                    log.info("testVideoStore                                                          false")
+                log.info("开始照片存储测试")
+                resNum4 = self.testPhotoStore()#-1/1
+                if resNum4 == -1:
+                    fail += 1
+                    log.info("testPhotoStore                                                          false")
+                log.info("开始存储视频事件测试")
+                resNum5 = self.testVideoEvent()#-1/1
+                if resNum5 == -1:
+                    fail += 1
+                    log.info("testVideoEvent                                                          false")
+                sum = resNum1+resNum2+resNum3+resNum4+resNum5
+                log.info("sum:%d",sum)
+                log.info("共测试%d步，成功%d步,失败%d步,具体失败情况请查看以上日志！",sum,sum-fail,fail)
+                log.info("常规测试到此结束！感谢您的耐心等待,下面将执行删除，清空测试,以便恢复系统原貌:！")
+                self.dms.testDeleteDevice()
+                self.dataVerifier.testIfDeviceDeleted()
+                log.info("测试结束，感谢支持！！！")
 #         
+    def testUpdateDevice(self):
+        #update Device
+        self.dms.testUpdateDevice()
+        self.testAddDeviceIsSuccess()
+        self.testLiveViewAndFrameRate()
+        self.testVideoStore()
+        self.testPhotoStore()
+        self.testVideoEvent()
+        
+    
     def testAddDeviceIsSuccess(self):
         ####1.添加设备过程
         #添加设备-->查看devices表中添加是否正确-->查看ds_device_info表中是否正确-->
         #-->查看ds_device_info表中device是否添加到DS了-->查看channel_device_map表中的对应关系建立的是否正确
         
-        self.dataVerifier.testCorrectnessInDevices()
-        self.dataVerifier.testCorrectnessInDsDeviceInfo()
-        self.dataVerifier.testIfDeviceAddedToDs()
+        r = self.dataVerifier.testCorrectnessInDevices()
+        e = self.dataVerifier.testCorrectnessInDsDeviceInfo()
+        s = self.dataVerifier.testIfDeviceAddedToDs()
         #dataVerifier.testMatchUpInChannelDeviceMap()
         #测试DS中是否有该设备的存在
         global ds
         ds = DeviceServerServiceClient()
-        ds.testDeviceisinDs()
+        u = ds.testDeviceisinDs()
+        if r and e and s and u:
+            return True
+        else:
+            return False
+        
     
     def testLiveViewAndFrameRate(self):
         ####2.liveview查看过程
         #查看liveview-->查看返回的liveview是否正确-->判断返回的liveview是否可播放-->
         #-->查看stream_session_info里面是否存了session信息-->
-        self.testLiveView(self.scs, self.dataVerifier)#测试url
+        viewRes = self.testLiveView(self.scs, self.dataVerifier)#测试url
         global ds
-        ds.testDeviceFrameRate()#测试帧率
+        rateRes = ds.testDeviceFrameRate()#测试帧率
+        if viewRes and rateRes:
+            return 1
+        else:
+            return -1
     
     def testChunkSize(self):
         '''
           test set chunk-size function
         '''
-        self.ccs.testSetChunkSize()
+        result = self.ccs.testSetChunkSize()
+        if result:
+            return 1
+        else:
+            return -1
     
     
     def testVideoStore(self):
         '''
           test video 
-        '''  
-        self.dms.TestVideoStrategy()
-#         log.debug('VideoStrategy End , will waite 20s ')
-#         time.sleep(20)
-        self.scs.checkVideoListSize()
-        global res
-        res = RecordingServerServiceClient()
-        res.testGetVideoStreamList() 
+        '''
+        result = self.dms.TestVideoStrategy()
+        if result:
+            end = self.scs.checkVideoListSize()
+            global res
+            res = RecordingServerServiceClient()
+            ending = res.testGetVideoStreamList()
+            if ending and end:
+                return 1
+            else:
+                return -1 
         
     def testPhotoStore(self):
         '''
           test photo
         '''
-        self.dms.testPhotoStrategy()
-        self.scs.checkPhotoUrlSize()
-        global res
-        res.testGetPhotoStreamList()  
+        result = self.dms.testPhotoStrategy()
+        if result:
+            end = self.scs.checkPhotoUrlSize()
+            global res
+            ending = res.testGetPhotoStreamList()
+            if end and ending:
+                return 1
+            else:
+                return -1
         
     def testVideoEvent(self):
         '''
@@ -121,23 +164,33 @@ class MainClass(object):
         '''
         isTrue = True
         num = 0
+        sum = 0
         while isTrue:
             log.info('The %d cycles start:',num)
-            self.drs.sendEventToArbiter()
-            time.sleep(3)
-            global res
-            res.testGetEventStreamList()
-            log.info('The %d cycles end:',num)
+            result = self.drs.sendEventToArbiter()
+            if result:
+                time.sleep(3)
+                global res
+                end = res.testGetEventStreamList()
+                if end:
+                    sum += 1
+                log.info('The %d cycles end:',num)
             num = num + 1
             if num == 6:
                 isTrue = False
+                if sum >= 4:
+                    return 1
+                else:
+                    return -1
     
     def testLiveView(self, scs, dataVerifier):
-        #更新设备-->查看devices表中更新是否成功-->查看ds_device_info更新是否成功-->
-        #-->更新之后按照"2"中步骤查看liveview-->
-        scs.testLiveViewResult()   
-        dataVerifier.testIfAddedToStreamSessionInfo()
-        dataVerifier.testIfDelFromStreamSessionInfo()
+        urlResult = scs.testLiveViewResultUrl()
+        addRes = dataVerifier.testIfAddedToStreamSessionInfo()
+        delRes = dataVerifier.testIfDelFromStreamSessionInfo()
+        if urlResult and addRes and delRes:
+            return True
+        else:
+            return False
     
     def deleteDeviceAndCleanData(self):
         try:

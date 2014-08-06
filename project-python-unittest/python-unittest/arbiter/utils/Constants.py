@@ -11,7 +11,10 @@ addDevice = "addDevice"
 updateDevice = "updateDevice"
 deleteDevice = "deleteDevice"
 streamControl = "streamControl"
-frame = "frame"
+configControl = "configControl"
+videoStrategy = "videoStrategy"
+photoStrategy = "photoStrategy"
+deviceFrameRate = "deviceFrameRate"
 
 #the device's name we added for testing
 addedDeviceName="MegaPixel"
