@@ -41,7 +41,7 @@ class DeviceDataReceiverServiceClient():
            Config().writeToConfig(streamControl,"event-id",str(uuId))
            stringData = {"eventId":str(uuId),"deviceId":devId,"channelId":"0"}
            sdate = json.dumps(stringData)
-           istrue = self.client.sendEventData(None,None,'CAPTURE_EVENT_VIDEO',None,None,sdate,None)
+           istrue = self.client.sendEventData(None,int(devId),'CAPTURE_EVENT_VIDEO',None,None,sdate,None)
            log.debug('isTrue:%s',istrue)
            return istrue
         except Exception,e:

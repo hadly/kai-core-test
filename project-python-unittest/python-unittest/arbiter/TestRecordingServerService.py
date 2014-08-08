@@ -62,7 +62,7 @@ class RecordingServerServiceClient():
                         log.debug('this video from %s to %s is fail',begin,end)
                 else:
                     log.debug('this video"size from %s to %s is fail',begin,end)
-            if num == 4:
+            if num >= 2:
                 return True
             return False
         except Exception,e:
@@ -88,7 +88,7 @@ class RecordingServerServiceClient():
                     num += 1
                 else:
                     log.debug('the test add a picture have an error at %s',start)
-            if num == 12:
+            if num >= 18:
                 return True
             return False
         except Exception,e:
@@ -99,8 +99,6 @@ class RecordingServerServiceClient():
         try:
             log.debug('*******testGetEventStreamList begin******')
             eventId = Config().getFromConfigs(Constants.streamControl, "event-id")
-            chunkSize = Config().getFromConfigs(Constants.configControl,"chunk-size")
-            percent = Config().getFromConfigs(Constants.deviceFrameRate,"percent")
             info = {"storage-type":"event-recording", "stream-type":"http/h264", "event-id":eventId}
             streamInfo = json.dumps(info)
             log.debug('%s',self.client)
@@ -112,8 +110,8 @@ class RecordingServerServiceClient():
                 fn = strJson['fn']
                 fps = strJson['fps']
                 size = strJson['size']
-                if eval(fps)*eval(fn)*eval(size)!=0:
-                    if abs(eval(chunkSize)-eval(dur)/60)<=eval(chunkSize*percent):
+                if float(fps)*float(fn)*float(size)!=0:
+                    if abs(10-float(dur))<=2:
                         log.debug('Add an event success' )
                         return True
                     else:

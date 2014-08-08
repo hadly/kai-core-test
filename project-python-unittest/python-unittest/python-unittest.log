@@ -1,36 +1,72 @@
-[2014-08-06 14:13:18] main.py(__init__:26)[DEBUG] ******** Main init begin**********
-[2014-08-06 14:13:18] main.py(__init__:33)[DEBUG] ******** Main init end**********
-[2014-08-06 14:13:18] TestDeviceManagementServer.py(testAddDevice:38)[DEBUG] test add device
-[2014-08-06 14:13:18] TestDeviceManagementServer.py(testAddDevice:41)[DEBUG] add device=DeviceDetails(alertFlag=None, eventSettings=None, functionalityId=None, alive=None, lng='116', id='', accountId='3', currentPositionId=None, port='80', liveview=None, snapshotRecordingInterval='5', deviceServerUrls='', modelId='111', host='192.168.200.116', key='', address='Beijing', lat='40', password='', name='MegaPixel', snapshotRecordingEnabled='false', cloudRecordingEnabled='false', action=None, login='admin', statusId=None),result=18
-[2014-08-06 14:13:18] TestDeviceManagementServer.py(testAddDevice:46)[INFO] add device success
-[2014-08-06 14:13:18] TestMysqlDataVerifier.py(testCorrectnessInDevices:33)[DEBUG] test if device added to table devices
-[2014-08-06 14:13:18] TestMysqlDataVerifier.py(testCorrectnessInDevices:36)[DEBUG] devices=((10L, 'MegaPixel', 'core-generated-10', '192.168.200.116', 40L, 116L, 111L, None, '{"port":"80","login":"admin","password":"","address":"Beijing"}', '{"jpeg":{"0":"http://192.168.200.18:9111/snap/10/0"},"mjpeg":{"0":"http://192.168.200.116:80/mjpeg/video.cgi&resolution=320X240"},"rtsp":{"0":"rtsp://192.168.200.18:12021/rtsp/10/0"},"rtmp":{"0":"rtmp://192.168.200.18:1935/flvplayback/live10-0"}}', 0L, 5L, 0L), (11L, 'MegaPixel', 'core-generated-11', '192.168.200.116', 40L, 40L, 111L, None, '{"port":"80","login":"admin","password":"","address":"Beijing"}', '{"jpeg":{"0":"http://192.168.200.18:9111/snap/11/0"},"mjpeg":{"0":"http://192.168.200.116:80/mjpeg/video.cgi&resolution=320X240"},"rtsp":{"0":"rtsp://192.168.200.18:12021/rtsp/11/0"},"rtmp":{"0":"rtmp://192.168.200.18:1935/flvplayback/live11-0"}}', 0L, 5L, 0L), (12L, 'MegaPixel', 'core-generated-12', '192.168.200.116', 40L, 40L, 111L, None, '{"port":"80","login":"admin","password":"","address":"Beijing"}', '{"jpeg":{"0":"http://192.168.200.18:9111/snap/12/0"},"mjpeg":{"0":"http://192.168.200.116:80/mjpeg/video.cgi&resolution=320X240"},"rtsp":{"0":"rtsp://192.168.200.18:12021/rtsp/12/0"},"rtmp":{"0":"rtmp://192.168.200.18:1935/flvplayback/live12-0"}}', 0L, 5L, 0L), (13L, 'MegaPixel', 'core-generated-13', '192.168.200.116', 40L, 40L, 111L, None, '{"port":"80","login":"admin","password":"","address":"Beijing"}', '{"jpeg":{"0":"http://192.168.200.18:9111/snap/13/0"},"mjpeg":{"0":"http://192.168.200.116:80/mjpeg/video.cgi&resolution=320X240"},"rtsp":{"0":"rtsp://192.168.200.18:12021/rtsp/13/0"},"rtmp":{"0":"rtmp://192.168.200.18:1935/flvplayback/live13-0"}}', 0L, 5L, 0L), (14L, 'MegaPixel', 'core-generated-14', '192.168.200.116', 40L, 40L, 111L, None, '{"port":"80","login":"admin","password":"","address":"Beijing"}', '{"jpeg":{"0":"http://192.168.200.18:9111/snap/14/0"},"mjpeg":{"0":"http://192.168.200.116:80/mjpeg/video.cgi&resolution=320X240"},"rtsp":{"0":"rtsp://192.168.200.18:12021/rtsp/14/0"},"rtmp":{"0":"rtmp://192.168.200.18:1935/flvplayback/live14-0"}}', 0L, 5L, 0L), (15L, 'MegaPixel', 'core-generated-15', '192.168.200.116', 40L, 40L, 111L, None, '{"port":"80","login":"admin","password":"","address":"Beijing"}', '{"jpeg":{"0":"http://192.168.200.18:9111/snap/15/0"},"mjpeg":{"0":"http://192.168.200.116:80/mjpeg/video.cgi&resolution=320X240"},"rtsp":{"0":"rtsp://192.168.200.18:12021/rtsp/15/0"},"rtmp":{"0":"rtmp://192.168.200.18:1935/flvplayback/live15-0"}}', 0L, 5L, 0L), (16L, 'MegaPixel', 'core-generated-16', '192.168.200.116', 40L, 40L, 111L, None, '{"port":"80","login":"admin","password":"","address":"Beijing"}', '{"jpeg":{"0":"http://192.168.200.18:9111/snap/16/0"},"mjpeg":{"0":"http://192.168.200.116:80/mjpeg/video.cgi&resolution=320X240"},"rtsp":{"0":"rtsp://192.168.200.18:12021/rtsp/16/0"},"rtmp":{"0":"rtmp://192.168.200.18:1935/flvplayback/live16-0"}}', 0L, 5L, 0L), (17L, 'MegaPixel', 'core-generated-17', '192.168.200.116', 40L, 40L, 111L, None, '{"port":"80","login":"admin","password":"","address":"Beijing"}', '{"jpeg":{"0":"http://192.168.200.18:9111/snap/17/0"},"mjpeg":{"0":"http://192.168.200.116:80/mjpeg/video.cgi&resolution=320X240"},"rtsp":{"0":"rtsp://192.168.200.18:12021/rtsp/17/0"},"rtmp":{"0":"rtmp://192.168.200.18:1935/flvplayback/live17-0"}}', 0L, 5L, 0L), (18L, 'MegaPixel', 'core-generated-18', '192.168.200.116', 40L, 40L, 111L, None, '{"port":"80","login":"admin","password":"","address":"Beijing"}', '', 0L, 5L, 0L))
-[2014-08-06 14:13:18] TestMysqlDataVerifier.py(testCorrectnessInDevices:39)[DEBUG] device name in devices=MegaPixel
-[2014-08-06 14:13:18] TestMysqlDataVerifier.py(testCorrectnessInDevices:44)[INFO] added to devices correctly/success
-[2014-08-06 14:13:18] TestMysqlDataVerifier.py(testCorrectnessInDsDeviceInfo:55)[DEBUG] test if device added to ds_device_info
-[2014-08-06 14:13:18] TestMysqlDataVerifier.py(testCorrectnessInDsDeviceInfo:61)[DEBUG] ds_device_info=((10L, 'core-generated-10', '{"num-channels":1,"port":"80","servertype":"amtk-ipc","cloud_recording_enabled":0,"username":"admin","host":"192.168.200.116","snapshot_recording_interval":5,"address":"Beijing","name":"MegaPixel","device_url":"http://#{device:host}:#{device:misc:port}/","password":"","snapshot_recording_enabled":0}', 2, 21L),)
-[2014-08-06 14:13:18] TestMysqlDataVerifier.py(testCorrectnessInDsDeviceInfo:67)[INFO] device name in ds_device_info={"num-channels":1,"port":"80","servertype":"amtk-ipc","cloud_recording_enabled":0,"username":"admin","host":"192.168.200.116","snapshot_recording_interval":5,"address":"Beijing","name":"MegaPixel","device_url":"http://#{device:host}:#{device:misc:port}/","password":"","snapshot_recording_enabled":0}
-[2014-08-06 14:13:18] TestMysqlDataVerifier.py(testCorrectnessInDsDeviceInfo:68)[INFO] added to dsDeviceInfo correctly/success!
-[2014-08-06 14:13:18] TestMysqlDataVerifier.py(testIfDeviceAddedToDs:82)[DEBUG] test if device added to a DS
-[2014-08-06 14:13:18] TestMysqlDataVerifier.py(testIfDeviceAddedToDs:84)[DEBUG] sleep 40 seconds to wait DS register
-[2014-08-06 14:13:58] TestMysqlDataVerifier.py(testIfDeviceAddedToDs:90)[DEBUG] ds_device_info=((10L, 'core-generated-10', '{"num-channels":1,"port":"80","servertype":"amtk-ipc","cloud_recording_enabled":0,"username":"admin","host":"192.168.200.116","snapshot_recording_interval":5,"address":"Beijing","name":"MegaPixel","device_url":"http://#{device:host}:#{device:misc:port}/","password":"","snapshot_recording_enabled":0}', 2, 21L),)
-[2014-08-06 14:13:58] TestDeviceServerService.py(__init__:21)[DEBUG] ************DeviceServerServiceClient init come in*******************
-[2014-08-06 14:13:58] TestDeviceServerService.py(__init__:32)[DEBUG] ************DeviceServerServiceClient init End*******************
-[2014-08-06 14:13:58] TestDeviceServerService.py(testDeviceisinDs:45)[DEBUG] this test begin DS
-[2014-08-06 14:13:58] TestDeviceServerService.py(testDeviceisinDs:53)[INFO] this device in DS
-[2014-08-06 14:13:58] TestStreamControlServer.py(testLiveViewResultUrl:33)[DEBUG] test begin liveview
-[2014-08-06 14:13:59] TestStreamControlServer.py(getUrlList:63)[DEBUG] ['rtmp://192.168.200.18:1935/flvplayback/live18-0']
-[2014-08-06 14:13:59] TestStreamControlServer.py(testLiveViewResultUrl:38)[DEBUG] msg['rtmp://192.168.200.18:1935/flvplayback/live18-0']
-[2014-08-06 14:13:59] TestStreamControlServer.py(testLiveViewResultUrl:42)[DEBUG] liveview,deviceId=18, urls=['rtmp://192.168.200.18:1935/flvplayback/live18-0'], url=rtmp://192.168.200.18:1935/flvplayback/live18-0
-[2014-08-06 14:13:59] TestMysqlDataVerifier.py(testIfAddedToStreamSessionInfo:200)[DEBUG] streamSessionInfo=(('da74a230-1d30-11e4-ac1b-005056c00008', 'rtmp/h264', 30000L, 18L, 0, 1407305638901L, 0L, 0L),)
-[2014-08-06 14:13:59] TestMysqlDataVerifier.py(testIfAddedToStreamSessionInfo:202)[DEBUG] add to stream_session_info success.
-[2014-08-06 14:14:39] TestMysqlDataVerifier.py(testIfDelFromStreamSessionInfo:216)[DEBUG] sleep 40 seconds before test delete stream_session_info
-[2014-08-06 14:14:39] TestMysqlDataVerifier.py(testIfDelFromStreamSessionInfo:219)[DEBUG] streamSessionInfo=()
-[2014-08-06 14:14:39] TestMysqlDataVerifier.py(testIfDelFromStreamSessionInfo:221)[DEBUG] delete stream_session_info success.
-[2014-08-06 14:14:39] TestDeviceServerService.py(testDeviceFrameRate:68)[DEBUG] this test is test frame-rate vs rated-frames
-[2014-08-06 14:14:39] TestDeviceServerService.py(testDeviceFrameRate:81)[INFO] this frame-rate:15.8 is false~
-[2014-08-06 14:14:39] TestConfigControlService.py(testSetChunkSize:33)[DEBUG] test setChunkSize
-[2014-08-06 14:14:39] TestConfigControlService.py(testSetChunkSize:39)[INFO] this function set chunk-size is success!
-[2014-08-06 14:14:39] main.py(beginTesting:51)[INFO] sum:2
-[2014-08-06 14:14:39] main.py(beginTesting:53)[INFO] 共测试2步，成功
-[2014-08-06 14:14:39] main.py(<module>:189)[DEBUG] Congratulations!!! Your testing is successful.
+[2014-08-08 15:59:56] main.py(__init__:26)[DEBUG] ******** Main init begin**********
+[2014-08-08 15:59:56] main.py(__init__:33)[DEBUG] ******** Main init end**********
+[2014-08-08 15:59:56] main.py(beginTesting:41)[INFO] [添加设备]
+[2014-08-08 15:59:56] main.py(beginTesting:42)[INFO] 开始添加设备...
+[2014-08-08 15:59:56] TestDeviceManagementServer.py(testAddDevice:38)[DEBUG] test add device
+[2014-08-08 15:59:56] TestDeviceManagementServer.py(testAddDevice:41)[DEBUG] add device=DeviceDetails(alertFlag=None, eventSettings=None, functionalityId=None, alive=None, lng='116', id='', accountId='3', currentPositionId=None, port='80', liveview=None, snapshotRecordingInterval='5', deviceServerUrls='', modelId='111', host='192.168.200.116', key='', address='Beijing', lat='40', password='', name='MegaPixel', snapshotRecordingEnabled='false', cloudRecordingEnabled='true', action=None, login='admin', statusId=None),result=4
+[2014-08-08 15:59:56] TestDeviceManagementServer.py(testAddDevice:46)[DEBUG] add device success
+[2014-08-08 15:59:56] main.py(beginTesting:45)[INFO] 添加设备                                                                                                                                                        OK
+[2014-08-08 15:59:56] TestMysqlDataVerifier.py(testCorrectnessInDevices:33)[DEBUG] test if device added to table devices
+[2014-08-08 15:59:56] TestMysqlDataVerifier.py(testCorrectnessInDevices:36)[DEBUG] devices=((4L, 'MegaPixel', 'core-generated-4', '192.168.200.116', 40L, 40L, 111L, None, '{"port":"80","login":"admin","password":"","address":"Beijing"}', '', 0L, 5L, 1L),)
+[2014-08-08 15:59:56] TestMysqlDataVerifier.py(testCorrectnessInDevices:39)[DEBUG] device name in devices=MegaPixel
+[2014-08-08 15:59:56] TestMysqlDataVerifier.py(testCorrectnessInDevices:44)[DEBUG] added to devices correctly/success
+[2014-08-08 15:59:56] main.py(testAddDeviceIsSuccess:138)[INFO] 设备在Devices                                            OK
+[2014-08-08 15:59:56] TestMysqlDataVerifier.py(testCorrectnessInDsDeviceInfo:55)[DEBUG] test if device added to ds_device_info
+[2014-08-08 15:59:56] TestMysqlDataVerifier.py(testCorrectnessInDsDeviceInfo:61)[DEBUG] ds_device_info=((4L, 'core-generated-4', '{"num-channels":1,"port":"80","servertype":"amtk-ipc","cloud_recording_enabled":1,"username":"admin","host":"192.168.200.116","snapshot_recording_interval":5,"address":"Beijing","name":"MegaPixel","device_url":"http://#{device:host}:#{device:misc:port}/","password":"","snapshot_recording_enabled":0}', 0, -1L),)
+[2014-08-08 15:59:56] TestMysqlDataVerifier.py(testCorrectnessInDsDeviceInfo:67)[DEBUG] device name in ds_device_info={"num-channels":1,"port":"80","servertype":"amtk-ipc","cloud_recording_enabled":1,"username":"admin","host":"192.168.200.116","snapshot_recording_interval":5,"address":"Beijing","name":"MegaPixel","device_url":"http://#{device:host}:#{device:misc:port}/","password":"","snapshot_recording_enabled":0}
+[2014-08-08 15:59:56] TestMysqlDataVerifier.py(testCorrectnessInDsDeviceInfo:68)[DEBUG] added to dsDeviceInfo correctly/success!
+[2014-08-08 15:59:56] main.py(testAddDeviceIsSuccess:143)[INFO] 设备在ds_device_info                                     OK
+[2014-08-08 15:59:56] TestMysqlDataVerifier.py(testIfDeviceAddedToDs:82)[DEBUG] test if device added to a DS
+[2014-08-08 15:59:56] TestMysqlDataVerifier.py(testIfDeviceAddedToDs:84)[DEBUG] sleep 40 seconds to wait DS register
+[2014-08-08 16:00:36] TestMysqlDataVerifier.py(testIfDeviceAddedToDs:90)[DEBUG] ds_device_info=((4L, 'core-generated-4', '{"num-channels":1,"port":"80","servertype":"amtk-ipc","cloud_recording_enabled":1,"username":"admin","host":"192.168.200.116","snapshot_recording_interval":5,"address":"Beijing","name":"MegaPixel","device_url":"http://#{device:host}:#{device:misc:port}/","password":"","snapshot_recording_enabled":0}', 2, 21L),)
+[2014-08-08 16:00:36] main.py(testAddDeviceIsSuccess:148)[INFO] 注册设备到DS                                              OK
+[2014-08-08 16:00:36] TestDeviceServerService.py(__init__:21)[DEBUG] ************DeviceServerServiceClient init come in*******************
+[2014-08-08 16:00:36] TestDeviceServerService.py(__init__:32)[DEBUG] ************DeviceServerServiceClient init End*******************
+[2014-08-08 16:00:36] TestDeviceServerService.py(testDeviceisinDs:45)[DEBUG] this test begin DS
+[2014-08-08 16:00:36] TestDeviceServerService.py(testDeviceisinDs:53)[DEBUG] this device in DS
+[2014-08-08 16:00:36] main.py(testAddDeviceIsSuccess:157)[INFO] DS中存在该设备                                                                                                                                      OK
+[2014-08-08 16:00:36] main.py(beginTesting:49)[INFO] 设备添加成功，开始常规功能测试,此过程预期几十分到好几十分，请耐心等待：
+[2014-08-08 16:00:36] main.py(beginTesting:50)[INFO] [视频直播]
+[2014-08-08 16:00:36] main.py(beginTesting:51)[INFO] 开始视频直播测试...
+[2014-08-08 16:00:36] TestStreamControlServer.py(testLiveViewResultUrl:33)[DEBUG] test begin liveview
+[2014-08-08 16:00:37] TestStreamControlServer.py(getUrlList:63)[DEBUG] ['rtmp://192.168.200.18:1935/flvplayback/live4-0']
+[2014-08-08 16:00:37] TestStreamControlServer.py(testLiveViewResultUrl:38)[DEBUG] msg['rtmp://192.168.200.18:1935/flvplayback/live4-0']
+[2014-08-08 16:00:37] TestStreamControlServer.py(testLiveViewResultUrl:42)[DEBUG] liveview,deviceId=4, urls=['rtmp://192.168.200.18:1935/flvplayback/live4-0'], url=rtmp://192.168.200.18:1935/flvplayback/live4-0
+[2014-08-08 16:00:37] TestMysqlDataVerifier.py(testIfAddedToStreamSessionInfo:200)[DEBUG] streamSessionInfo=(('14d29cf0-1ed2-11e4-8417-005056c00008', 'rtmp/h264', 30000L, 4L, 0, 1407484836963L, 0L, 0L),)
+[2014-08-08 16:00:37] TestMysqlDataVerifier.py(testIfAddedToStreamSessionInfo:202)[DEBUG] add to stream_session_info success.
+[2014-08-08 16:01:17] TestMysqlDataVerifier.py(testIfDelFromStreamSessionInfo:216)[DEBUG] sleep 40 seconds before test delete stream_session_info
+[2014-08-08 16:01:17] TestMysqlDataVerifier.py(testIfDelFromStreamSessionInfo:219)[DEBUG] streamSessionInfo=()
+[2014-08-08 16:01:17] TestMysqlDataVerifier.py(testIfDelFromStreamSessionInfo:221)[DEBUG] delete stream_session_info success.
+[2014-08-08 16:01:17] main.py(testLiveViewAndFrameRate:173)[INFO] 直播所得URL                                               OK
+[2014-08-08 16:01:17] TestDeviceServerService.py(testDeviceFrameRate:68)[DEBUG] this test is test frame-rate vs rated-frames
+[2014-08-08 16:01:17] TestDeviceServerService.py(testDeviceFrameRate:81)[DEBUG] this frame-rate:11.2 is false~
+[2014-08-08 16:01:17] main.py(testLiveViewAndFrameRate:181)[INFO] 直播所得帧率                                                                                                                                              False
+[2014-08-08 16:01:17] main.py(beginTesting:55)[INFO] 视频直播                                                                                                                                                                                        False
+[2014-08-08 16:01:17] main.py(beginTesting:58)[INFO] [更新ChunkSize]
+[2014-08-08 16:01:17] main.py(beginTesting:59)[INFO] 开始更新ChunkSize测试...
+[2014-08-08 16:01:17] TestConfigControlService.py(testSetChunkSize:33)[DEBUG] test setChunkSize
+[2014-08-08 16:01:17] TestConfigControlService.py(testSetChunkSize:39)[DEBUG] this function set chunk-size is success!
+[2014-08-08 16:01:17] main.py(beginTesting:65)[INFO] 更新ChunkSize                                                           OK
+[2014-08-08 16:01:17] main.py(beginTesting:66)[INFO] [视频存储]
+[2014-08-08 16:01:17] main.py(beginTesting:67)[INFO] 开始视频存储测试...
+[2014-08-08 16:01:17] TestDeviceManagementServer.py(TestVideoStrategy:65)[DEBUG] The Test Strategy
+[2014-08-08 16:02:00] TestDeviceManagementServer.py(TestVideoStrategy:81)[DEBUG] msg:the next will sleep 2*60*3s~
+[2014-08-08 16:07:00] TestDeviceManagementServer.py(TestVideoStrategy:95)[DEBUG] msg:one cycle end time
+[2014-08-08 16:08:00] TestDeviceManagementServer.py(TestVideoStrategy:99)[ERROR] error:invalid token (<string>, line 1)
+[2014-08-08 16:08:00] TestDeviceManagementServer.py(TestVideoStrategy:100)[DEBUG] The Test Strategy start fail
+[2014-08-08 16:08:00] main.py(testVideoStore:222)[INFO] 视频存储策略                                                                                                                                                            False
+[2014-08-08 16:08:00] main.py(beginTesting:71)[INFO] 视频存储                                                                                                                                                                                                      False
+[2014-08-08 16:08:00] main.py(beginTesting:74)[INFO] [视频事件]
+[2014-08-08 16:08:00] main.py(beginTesting:75)[INFO] 开始视频事件测试...
+[2014-08-08 16:08:00] main.py(testVideoEvent:258)[INFO] 第0次测试视频事件...
+[2014-08-08 16:08:00] TestDeviceDataReceiverService.py(sendEventToArbiter:37)[DEBUG] the tast sendEventToArbiter start!
+[2014-08-08 16:08:00] TestDeviceDataReceiverService.py(sendEventToArbiter:45)[DEBUG] isTrue:True
+[2014-08-08 16:08:00] main.py(testVideoEvent:262)[INFO] 发送事件到Arbiter                                              OK
+[2014-08-08 16:08:10] main.py(<module>:308)[ERROR] exception, global name 'res' is not defined
+[2014-08-08 16:08:10] main.py(__init__:26)[DEBUG] ******** Main init begin**********
+[2014-08-08 16:08:10] main.py(__init__:33)[DEBUG] ******** Main init end**********
+[2014-08-08 16:08:10] TestDeviceManagementServer.py(testDeleteDevice:149)[DEBUG] test delete device
+[2014-08-08 16:08:10] TestDeviceManagementServer.py(testDeleteDevice:152)[DEBUG] remove device=4,result=True
+[2014-08-08 16:08:10] TestDeviceManagementServer.py(testDeleteDevice:155)[DEBUG] delete device success
+[2014-08-08 16:08:10] TestMysqlDataVerifier.py(cleanDeviceInfo:189)[DEBUG] deleted device=()
+[2014-08-08 16:08:10] TestMysqlDataVerifier.py(cleanDeviceInfo:192)[DEBUG] clean device, result=()

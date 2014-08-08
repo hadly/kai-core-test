@@ -67,16 +67,17 @@ class MainClass(object):
             res.testGetEventStreamList()
             log.debug('The %d cycles end:',num)
             num = num + 1
-            if num == 6:
+            if num == 2:
                 isTrue = False
 if __name__ == '__main__':
     print "begin Main test."
 #    
 #     MainClass().TestVideoStr4()   #Video≤‚ ‘≤ﬂ¬‘
-#     MainClass().TestVideoStr0()   #≤‚ ‘url 
+    MainClass().TestVideoStr0()   #≤‚ ‘url 
 #     MainClass().TestVideoStr1()   #≤‚ ‘÷°¬ £¨ ”∆µ¥Û–°
+    log.info("fffff")
 #     MainClass().TestVideoStr2()
-    MainClass().TestVideoStr3()
-    MainClass().TestVideoStr5()
-#     MainClass().TestEventStr9()
+#     MainClass().TestVideoStr3()
+#     MainClass().TestVideoStr5()
+    MainClass().TestEventStr9()
     

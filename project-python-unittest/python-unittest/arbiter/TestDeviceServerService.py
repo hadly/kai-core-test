@@ -80,7 +80,7 @@ class DeviceServerServiceClient():
             else:
                 log.debug('this frame-rate:%s is false~',fra)
                 #由于网络等原因，获得的即时帧率会过低，造成结果错误，以后改正，变为False
-                return True  
+                return False  
         except Exception,e:
             log.error('testDeviceFrameRate  exception=%s',e)
             return False

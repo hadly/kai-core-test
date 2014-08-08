@@ -91,7 +91,8 @@ class StreamControlServerClient():
             endTime = Config().getFromConfigs(Constants.photoStrategy, "photo-end-time-UTC")
             type = Config().getFromConfigs(Constants.photoStrategy, "type")
             urls = self.getUrlList(sessionId=sessionId,beginTime=beginTime,endTime=endTime,type=type)
-            if len(urls)==12:
+            log.debug('urls size:%d',len(urls))
+            if len(urls)>=18:#理论会产生22张图,中间由于代码的执行，所以会少掉一些，所以在18张以上视为合格
                 log.debug('the result is success')
                 return True
             else:

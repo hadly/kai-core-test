@@ -170,19 +170,19 @@ class MysqlDataVerifier():
             #get device's id whose name is "unittest-amtk" 
             device = Mysql(self.con).getDevice()
             log.debug("deleted device=%s",device)
-            
             deviceId = Config().getFromConfigs(Constants.deleteDevice, "device-id")
             dsDeviceInfo = Mysql(self.con).getDsDeviceInfo(deviceId)
             log.debug("deleted dsDeviceInfo=%s",dsDeviceInfo)
             log.debug("len-device=" + (str)(len(device)) + ",len-dsDevice_info=" + (str)(len(dsDeviceInfo)) )
             if (len(device) == 0) & (len(dsDeviceInfo) == 0):
-                log.debug("device deleted correctly/yes")
+                log.debug("device deleted correctly")
+                return True
             else:
                 log.debug('maybe device deleted fail')
-                raise Exception("maybe device deleted fail")
+                return False
         except Exception,e:
             log.error("exception, %s", e)
-            raise Exception("device deleted exception")
+            return False
         
     def cleanDeviceInfo(self):
         device = Mysql(self.con).getDevice()
@@ -224,7 +224,16 @@ class MysqlDataVerifier():
             log.debug("delete from stream_session_info fail.")
             return False
         
-        
+    def testConfigurationsHavKUP(self):
+        name = "kup-arbiter-host"
+        value = Config().getFromConfigs(Constants.configControl,"kup-arbiter-host")
+        configurations = Mysql(self.con).getConfigurationsInfo(name,value)
+        if len(configurations)!=0:
+            log.debug('msg:KUP add success')
+            return True
+        else:
+            log.debug("KUP not set success")
+            return False
     #----some auxiliary methods
     def isExist(self):
         pass   

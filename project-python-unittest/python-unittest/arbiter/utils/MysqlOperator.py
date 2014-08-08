@@ -66,6 +66,9 @@ class Mysql(object):
         result = self.executeSql(sql, deviceId)
         return result
         
-        
+    def getConfigurationsInfo(self,name,value):
+        sql = "select * from configurations where name=%s and value=%s ;"
+        result = self.executeSql(sql,name,value)
+        return result
         
         

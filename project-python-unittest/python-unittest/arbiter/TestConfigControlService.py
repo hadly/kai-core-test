@@ -7,7 +7,7 @@
 from CoreServices import ConfigControlService
 from arbiter.utils.ConfigurationReader import Config
 from arbiter.utils import ThriftClient, Constants
-from arbiter.utils.Constants import arbiter
+from arbiter.utils.Constants import arbiter,configControl
 import logging
 
 log = logging.getLogger('testConfigControlService')
@@ -24,6 +24,15 @@ class ConfigControlServiceClient():
     
     def tearDown(self):
         ThriftClient.closeThriftClient()
+    
+    def testSetCloudServer(self):
+        try:
+            kupHost = Config().getFromConfigs(configControl,"kup-arbiter-host")
+            result = self.client.setCloudServer(kupHost)
+            log.debug("result:%s",result)
+            return result
+        except Exception,e:
+            return False
 
     def testSetChunkSize(self):
         '''
