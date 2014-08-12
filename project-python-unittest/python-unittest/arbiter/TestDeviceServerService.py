@@ -44,6 +44,7 @@ class DeviceServerServiceClient():
         try:
             log.debug('this test begin DS')
             devices = self.client.getDevices()
+            log.debug(len(devices))
             if len(devices)>0:
                 num = 0
                 for i in devices:
@@ -71,7 +72,7 @@ class DeviceServerServiceClient():
             fra = decondeJson['frame-rate']
             Config().writeToConfig(Constants.deviceFrameRate,"frame-rate",fra)
             rate = Config().getFromConfigs(Constants.deviceFrameRate,"rated-frames")
-            percent = Config().getFromConfigs(Constants.deviceFrameRate,"percent")
+            percent = Config().getFromConfigs(Constants.deviceFrameRate,"max-percent")
             max = eval(rate)*(1+eval(percent))
             min = eval(rate)*(1-eval(percent))
             if fra <= max and fra >= min:

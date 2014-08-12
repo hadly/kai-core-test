@@ -38,9 +38,11 @@ class MainClass(object):
         ####1.添加设备过程
         #添加设备-->查看devices表中添加是否正确-->查看ds_device_info表中是否正确-->
         #-->查看ds_device_info表中device是否添加到DS了-->查看channel_device_map表中的对应关系建立的是否正确
+        fail = 0
         log.info("[设置KUP]")
         kupRes = self.testSetKUP()
         if kupRes==-1:
+            fail += 1
             log.info("设置KUP                                                False")
         else:
             log.info("设置KUP                                                OK")
@@ -51,7 +53,6 @@ class MainClass(object):
                 log.info("添加设备                                                                                                                                                      OK")
                 addResult = self.testAddDeviceIsSuccess()
                 if addResult:
-                    fail = 0
                     log.info("设备添加成功，开始常规功能测试,此过程预期几十分到好几十分，请耐心等待：")
                     log.info("[视频直播]")
                     log.info("开始视频直播测试...")
@@ -69,42 +70,48 @@ class MainClass(object):
                         log.info("更新ChunkSize                                                           False")
                     else:
                         log.info("更新ChunkSize                                                           OK")
-                    log.info("[视频存储]")
-                    log.info("开始视频存储测试...")
-                    resNum3 = self.testVideoStore()#-1/1
-                    if resNum3 == -1:
-                        fail += 1
-                        log.info("视频存储                                                                                                                                                                                                      False")
-                    else:
-                        log.info("视频存储                                                                                                                                                                                                      OK")
-                    log.info("[视频事件]")
-                    log.info("开始视频事件测试...")
-                    resNum5 = self.testVideoEvent()#-1/1
-                    if resNum5 == -1:
-                        fail += 1
-                        log.info("视频事件检测                                                                                                                                                                                                 False")
-                    else:
-                        log.info("视频事件检测                                                                                                                                                                                                 OK")
-                    log.info("[照片存储]")
-                    log.info("开始照片存储测试...")
-                    resNum4 = self.testPhotoStore()#-1/1
-                    if resNum4 == -1:
-                        fail += 1
-                        log.info("照片存储                                                                                                                                                                                                        False")
-                    else:
-                        log.info("照片存储                                                                                                                                                                                                        OK")
-                    
-                    log.info("共测试%d步，成功%d步,失败%d步,具体失败情况请查看以上日志！",5,5-fail,fail)
+#                     log.info("[视频存储]")
+#                     log.info("开始视频存储测试...")
+#                     resNum3 = self.testVideoStore()#-1/1
+#                     if resNum3 == -1:
+#                         fail += 1
+#                         log.info("视频存储                                                                                                                                                                                                      False")
+#                     else:
+#                         log.info("视频存储                                                                                                                                                                                                      OK")
+#                     log.info("[视频事件]")
+#                     log.info("开始视频事件测试...")
+#                     resNum5 = self.testVideoEvent()#-1/1
+#                     if resNum5 == -1:
+#                         fail += 1
+#                         log.info("视频事件检测                                                                                                                                                                                                 False")
+#                     else:
+#                         log.info("视频事件检测                                                                                                                                                                                                 OK")
+#                     log.info("[照片存储]")
+#                     log.info("开始照片存储测试...")
+#                     resNum4 = self.testPhotoStore()#-1/1
+#                     if resNum4 == -1:
+#                         fail += 1
+#                         log.info("照片存储                                                                                                                                                                                                        False")
+#                     else:
+#                         log.info("照片存储                                                                                                                                                                                                        OK")
                     log.info("下面将进行更新设备测试，please wait")
                     log.info("[更新设备]")
-                    self.testUpdateDevice()
+                    resNum6 = self.testUpdateDevice()
+                    if resNum6==-1:
+                        fail += 1
                     log.info("常规测试到此结束！感谢您的耐心等待,下面将执行删除，清空测试,以便恢复系统原貌:！")
                     delDeviceRes = self.dms.testDeleteDevice()
                     isSuccess = self.dataVerifier.testIfDeviceDeleted()
                     if delDeviceRes and isSuccess:
                         log.info("删除数据成功，测试即将结束！")
-                    log.info("测试结束，感谢支持！！！")
-         
+                    else:
+                        fail += 1
+                    
+        if fail==0:
+            log.info("Congratulations!!! Your testing is successful.")
+        else:
+            log.info("本次测试有误，请查看上述日志，查找False，以便得到错误信息~")
+        log.info("测试结束，感谢支持！！！") 
     def testSetKUP(self):
         result = self.ccs.testSetCloudServer()
         if result:
@@ -128,27 +135,30 @@ class MainClass(object):
             log.info("更新设备信息成功，现检测更新后设备功能,这个过程可能需要10~20分钟:")
             result = self.testAddDeviceIsSuccess()
             if result:
-                log.info("设备注册到DS                                       OK~")
+                log.info("设备注册到DS                                           OK")
                 if self.testLiveViewAndFrameRate()==1:
-                    log.info("视频直播测试                                                                                                                  OK~")
+                    log.info("视频直播测试                                                                                                                      OK")
                 else:
-                    log.info("视频直播测试                                                                                                                  False~")
+                    log.info("视频直播测试                                                                                                                      False")
                 if self.testVideoStore()==1:
-                    log.info("视频存储测试                                                                                                                 OK~")
+                    log.info("视频存储测试                                                                                                                     OK")
                 else:
-                    log.info("视频存储测试                                                                                                                 False~")
+                    log.info("视频存储测试                                                                                                                     False")
                 if self.testPhotoStore()==1:
-                    log.info("图片存储测试                                                                                                                 OK~")
+                    log.info("图片存储测试                                                                                                                     OK")
                 else:
-                    log.info("图片存储测试                                                                                                                 False~")
+                    log.info("图片存储测试                                                                                                                     False")
                 if self.testVideoEvent()==1:
-                    log.info("视频事件存储                                                                                                                 OK~")
+                    log.info("视频事件存储                                                                                                                     OK")
                 else:
-                    log.info("视频事件存储                                                                                                                 False~")
+                    log.info("视频事件存储                                                                                                                     False")
+                return 1
             else:
                 log.info("设备注册                                                                                                                            False")
+                return -1
         else:
-            log.info("设备更新                                                                                                                    false~")
+            log.info("设备更新                                                                                                                    False")
+            return -1
         
     def testAddDeviceIsSuccess(self):
         ####1.添加设备过程

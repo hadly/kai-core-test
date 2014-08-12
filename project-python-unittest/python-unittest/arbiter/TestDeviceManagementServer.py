@@ -35,7 +35,7 @@ class DeviceManagementServer():
     def testAddDevice(self):
         try:
             log.debug("test add device")
-            deviceDetails = self.getDeviceDetails(addDevice)
+            deviceDetails = self.getDeviceDetails(addDevice,False)
             result = self.client.addDevice(deviceDetails)
             log.debug("add device=%s,result=%s", deviceDetails, result)
             Config().writeToConfig(updateDevice, "device-id", result)
@@ -51,7 +51,7 @@ class DeviceManagementServer():
             return False
     def updateCloud(self):
         Config().writeToConfig(addDevice, "cloud-recording-enabled","true")
-        deviceDetail1 = self.getDeviceDetails(updateDevice)
+        deviceDetail1 = self.getDeviceDetails(updateDevice,False)
         result = self.client.updateDevice(deviceDetail1)
         if result and sum==0:
             time.sleep(40)
@@ -78,11 +78,11 @@ class DeviceManagementServer():
                     log.debug('msg:the next will sleep 2*60*3s~')
                     if sum!=0:
                         Config().writeToConfig(addDevice, "cloud-recording-enabled","true")
-                        self.client.updateDevice(self.getDeviceDetails(updateDevice))
+                        self.client.updateDevice(self.getDeviceDetails(updateDevice,False))
                     sum = sum + 1
                     time.sleep(eval(chunk_size)*60*2)
                     Config().writeToConfig(addDevice, "cloud-recording-enabled","false")
-                    deviceDetail2 = self.getDeviceDetails(updateDevice)
+                    deviceDetail2 = self.getDeviceDetails(updateDevice,False)
                     self.client.updateDevice(deviceDetail2)
                     if sum == 2:
                         Config().writeToConfig(videoStrategy, "liveview-end-time-UTC",time.strftime("%d%m%Y%H%M%S",time.gmtime()))
@@ -103,7 +103,7 @@ class DeviceManagementServer():
             log.debug('The Test Strategy')
             interval = Config().getFromConfigs(addDevice,"snapshot-recording-interval")
             Config().writeToConfig(addDevice, "snapshot-recording-enabled","true")
-            deviceDetail1 = self.getDeviceDetails(updateDevice)
+            deviceDetail1 = self.getDeviceDetails(updateDevice,False)
             result = self.client.updateDevice(deviceDetail1)
             log.debug('result:%s',result)
             if result and sum==0:
@@ -118,12 +118,12 @@ class DeviceManagementServer():
                         Config().writeToConfig(photoStrategy, "photo-begin-time-UTC",time.strftime("%d%m%Y%H%M%S",time.gmtime(timess)))
                     if sum!=0:
                         Config().writeToConfig(addDevice, "snapshot-recording-enabled","true")
-                        self.client.updateDevice(self.getDeviceDetails(updateDevice))
+                        self.client.updateDevice(self.getDeviceDetails(updateDevice,False))
                     sum = sum + 1
                     log.debug('msg:sleep 60s')
                     time.sleep(eval(interval)*12)
                     Config().writeToConfig(addDevice, "snapshot-recording-enabled","false")
-                    deviceDetail2 = self.getDeviceDetails(updateDevice)
+                    deviceDetail2 = self.getDeviceDetails(updateDevice,False)
                     result = self.client.updateDevice(deviceDetail2)
                     if result==True and sum==1:
                         log.debug('msg:sleep 60s')
@@ -157,7 +157,7 @@ class DeviceManagementServer():
     def testUpdateDevice(self):
         try:
             log.debug("test update device")
-            deviceDetails = self.getDeviceDetails(updateDevice)
+            deviceDetails = self.getDeviceDetails(updateDevice,True)
             result = self.client.updateDevice(deviceDetails)
             log.debug("update device=%s,result=%s", deviceDetails, result)
             if result == False:
@@ -172,7 +172,7 @@ class DeviceManagementServer():
     
     
     #here are some auxiliary methods
-    def getDeviceDetails(self, manipulate):
+    def getDeviceDetails(self, manipulate,ishost):
         configuration = Config()
         config = configuration.getConfig()
         if manipulate == addDevice:
@@ -209,8 +209,10 @@ class DeviceManagementServer():
             return device
         elif manipulate == updateDevice:
             deviceId = config.get(updateDevice,'device-id')
-            host = config.get(updateDevice,'host')
-            
+            if ishost==True:
+                host = config.get(updateDevice,'host')
+            else:
+                host = config.get(addDevice,'host')
             name = config.get(addDevice,'name')
             key = config.get(addDevice,'key')
             port = config.get(addDevice,'port')

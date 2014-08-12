@@ -36,7 +36,7 @@ class RecordingServerServiceClient():
             num = 0
             beginTime = Config().getFromConfigs(Constants.videoStrategy, "liveview-begin-time-local")
             chunkSize = Config().getFromConfigs(Constants.configControl,"chunk-size")
-            percent = Config().getFromConfigs(Constants.deviceFrameRate,"rates")
+            percent = Config().getFromConfigs(Constants.deviceFrameRate,"min-percent")
             frame_rate = Config().getFromConfigs(Constants.deviceFrameRate,"frame-rate")
             endTime = Config().getFromConfigs(Constants.videoStrategy, "liveview-end-time-local")
             info = {"storage-type":"video-recording", "stream-type":"http/h264","begin":beginTime,"end":endTime}
