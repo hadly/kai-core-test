@@ -5,6 +5,7 @@ Created on 2014-6-23
 @author: Administrator
 '''
 import logging
+import os
 
 logging.basicConfig(level=logging.DEBUG,
                 format='[%(asctime)s] %(filename)s(%(funcName)s:%(lineno)d)[%(levelname)s] %(message)s',
@@ -20,10 +21,14 @@ logging.basicConfig(level=logging.DEBUG,
 # console.setFormatter(forma)
 # logging.getLogger('').addHandler(console)
 #################################################################################################
+
+
 formatter = logging.Formatter('[%(asctime)s] %(filename)s(%(funcName)s:%(lineno)d)[%(levelname)s] %(message)s')
+logPath=".." + os.path.sep + ".." + os.path.sep + "scripts" + os.path.sep + "log" + os.path.sep
+
 #################################################################################################
 #DEBUG and the above level output
-debug = logging.FileHandler("core-test-debug.log","w")
+debug = logging.FileHandler(logPath + "core-test-debug.log","w")
 debug.setLevel(logging.DEBUG)
 debug.setFormatter(formatter)
 logging.getLogger('').addHandler(debug)
@@ -31,7 +36,7 @@ logging.getLogger('').addHandler(debug)
 
 #################################################################################################
 #INFO and the above level output
-info = logging.FileHandler("core-test-info.log","w")
+info = logging.FileHandler(logPath + "core-test-info.log","w")
 #Will only print INFO and the above level log, such as ERROR log. Will not print DEBUG log.
 info.setLevel(logging.INFO)
 info.setFormatter(formatter)

@@ -4,8 +4,9 @@ Created on 2014-6-19
 @author: Administrator
 '''
 import ConfigParser
+import os
 
-configFile = "configuration.cfg"
+configFile = ".." + os.path.sep + ".." + os.path.sep + "scripts" + os.path.sep + "configuration.cfg"
 class Config():
     config = None
     def __init__(self):
