@@ -3,7 +3,7 @@
 # 1.Backup the database juzz4v2
 # 2.Import the new juzz4v2.sql
 
-cd ../sql
+cd ../sqls
 
 # Backup the tables in DB
 TIME=`date '+%Y%m%d-%H%M%S'`
