@@ -35,17 +35,18 @@ class StreamControlServerClient():
             type = Config().getFromConfigs(Constants.videoStrategy, "type")
             deviceId = Config().getFromConfigs(deleteDevice, "device-id")
             urls = self.getUrlList(sessionId=sessionId,beginTime=None,endTime=None,type=type)
-            log.debug('msg%s',urls)
             if len(urls)!=0:
                 url = urls[0]
             #the returned url is like--rtmp://10.101.0.206:1935/flvplayback/live13-0
                 log.debug("liveview,deviceId=%s, urls=%s, url=%s",deviceId,urls,url)
                 if deviceId not in url:
                     log.debug('liveview url not normal,false')
+                    log.info("直播所得URL地址为:%s,当中无id为%s的设备信息，故False",url,deviceId)
                     return False
                 return True
             else:
                 log.debug('msg: The Get Url is None~~')
+                log.info("直播所得URL地址为空，False")
                 return False
         except Exception, e:
             log.error("liveview Error:%s",e)
@@ -79,6 +80,7 @@ class StreamControlServerClient():
                 return True
             else:
                 log.debug('the result is false')
+                log.info("视频存储所得URL为空,False")
                 return False
         except Exception,e:
             log.error('Error:%s',e)
@@ -97,6 +99,7 @@ class StreamControlServerClient():
                 return True
             else:
                 log.debug('the result is false')
+                log.info("图片存储所得URL的大小为%d,低于预期的大小，False",len(urls))
                 return False
         except Exception,e:
             log.error('Error:%s',e)

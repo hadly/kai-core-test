@@ -1,3 +1,4 @@
+# -*- coding: GBK -*-
 '''
 Created on 2014-7-17
 

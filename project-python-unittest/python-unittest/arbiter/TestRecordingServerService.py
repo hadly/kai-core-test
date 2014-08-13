@@ -1,3 +1,4 @@
+# -*- coding: GBK -*-
 '''
 Created on 2014-7-17
 
@@ -60,11 +61,14 @@ class RecordingServerServiceClient():
                         num += 1
                     else:
                         log.debug('this video from %s to %s is fail',begin,end)
+                        log.info("从%s到%s的视频帧率为%s,与直播所得帧率%s相差较大,False",begin,end,fps,frame_rate)
                 else:
                     log.debug('this video"size from %s to %s is fail',begin,end)
             if num >= 2:
                 return True
-            return False
+            else:
+                log.info("本次视频存储所得4条视频中，共有%d条视频存储成功，与预期不符，False",num)
+                return False
         except Exception,e:
             log.error('Error:%s',e)
             return False
@@ -90,7 +94,9 @@ class RecordingServerServiceClient():
                     log.debug('the test add a picture have an error at %s',start)
             if num >= 18:
                 return True
-            return False
+            else:
+                log.info("本次图片存储测试，共得图片%d张,与预期不符，False",num)
+                return False
         except Exception,e:
             log.error('Error:%s',e)
             return False
@@ -116,6 +122,7 @@ class RecordingServerServiceClient():
                         return True
                     else:
                         log.debug('The result error is relatively large, so the failure')
+                        log.info("本次事件视频存储测试所得视频大小为:%s秒，与10s误差较大，False",dur)
                         return False
                 else:
                     log.debug('Add an event error,have zero value')

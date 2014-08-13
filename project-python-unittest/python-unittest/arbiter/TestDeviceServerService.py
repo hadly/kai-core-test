@@ -42,7 +42,7 @@ class DeviceServerServiceClient():
           make sure this deviceId in DS
         '''
         try:
-            log.debug('this test begin DS')
+            log.debug(self.client)
             devices = self.client.getDevices()
             log.debug(len(devices))
             if len(devices)>0:
@@ -80,7 +80,7 @@ class DeviceServerServiceClient():
                 return True
             else:
                 log.debug('this frame-rate:%s is false~',fra)
-                #由于网络等原因，获得的即时帧率会过低，造成结果错误，以后改正，变为False
+                log.info("直播所得帧率为%s，预期额定帧率为%s，不符合预期，False",fra,rate)
                 return False  
         except Exception,e:
             log.error('testDeviceFrameRate  exception=%s',e)

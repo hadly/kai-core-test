@@ -39,74 +39,76 @@ class MainClass(object):
         #添加设备-->查看devices表中添加是否正确-->查看ds_device_info表中是否正确-->
         #-->查看ds_device_info表中device是否添加到DS了-->查看channel_device_map表中的对应关系建立的是否正确
         fail = 0
-        log.info("[设置KUP]")
+        log.info("[测试点-设置KUP][开始]")
         kupRes = self.testSetKUP()
         if kupRes==-1:
             fail += 1
-            log.info("设置KUP                                                False")
+            log.info("[测试点-设置KUP][结束]                False")
         else:
-            log.info("设置KUP                                                OK")
-            log.info("[添加设备]")
-            log.info("开始添加设备...")
+            log.info("[测试点-设置KUP][结束]                OK")
+            log.info("[测试点-添加设备][开始]")
             result = self.dms.testAddDevice()
             if result:
-                log.info("添加设备                                                                                                                                                      OK")
+                log.info("执行添加设备                                                                  OK")
                 addResult = self.testAddDeviceIsSuccess()
                 if addResult:
-                    log.info("设备添加成功，开始常规功能测试,此过程预期几十分到好几十分，请耐心等待：")
-                    log.info("[视频直播]")
-                    log.info("开始视频直播测试...")
+                    log.info("[测试点-添加设备][结束]                OK")
+                    time.sleep(90)
+                    log.info("[测试点-视频直播][开始]")
                     resNum1 = self.testLiveViewAndFrameRate() #-1/1
                     if resNum1==-1:
                         fail += 1
-                        log.info("视频直播                                                                                                                                                                                        False")
+                        log.info("[测试点-视频直播][结束]                False")
                     else:
-                        log.info("视频直播                                                                                                                                                                                        OK")
-                    log.info("[更新ChunkSize]")
-                    log.info("开始更新ChunkSize测试...")
+                        log.info("[测试点-视频直播][结束]                OK")
+                    log.info("[测试点-更新ChunkSize][开始]")
                     resNum2 = self.testChunkSize() #-1/1
                     if resNum2 == -1:
                         fail += 1
-                        log.info("更新ChunkSize                                                           False")
+                        log.info("[测试点-更新ChunkSize][结束]            False")
                     else:
-                        log.info("更新ChunkSize                                                           OK")
-#                     log.info("[视频存储]")
-#                     log.info("开始视频存储测试...")
-#                     resNum3 = self.testVideoStore()#-1/1
-#                     if resNum3 == -1:
-#                         fail += 1
-#                         log.info("视频存储                                                                                                                                                                                                      False")
-#                     else:
-#                         log.info("视频存储                                                                                                                                                                                                      OK")
-#                     log.info("[视频事件]")
-#                     log.info("开始视频事件测试...")
-#                     resNum5 = self.testVideoEvent()#-1/1
-#                     if resNum5 == -1:
-#                         fail += 1
-#                         log.info("视频事件检测                                                                                                                                                                                                 False")
-#                     else:
-#                         log.info("视频事件检测                                                                                                                                                                                                 OK")
-#                     log.info("[照片存储]")
-#                     log.info("开始照片存储测试...")
-#                     resNum4 = self.testPhotoStore()#-1/1
-#                     if resNum4 == -1:
-#                         fail += 1
-#                         log.info("照片存储                                                                                                                                                                                                        False")
-#                     else:
-#                         log.info("照片存储                                                                                                                                                                                                        OK")
+                        log.info("[测试点-更新ChunkSize][结束]            OK")
+                    log.info("[测试点-视频存储][开始]")
+                    resNum3 = self.testVideoStore()#-1/1
+                    if resNum3 == -1:
+                        fail += 1
+                        log.info("[测试点-视频存储][结束]                False")
+                    else:
+                        log.info("[测试点-视频存储][结束]                OK")
+                    log.info("[测试点-照片存储][开始]")
+                    resNum4 = self.testPhotoStore()#-1/1
+                    if resNum4 == -1:
+                        fail += 1
+                        log.info("[测试点-照片存储][结束]                False")
+                    else:
+                        log.info("[测试点-照片存储][结束]                OK")
+                    log.info("[测试点-视频事件][开始]")
+                    resNum5 = self.testVideoEvent()#-1/1
+                    if resNum5 == -1:
+                        fail += 1
+                        log.info("[测试点-视频事件][结束]                False")
+                    else:
+                        log.info("[测试点-视频事件][结束]                OK")
                     log.info("下面将进行更新设备测试，please wait")
-                    log.info("[更新设备]")
+                    log.info("[测试点-更新设备][开始]")
                     resNum6 = self.testUpdateDevice()
                     if resNum6==-1:
                         fail += 1
-                    log.info("常规测试到此结束！感谢您的耐心等待,下面将执行删除，清空测试,以便恢复系统原貌:！")
+                        log.info("[测试点-更新设备][结束]                False")
+                    else:
+                        log.info("[测试点-更新设备][结束]                OK")
+#                     log.info("常规测试到此结束！感谢您的耐心等待,下面将执行删除，清空测试,以便恢复系统原貌:！")
+                    log.info("[测试点-删除设备][开始]")
                     delDeviceRes = self.dms.testDeleteDevice()
                     isSuccess = self.dataVerifier.testIfDeviceDeleted()
                     if delDeviceRes and isSuccess:
-                        log.info("删除数据成功，测试即将结束！")
+                        log.info("[测试点-删除设备][结束]                OK")
                     else:
                         fail += 1
-                    
+                        log.info("[测试点-删除设备][结束]                False")
+                else:
+                    fail += 1
+                    log.info("[测试点-添加设备][结束]                False")
         if fail==0:
             log.info("Congratulations!!! Your testing is successful.")
         else:
@@ -115,14 +117,14 @@ class MainClass(object):
     def testSetKUP(self):
         result = self.ccs.testSetCloudServer()
         if result:
-            log.info("设置KUPHost                                        OK")
+            log.info("设置KUPHost                OK")
         else:
-            log.info("设置KUPHost                                        False")
+            log.info("设置KUPHost                False")
         dbResult = self.dataVerifier.testConfigurationsHavKUP()
         if dbResult:
-            log.info("KUP是否在Configurations                             OK")
+            log.info("KUP是否在Configurations        OK")
         else:
-            log.info("KUP是否在Configurations                             False")
+            log.info("KUP是否在Configurations        False")
         if result and dbResult:
             return 1
         else:
@@ -132,32 +134,21 @@ class MainClass(object):
         #update Device
         upDeviceRes = self.dms.testUpdateDevice()
         if upDeviceRes:
-            log.info("更新设备信息成功，现检测更新后设备功能,这个过程可能需要10~20分钟:")
+            log.info("[更新设备信息]                OK")
             result = self.testAddDeviceIsSuccess()
             if result:
-                log.info("设备注册到DS                                           OK")
+                log.info("设备注册到                                            OK")
                 if self.testLiveViewAndFrameRate()==1:
-                    log.info("视频直播测试                                                                                                                      OK")
+                    log.info("视频直播测试                                    OK")
+                    return 1
                 else:
-                    log.info("视频直播测试                                                                                                                      False")
-                if self.testVideoStore()==1:
-                    log.info("视频存储测试                                                                                                                     OK")
-                else:
-                    log.info("视频存储测试                                                                                                                     False")
-                if self.testPhotoStore()==1:
-                    log.info("图片存储测试                                                                                                                     OK")
-                else:
-                    log.info("图片存储测试                                                                                                                     False")
-                if self.testVideoEvent()==1:
-                    log.info("视频事件存储                                                                                                                     OK")
-                else:
-                    log.info("视频事件存储                                                                                                                     False")
-                return 1
+                    log.info("视频直播测试                                     False")
+                    return -1
             else:
-                log.info("设备注册                                                                                                                            False")
+                log.info("设备注册                                                 False")
                 return -1
         else:
-            log.info("设备更新                                                                                                                    False")
+            log.info("[更新设备信息]                False")
             return -1
         
     def testAddDeviceIsSuccess(self):
@@ -167,28 +158,29 @@ class MainClass(object):
         
         r = self.dataVerifier.testCorrectnessInDevices()
         if r:
-            log.info("设备在Devices                                            OK")
+            log.info("设备在Devices                OK")
         else:
-            log.info("设备在Devices                                            False")
+            log.info("设备在Devices                False")
         e = self.dataVerifier.testCorrectnessInDsDeviceInfo()
         if e:
-            log.info("设备在ds_device_info                                     OK")
+            log.info("设备在ds_device_info            OK")
         else:
-            log.info("设备在ds_device_info                                     False")
+            log.info("设备在ds_device_info            False")
         s = self.dataVerifier.testIfDeviceAddedToDs()
         if s:
-            log.info("注册设备到DS                                              OK")
+            log.info("注册设备到DS                OK")
         else:
-            log.info("注册设备到DS                                              False")
+            log.info("注册设备到DS                False")
         #dataVerifier.testMatchUpInChannelDeviceMap()
         #测试DS中是否有该设备的存在
+        time.sleep(3)
         global ds
         ds = DeviceServerServiceClient()
         u = ds.testDeviceisinDs()
         if u:
-            log.info("DS中存在该设备                                                                                                                                      OK")
+            log.info("DS中存在该设备                                 OK")
         else:
-            log.info("DS中存在该设备                                                                                                                                      False")
+            log.info("DS中存在该设备                                 False")
         
         if r and e and s and u:
             return True
@@ -202,15 +194,15 @@ class MainClass(object):
         #-->查看stream_session_info里面是否存了session信息-->
         viewRes = self.testLiveView(self.scs, self.dataVerifier)#测试url
         if viewRes:
-            log.info("直播所得URL                                               OK")
+            log.info("直播所得URL                OK")
         else:
-            log.info("直播所得URL                                               False")
+            log.info("直播所得URL                False")
         global ds
         rateRes = ds.testDeviceFrameRate()#测试帧率
         if rateRes:
-            log.info("直播所得帧率                                                                                                                                              OK")
+            log.info("直播所得帧率                                                  OK")
         else:
-            log.info("直播所得帧率                                                                                                                                              False")
+            log.info("直播所得帧率                                                  False")
         if viewRes and rateRes:
             return 1
         else:
@@ -232,26 +224,26 @@ class MainClass(object):
         '''
         result = self.dms.TestVideoStrategy()
         if result:
-            log.info("视频存储策略                                                                                                                                                    OK")
+            log.info("视频存储策略                                          OK")
             time.sleep(15)
             end = self.scs.checkVideoListSize()
             if end:
-                log.info("视频存储所得URL                                            OK")
+                log.info("视频存储所得URL            OK")
             else:
-                log.info("视频存储所得URL                                            False")
+                log.info("视频存储所得URL            False")
             global res
             res = RecordingServerServiceClient()
             ending = res.testGetVideoStreamList()
             if ending:
-                log.info("视频存储获取帧率，时长                                                                                                                           OK")
+                log.info("视频存储获取帧率，时长                            OK")
             else:
-                log.info("视频存储获取帧率，时长                                                                                                                           False")
+                log.info("视频存储获取帧率，时长                            False")
             if ending and end:
                 return 1
             else:
                 return -1
         else:
-            log.info("视频存储策略                                                                                                                                                            False")
+            log.info("视频存储策略                                                            False")
             return -1 
         
     def testPhotoStore(self):
@@ -260,24 +252,24 @@ class MainClass(object):
         '''
         result = self.dms.testPhotoStrategy()
         if result:
-            log.info("照片存储策略                                                                                                                                                            OK")
+            log.info("照片存储策略                                                           OK")
             end = self.scs.checkPhotoUrlSize()
             if end:
-                log.info("照片存储获得URL                                                 OK")
+                log.info("照片存储获得URL                OK")
             else:
-                log.info("照片存储获得URL                                                 False")
+                log.info("照片存储获得URL                False")
             global res
             ending = res.testGetPhotoStreamList()
             if ending:
-                log.info("照片存储所得信息核查                                                                                                                                            OK")
+                log.info("照片存储所得信息核查                                         OK")
             else:
-                log.info("照片存储所得信息核查                                                                                                                                            False")
+                log.info("照片存储所得信息核查                                          False")
             if end and ending:
                 return 1
             else:
                 return -1
         else:
-            log.info("照片存储策略                                                                                                                                                                False")
+            log.info("照片存储策略                                                   False")
             return -1
     def testVideoEvent(self):
         '''
@@ -291,17 +283,17 @@ class MainClass(object):
             self.dms.updateCloud()
             result = self.drs.sendEventToArbiter()
             if result:
-                log.info("发送事件到Arbiter                                              OK")
+                log.info("发送事件到Arbiter                OK")
                 time.sleep(10)
                 global res
                 end = res.testGetEventStreamList()
                 if end:
-                    log.info("事件信息检测                                                                                                                                                OK")
+                    log.info("事件信息检测                                                         OK")
                     sum += 1
                 else:
-                    log.info("事件信息检测                                                                                                                                                False")
+                    log.info("事件信息检测                                                         False")
             else:
-                log.info("发送事件到Arbiter                                              False")
+                log.info("发送事件到Arbiter                False")
             num = num + 1
             if num == 6:
                 isTrue = False
