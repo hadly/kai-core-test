@@ -273,7 +273,7 @@ class MainClass(object):
                 log.info("image recording URL                False")
             
             imageContentOK = rss.testGetPhotoStreamList()
-            if ending:
+            if imageContentOK:
                 log.info("image recording content check                OK")
             else:
                 log.info("image recording content check                False")
