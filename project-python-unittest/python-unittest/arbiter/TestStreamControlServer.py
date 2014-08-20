@@ -41,12 +41,12 @@ class StreamControlServerClient():
                 log.debug("liveview,deviceId=%s, urls=%s, url=%s",deviceId,urls,url)
                 if deviceId not in url:
                     log.debug('liveview url not normal,false')
-                    log.info("直播所得URL地址为:%s,当中无id为%s的设备信息，故False",url,deviceId)
+                    log.info("liveview URL is %s, no deviceId %s found in it. False",url,deviceId)
                     return False
                 return True
             else:
                 log.debug('msg: The Get Url is None~~')
-                log.info("直播所得URL地址为空，False")
+                log.info("liveview URL is empty. False")
                 return False
         except Exception, e:
             log.error("liveview Error:%s",e)
@@ -66,7 +66,7 @@ class StreamControlServerClient():
         except Exception,e:
             log.error('Error:%s',e)
             raise Exception('getUrlList exception!')
-    #here are some auxiliary methods
+    
     def checkVideoListSize(self):
         try:
             sessionId = str(uuid1())
@@ -80,7 +80,7 @@ class StreamControlServerClient():
                 return True
             else:
                 log.debug('the result is false')
-                log.info("视频存储所得URL为空,False")
+                log.info("liveview URL is empty, False")
                 return False
         except Exception,e:
             log.error('Error:%s',e)
@@ -99,7 +99,7 @@ class StreamControlServerClient():
                 return True
             else:
                 log.debug('the result is false')
-                log.info("图片存储所得URL的大小为%d,低于预期的大小，False",len(urls))
+                log.info("image recording URL size is %d, not as expected. False",len(urls))
                 return False
         except Exception,e:
             log.error('Error:%s',e)

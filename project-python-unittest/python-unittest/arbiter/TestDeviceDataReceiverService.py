@@ -35,7 +35,7 @@ class DeviceDataReceiverServiceClient():
         ThriftClient.closeThriftClient()
         
     def sendEventToArbiter(self):
-        log.debug('the tast sendEventToArbiter start!')
+        log.debug('the test sendEventToArbiter start!')
         try:
            devId = Config().getFromConfigs(deleteDevice,"device-id")
            uuId = uuid.uuid1()

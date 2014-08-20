@@ -61,13 +61,13 @@ class RecordingServerServiceClient():
                         num += 1
                     else:
                         log.debug('this video from %s to %s is fail',begin,end)
-                        log.info("从%s到%s的视频帧率为%s,与直播所得帧率%s相差较大,False",begin,end,fps,frame_rate)
+                        log.info("from %s to %s, the video's frame rate is %s, the rate from DS is %s, differ big. False",begin,end,fps,frame_rate)
                 else:
                     log.debug('this video"size from %s to %s is fail',begin,end)
             if num >= 2:
                 return True
             else:
-                log.info("本次视频存储所得4条视频中，共有%d条视频存储成功，与预期不符，False",num)
+                log.info("we recorded four video clips, but only %d are correct, not as expected. False",num)
                 return False
         except Exception,e:
             log.error('Error:%s',e)
@@ -95,7 +95,7 @@ class RecordingServerServiceClient():
             if num >= 18:
                 return True
             else:
-                log.info("本次图片存储测试，共得图片%d张,与预期不符，False",num)
+                log.info("we get %d images, not as expected. False",num)
                 return False
         except Exception,e:
             log.error('Error:%s',e)
@@ -122,7 +122,7 @@ class RecordingServerServiceClient():
                         return True
                     else:
                         log.debug('The result error is relatively large, so the failure')
-                        log.info("本次事件视频存储测试所得视频大小为:%s秒，与10s误差较大，False",dur)
+                        log.info("event video duration is %s seconds, rather than the expected 10 seconds, differ big. False",dur)
                         return False
                 else:
                     log.debug('Add an event error,have zero value')

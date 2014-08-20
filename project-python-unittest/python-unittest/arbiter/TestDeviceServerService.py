@@ -80,7 +80,7 @@ class DeviceServerServiceClient():
                 return True
             else:
                 log.debug('this frame-rate:%s is false~',fra)
-                log.info("直播所得帧率为%s，预期额定帧率为%s，不符合预期，False",fra,rate)
+                log.info("the frame rate from DS is %s, expected rate is %s, something is wrong. False",fra,rate)
                 return False  
         except Exception,e:
             log.error('testDeviceFrameRate  exception=%s',e)
