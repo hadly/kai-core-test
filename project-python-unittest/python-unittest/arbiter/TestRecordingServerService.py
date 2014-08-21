@@ -6,7 +6,7 @@ Created on 2014-7-17
 '''
 from arbiter.utils.MysqlOperator import Mysql
 from arbiter.utils.ConfigurationReader import Config
-from arbiter.utils import ThriftClient, Constants,MysqlConnector
+from arbiter.utils import ThriftClient, Constants
 from RecordingCommsAPI import RecordingServerService
 # from arbiter.utils.Constants import deleteDevice,streamControl
 import logging
@@ -18,9 +18,8 @@ class RecordingServerServiceClient():
     con = None
     def __init__(self):
         try:
-            self.con = MysqlConnector.getConnection()
             self.deviceId = Config().getFromConfigs(Constants.deleteDevice,"device-id")
-            rsServerInfo = Mysql(self.con).getRsServerInfo(self.deviceId)
+            rsServerInfo = Mysql().getRsServerInfo(self.deviceId)
             if len(rsServerInfo)!=0:
                 host = rsServerInfo[0][1]
                 port = rsServerInfo[0][2]
@@ -31,7 +30,25 @@ class RecordingServerServiceClient():
     
     def tearDown(self):
         ThriftClient.closeThriftClient()
-        
+        pass
+    
+    def getVideoStreamList_FirstValue(self,beginTime,endTime):
+        try:
+            info = {"storage-type":"video-recording", "stream-type":"http/h264","begin":beginTime,"end":endTime}
+            streamInfo = json.dumps(info)
+#             log.debug(streamInfo) 
+            streamList = self.client.getStreamList((int)(self.deviceId),0,streamInfo)
+            log.debug(streamList)
+            if len(streamList) > 0:
+                log.debug('The first value : %s',streamList[0])
+                strJson = json.loads(streamList[0])
+                return strJson["from"]  #begin time first video
+            else:
+                return None
+        except Exception,e:
+            log.error('GetFirstValue from %s to %s error:%s',beginTime,endTime,e)
+            raise Exception(e)
+    
     def testGetVideoStreamList(self):
         try:
             num = 0

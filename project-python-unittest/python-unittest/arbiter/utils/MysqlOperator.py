@@ -10,7 +10,7 @@ from arbiter.utils import MysqlConnector
 class Mysql(object):
     
     con = None
-    def __init__(self, mysqlConnection):
+    def __init__(self):
         '''
         Constructor
         '''
@@ -42,7 +42,11 @@ class Mysql(object):
         sql = "select * from rs_server_info where id=(select server_id from rs_device_info where id=%s) ;"
         result = self.executeSql(sql,deviceId)
         return result
-    
+    def getStreamSessionInfoBySessionId(self,sessionId):
+        sql = "select * from stream_session_info where id=%s"
+        result = self.executeSql(sql,sessionId)
+        return result
+        pass
     def cleanDeviceInfo(self, deviceId):
         cur =self.con.cursor()
         sql1 = "delete from device_events where device_id=%s ;"

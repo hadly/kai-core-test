@@ -8,9 +8,11 @@ from CoreServices import StreamControlService
 from arbiter.utils.ConfigurationReader import Config
 from arbiter.utils import ThriftClient, Constants
 from arbiter.utils.Constants import arbiter,streamControl,deleteDevice
+from arbiter.utils.MysqlOperator import Mysql
 from arbiter.utils import LogUtil
 import logging
 from uuid import uuid1
+import time
 
 log = logging.getLogger("TestStreamControlServer")
 class StreamControlServerClient():
@@ -66,7 +68,39 @@ class StreamControlServerClient():
         except Exception,e:
             log.error('Error:%s',e)
             raise Exception('getUrlList exception!')
-    
+
+    def controlSession(self):
+        try:
+            sessionId = str(uuid1())
+            type = Config().getFromConfigs(Constants.videoStrategy, "type")
+            self.getUrlList(sessionId, None, None, type)
+            time.sleep(50)
+            result = Mysql().getStreamSessionInfoBySessionId(sessionId)
+            if len(result) > 0:
+                self.client.keepStreamSessionAlive(sessionId,120,None)
+            else:
+                log.info("sessionId : %s not in stream_session_info",sessionId)
+                return -1
+            time.sleep(65)
+            keepresult = Mysql().getStreamSessionInfoBySessionId(sessionId)
+            if len(keepresult) > 0:
+                log.info("keepSession                OK")
+                self.client.endStreamSession(sessionId)
+                time.sleep(5)
+                endresult = Mysql().getStreamSessionInfoBySessionId(sessionId)
+                if len(endresult) == 0:
+                    log.info("endSession                OK")
+                    return 1
+                else:
+                    log.info("endSession                False")
+                    return -1
+            else:
+                log.info("keepSession                False")
+                return -1
+        except Exception,e:
+            log.error('Error:%s',e)
+            return -1
+
     def checkVideoListSize(self):
         try:
             sessionId = str(uuid1())

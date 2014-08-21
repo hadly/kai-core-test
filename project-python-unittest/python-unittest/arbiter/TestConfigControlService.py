@@ -8,7 +8,7 @@
 from CoreServices import ConfigControlService
 from arbiter.utils.ConfigurationReader import Config
 from arbiter.utils import ThriftClient, Constants
-from arbiter.utils.Constants import arbiter,configControl
+from arbiter.utils.Constants import arbiter,configControl,deleteDevice
 import logging
 
 log = logging.getLogger('testConfigControlService')
@@ -41,7 +41,7 @@ class ConfigControlServiceClient():
         '''
         try:
             log.debug('test setChunkSize')
-            size = Config().getFromConfigs(Constants.configControl,"chunk-size")
+            size = Config().getFromConfigs(configControl,"chunk-size")
 #             print size
             result = self.client.setChunkSize((int)(size))
 #             print result
@@ -54,4 +54,13 @@ class ConfigControlServiceClient():
             log.error("testSetChunkSize error:%s",e)
             return False
 #             raise Exception("testSetChunkSize exception")
-                
+    def testSetStreamLimit(self,size):
+        try:
+            deviceId = Config().getFromConfigs(deleteDevice,"device-id")
+            result = self.client.setStreamStorageLimit(deviceId,"0",size)
+            log.debug('testSetStreamLimit result : %s',result)
+            return result
+        except Exception,e:
+            log.error('error : %s',e)
+            return None
+                    

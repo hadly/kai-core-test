@@ -11,6 +11,7 @@ from arbiter.TestConfigControlService import ConfigControlServiceClient
 from arbiter.TestDeviceDataReceiverService import DeviceDataReceiverServiceClient
 from arbiter.TestRecordingServerService import RecordingServerServiceClient
 from arbiter.TestDeviceServerService import DeviceServerServiceClient
+from arbiter.TestDeviceControlService import DeviceControlServiceClient
 import logging
 import sys
 import time
@@ -19,7 +20,6 @@ class MainClass(object):
     '''
     classdocs
     '''
-    
     def __init__(self):
         '''
         Constructor
@@ -30,9 +30,8 @@ class MainClass(object):
         self.scs = StreamControlServerClient()
         self.ccs = ConfigControlServiceClient()
         self.drs = DeviceDataReceiverServiceClient()
-        self.res = RecordingServerServiceClient()
+        self.dcs = DeviceControlServiceClient()
         log.debug('******** Main init end**********')
-        
     def beginTesting(self):
         '''
         Note:在这个函数里面添加要进行的测试方法;
@@ -54,9 +53,7 @@ class MainClass(object):
                 addResult = self.testIsAddDeviceSuccess()
                 if addResult:
                     log.info("[TP-Add Device][end]                OK")
-                    time.sleep(90)
-                    
-                    
+#                    time.sleep(90)
                     log.info("[TP-Liveview][begin]")
                     liveviewRes = self.testLiveViewAndFrameRate() #-1/1
                     if liveviewRes==-1:
@@ -64,17 +61,35 @@ class MainClass(object):
                         log.info("[TP-Liveview][end]                False")
                     else:
                         log.info("[TP-Liveview][end]                OK")
-                    
-                    
-                    log.info("[TP-Update ChunkSize][begin]")
+                    log.info("[TP-Device Online][begin]")
+                    getDeviceStatus = self.testGetDeviceStatus()
+                    if getDeviceStatus == -1:
+                        fail += 1
+                        log.info("[TP-Device Online][end]                False")
+                    else:
+                        log.info("[TP-Device Online][end]                OK")
+                    log.info("[TP-Handle Session][begin]")
+                    sessionResult = self.scs.controlSession()
+                    if sessionResult == -1:
+                        fail += 1
+                        log.info("[TP-Handle Session][end]            False")
+                    else:
+                        log.info("[TP-Handle Session][end]            OK")
+                    log.info("[TP-UpdateChunkSize][begin]")
                     chunksizeResult = self.testChunkSize() #-1/1
                     if chunksizeResult == -1:
                         fail += 1
                         log.info("[TP-Update ChunkSize][end]            False")
                     else:
                         log.info("[TP-Update ChunkSize][end]            OK")
-                    
-                    
+                    log.info("[TP-Set Storage Space][begin]")
+                    if self.testStreamStorageLimitZero() == 1:
+                        if self.testStreamStorageLimitOther() == 1:
+                            log.info("[TP-Set Storage Space][end]            OK")
+                        else:
+                            log.info("[TP-Set Storage Space][end]            False")
+                    else:
+                        log.info("[TP-Set Storage Space][end]            False")
                     log.info("[TP-Video Recording][begin]")
                     videoStorageRes = self.testVideoStore()#-1/1
                     if videoStorageRes == -1:
@@ -82,8 +97,6 @@ class MainClass(object):
                         log.info("[TP-Video Recording][end]                False")
                     else:
                         log.info("[TP-Video Recording][end]                OK")
-                    
-                    
                     log.info("[TP-Image Recording][begin]")
                     imageStorageRes = self.testPhotoStore()#-1/1
                     if imageStorageRes == -1:
@@ -92,7 +105,6 @@ class MainClass(object):
                     else:
                         log.info("[TP-Image Recording][end]                OK")
                     
-                    
                     log.info("[TP-Event Video Recording][begin]")
                     eventVideoRes = self.testVideoEvent()#-1/1
                     if eventVideoRes == -1:
@@ -100,18 +112,14 @@ class MainClass(object):
                         log.info("[TP-Event Video Recording][end]                False")
                     else:
                         log.info("[TP-Event Video Recording][end]                OK")
-                    
-                    
-                    log.info("we will test updateDevice, please wait")
+                    log.info("we will test updateDevice，please wait")
                     log.info("[TP-Update Device][begin]")
                     updateDeviceRes = self.testUpdateDevice()
                     if updateDeviceRes==-1:
                         fail += 1
                         log.info("[TP-Update Device][end]                False")
                     else:
-                        log.info("[TP-Update Device][end]                OK")
-#                     log.info("常规测试到此结束！感谢您的耐心等待,下面将执行删除，清空测试,以便恢复系统原貌:！")
-                    
+                        log.info("[TP-Update Device][end]                OK")                  
                     log.info("[TP-Delete Device][begin]")
                     delDeviceRes = self.dms.testDeleteDevice()
                     isSuccess = self.dataVerifier.testIfDeviceDeleted()
@@ -184,13 +192,11 @@ class MainClass(object):
             log.info("is device added to a DS                OK")
         else:
             log.info("is device added to a DS                False")
-        #dataVerifier.testMatchUpInChannelDeviceMap()
-        
+        #dataVerifier.testMatchUpInChannelDeviceMap()        
         #is this device in DS by calling getDevices()
         time.sleep(3)
         global ds 
         ds = DeviceServerServiceClient()
-        
         isInDS = ds.testDeviceisinDs()
         if isInDS:
             log.info("does device exists in DS                OK")
@@ -207,8 +213,7 @@ class MainClass(object):
         if viewRes:
             log.info("liveview URL                OK")
         else:
-            log.info("liveview URL                False")
-        
+            log.info("liveview URL                False")        
         rateRes = ds.testDeviceFrameRate()#测试帧率
         if rateRes:
             log.info("liveview frame rate                OK")
@@ -218,6 +223,94 @@ class MainClass(object):
             return 1
         else:
             return -1
+        
+    def testGetDeviceStatus(self):
+        result = self.dcs.judgeDeviceStatus()
+        if result == "online":
+            log.info("Device Online				OK")
+            return 1
+        else:
+            log.info("Device Online				False")
+            return -1
+        
+    def testStreamStorageLimitZero(self):
+        global rss
+        rss = RecordingServerServiceClient()
+        if self.dms.updateCloud():
+            begin_local_time = time.strftime("%d%m%Y%H%M%S",time.localtime(time.time()))
+            log.debug('begin_local_time : %s',begin_local_time)
+            time.sleep(40)
+            result = self.streamStorageLimitStrategy(0, 120, 180, begin_local_time,0)
+            if result:
+                return 1
+            else:
+                return -1
+        else:
+            return -1
+    
+    def testStreamStorageLimitOther(self):
+        if self.dms.updateCloud():
+            begin_local_time = time.strftime("%d%m%Y%H%M%S",time.localtime(time.time()))
+            log.debug('begin_local_time : %s',begin_local_time)
+            time.sleep(40)
+            one_result = self.streamStorageLimitStrategy(10, 130, 200, begin_local_time,1)
+            log.debug('message: next will wait time 330s for test 10M')
+            two_result = self.streamStorageLimitStrategy(30, 0, 150, begin_local_time,2)
+            log.debug('message:next will wait time  150s for test 30M')
+            if one_result and two_result:
+                return 1
+            else:
+                return -1
+        else:
+            return -1
+    
+    def streamStorageLimitStrategy(self,size,onesleeptime,twosleeptime,begin_local_time,number):
+        result = self.ccs.testSetStreamLimit(size)
+        log.debug(result)
+        if result:
+            log.info('set storage space is %dM				OK',size)
+            time.sleep(onesleeptime)
+            end_local_time = time.strftime("%d%m%Y%H%M%S",time.localtime(time.time()))
+            log.debug('end_local_time : %s',end_local_time)
+            if size == 0:
+                if self.dms.closeVideoRecord():
+                    log.debug('close video time :')
+                    time.sleep(twosleeptime)
+                    log.debug('RecordingServerService : %s',rss)
+                    if rss is None:
+                        raise Exception("RecordingServerService NoneType")
+                    zero_first_video_begin = rss.getVideoStreamList_FirstValue(begin_local_time,end_local_time)
+                    if zero_first_video_begin is None:
+                        log.info('test storage space is 0M				OK')
+                        return True
+                    else:
+                        log.info('test storage space is 0M				False')
+                        return False
+                else:
+                    return False
+            first_video_begin = rss.getVideoStreamList_FirstValue(begin_local_time,end_local_time)
+            log.debug('first_video_begin :%s',first_video_begin)
+            time.sleep(twosleeptime)
+            end_local_time = time.strftime("%d%m%Y%H%M%S",time.localtime(time.time()))
+            second_video_begin = rss.getVideoStreamList_FirstValue(begin_local_time,end_local_time)
+            log.debug('second_video_begin : %s',second_video_begin)
+            if number == 1 and first_video_begin != second_video_begin:
+                log.info('test storage space is %sM				OK',size)
+                return True
+            elif number == 1 and first_video_begin == second_video_begin:
+                log.info('test storage space is %sM				False',size)
+                return False
+            if number == 2 and first_video_begin == second_video_begin:
+                log.info('test storage space is %sM                OK',size)
+                self.dms.closeVideoRecord()
+                return True
+            elif number == 2 and first_video_begin != second_video_begin:
+                log.info('test storage space is %sM                False',size)
+                return False
+        else:
+            log.info('set storage space is %dM                 False',size)
+            return False
+
     
     def testChunkSize(self):
         '''
@@ -243,8 +336,8 @@ class MainClass(object):
             else:
                 log.info("video recording URL            False")
             
-            global rss
-            rss = RecordingServerServiceClient()
+#             global rss
+#             rss = RecordingServerServiceClient()
             videoContentOK = rss.testGetVideoStreamList()
             if videoContentOK:
                 log.info("video recording frateRate/duration                OK")
@@ -273,7 +366,7 @@ class MainClass(object):
                 log.info("image recording URL                False")
             
             imageContentOK = rss.testGetPhotoStreamList()
-            if ending:
+            if imageContentOK:
                 log.info("image recording content check                OK")
             else:
                 log.info("image recording content check                False")
@@ -284,7 +377,6 @@ class MainClass(object):
         else:
             log.info("execute image recording strategy                False")
             return -1
-        
     def testVideoEvent(self):
         '''
           test video-event,cycles time is 6
@@ -292,22 +384,23 @@ class MainClass(object):
         isTrue = True
         num = 0
         sum = 1
+        upres = self.dms.updateCloud()
+        if upres:
+            time.sleep(40)
         while isTrue:
             log.info('the %dnd times event video recording...',num)
-            self.dms.updateCloud()
             result = self.drs.sendEventToArbiter()
             if result:
                 log.info("send event video to Arbiter                OK")
                 time.sleep(10)
-                end = rsClient.testGetEventStreamList()
-                if end:
+                eventContentOK = rss.testGetEventStreamList()
+                if eventContentOK:
                     log.info("event video content check                OK")
                     sum += 1
                 else:
                     log.info("event video content check                False")
             else:
                 log.info("send event video to Arbiter                False")
-            
             num = num + 1
             if num == 6:
                 isTrue = False
@@ -319,14 +412,14 @@ class MainClass(object):
     def testLiveView(self, scs, dataVerifier):
         # check the if the liveview URL is correct 
         urlResult = scs.testLiveViewResultUrl()
-        addRes = dataVerifier.testIfAddedToStreamSessionInfo()
-        delRes = dataVerifier.testIfDelFromStreamSessionInfo()
-        if urlResult and addRes and delRes:
+        addResult = dataVerifier.testIfAddedToStreamSessionInfo()
+        delResult = dataVerifier.testIfDelFromStreamSessionInfo()
+        if urlResult and addResult and delResult:
             return True
         else:
             return False
     
-    def  deleteDeviceAndCleanData(self):
+    def deleteDeviceAndCleanData(self):
         try:
             DeviceManagementServer().testDeleteDevice()
         except Exception,e:

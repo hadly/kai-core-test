@@ -6,7 +6,7 @@ Created on 2014-7-16
 '''
 from arbiter.utils.MysqlOperator import Mysql
 from arbiter.utils.ConfigurationReader import Config
-from arbiter.utils import ThriftClient, Constants,MysqlConnector
+from arbiter.utils import ThriftClient, Constants
 from DeviceCommsAPI import DeviceServerService
 from arbiter.utils.Constants import deleteDevice
 import logging
@@ -19,9 +19,8 @@ class DeviceServerServiceClient():
     def __init__(self):
         try:
             log.debug('************DeviceServerServiceClient init come in*******************')
-            self.con = MysqlConnector.getConnection()
             self.deviceId = Config().getFromConfigs(deleteDevice,"device-id")
-            dsServerInfo = Mysql(self.con).getDsServerInfo(self.deviceId)
+            dsServerInfo = Mysql().getDsServerInfo(self.deviceId)
             if len(dsServerInfo)!=0:
                 host = dsServerInfo[0][2]
 #                 print host
@@ -50,6 +49,7 @@ class DeviceServerServiceClient():
                 for i in devices:
                     if i-eval(self.deviceId)==0:
                         num = num + 1
+                log.debug('the device number in DS : %d',num)
                 if num > 0:
                     log.debug('this device in DS')
                     return True

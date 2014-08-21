@@ -51,19 +51,30 @@ class DeviceManagementServer():
             log.error('Error:%s',e)
             return False
     def updateCloud(self):
+        '''
+           start video  
+        '''
         Config().writeToConfig(addDevice, "cloud-recording-enabled","true")
-        deviceDetail1 = self.getDeviceDetails(updateDevice,False)
-        result = self.client.updateDevice(deviceDetail1)
-        if result and sum==0:
-            time.sleep(40)
+        deviceDetail = self.getDeviceDetails(updateDevice,False)
+        result = self.client.updateDevice(deviceDetail)
+        log.debug("open the video store result : %s",result)
+        return result
+    
+    def closeVideoRecord(self):
+        Config().writeToConfig(addDevice, "cloud-recording-enabled","false")
+        deviceDetail = self.getDeviceDetails(updateDevice,False)
+        result = self.client.updateDevice(deviceDetail)
+        log.debug("close the video store result : %s",result)
         return result
     
     def TestVideoStrategy(self):
         sum = 0
         try:
-            log.debug('The Test Strategy')
+            log.debug('Test Video Strategy')
             chunk_size = Config().getFromConfigs(configControl,"chunk-size")
             result = self.updateCloud()
+            if result:
+                time.sleep(40)
             istrue = True
             while istrue:
                 time_mrt = time.time()
@@ -89,8 +100,9 @@ class DeviceManagementServer():
                         Config().writeToConfig(videoStrategy, "liveview-end-time-UTC",time.strftime("%d%m%Y%H%M%S",time.gmtime()))
                         Config().writeToConfig(videoStrategy, "liveview-end-time-local",time.strftime("%d%m%Y%H%M%S",time.localtime()))
                         istrue = False
-                    time.sleep(eval(chunk_size)*30)
-                    log.debug('msg:one cycle end time')
+                    if sum == 1:
+                        time.sleep(eval(chunk_size)*30)
+                    log.debug('the %d cycle end',sum)
             log.debug('TestVideoStrategy success!')
             return True
         except Exception,e:
@@ -101,7 +113,7 @@ class DeviceManagementServer():
     def testPhotoStrategy(self):
         sum = 0
         try:
-            log.debug('The Test Strategy')
+            log.debug('Test Image Strategy')
             interval = Config().getFromConfigs(addDevice,"snapshot-recording-interval")
             Config().writeToConfig(addDevice, "snapshot-recording-enabled","true")
             deviceDetail1 = self.getDeviceDetails(updateDevice,False)

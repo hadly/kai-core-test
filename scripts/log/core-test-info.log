@@ -1,0 +1,41 @@
+[2014-08-21 13:37:45,073]   [TP-Set KUP Address][begin]
+[2014-08-21 13:37:45,095]   set KUP address                OK
+[2014-08-21 13:37:45,618]   is KUP address in table Configurations                OK
+[2014-08-21 13:37:45,618]   [TP-Set KUP Address][end]                OK
+[2014-08-21 13:37:45,618]   [TP-Add Device][begin]
+[2014-08-21 13:37:45,803]   call addDevice                OK
+[2014-08-21 13:37:45,858]   is device in table Devices                OK
+[2014-08-21 13:37:45,891]   is device in table ds_device_info            OK
+[2014-08-21 13:38:25,937]   is device added to a DS                OK
+[2014-08-21 13:38:28,980]   does device exists in DS                OK
+[2014-08-21 13:38:28,980]   [TP-Add Device][end]                OK
+[2014-08-21 13:38:28,980]   [TP-Liveview][begin]
+[2014-08-21 13:40:39,405]   liveview URL                OK
+[2014-08-21 13:40:39,522]   liveview frame rate                OK
+[2014-08-21 13:40:39,522]   [TP-Liveview][end]                OK
+[2014-08-21 13:40:39,523]   [TP-Device Online][begin]
+[2014-08-21 13:40:39,552]   Device Online				OK
+[2014-08-21 13:40:39,552]   [TP-Device Online][end]                OK
+[2014-08-21 13:40:39,552]   [TP-Handle Session][begin]
+[2014-08-21 13:42:34,684]   keepSession                OK
+[2014-08-21 13:42:39,799]   endSession                OK
+[2014-08-21 13:42:39,799]   [TP-Handle Session][end]            OK
+[2014-08-21 13:42:39,801]   [TP-UpdateChunkSize][begin]
+[2014-08-21 13:42:39,826]   [TP-Update ChunkSize][end]            OK
+[2014-08-21 13:42:39,826]   [TP-Set Storage Space][begin]
+[2014-08-21 13:43:19,926]   set storage space is 0M				OK
+[2014-08-21 13:48:20,000]   test storage space is 0M				OK
+[2014-08-21 13:49:00,107]   set storage space is 10M				OK
+[2014-08-21 13:54:30,121]   test storage space is 10M				OK
+[2014-08-21 13:54:30,148]   set storage space is 30M				OK
+[2014-08-21 13:57:00,167]   test storage space is 30M				False
+[2014-08-21 13:57:00,168]   [TP-Set Storage Space][end]            False
+[2014-08-21 13:57:00,168]   [TP-Video Recording][begin]
+[2014-08-21 14:09:00,230]   execute video recording strategy                OK
+[2014-08-21 14:09:15,273]   video recording URL            OK
+[2014-08-21 14:09:15,293]   video recording frateRate/duration                OK
+[2014-08-21 14:09:15,293]   [TP-Video Recording][end]                OK
+[2014-08-21 14:09:15,295]   [TP-Image Recording][begin]
+[2014-08-21 14:13:05,265]   execute image recording strategy               OK
+[2014-08-21 14:13:05,289]   image recording URL                OK
+[2014-08-21 14:13:05,305]   exception, global name 'ending' is not defined

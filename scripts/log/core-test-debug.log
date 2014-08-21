@@ -1,0 +1,170 @@
+[2014-08-21 13:37:44,961] main.py(__init__:27)[DEBUG] ******** Main init begin**********
+[2014-08-21 13:37:45,073] main.py(__init__:34)[DEBUG] ******** Main init end**********
+[2014-08-21 13:37:45,073] main.py(beginTesting:41)[INFO] [TP-Set KUP Address][begin]
+[2014-08-21 13:37:45,095] TestConfigControlService.py(testSetCloudServer:33)[DEBUG] result:True
+[2014-08-21 13:37:45,095] main.py(testSetKUP:143)[INFO] set KUP address                OK
+[2014-08-21 13:37:45,617] TestMysqlDataVerifier.py(testConfigurationsHavKUP:232)[DEBUG] msg:KUP add success
+[2014-08-21 13:37:45,618] main.py(testSetKUP:148)[INFO] is KUP address in table Configurations                OK
+[2014-08-21 13:37:45,618] main.py(beginTesting:47)[INFO] [TP-Set KUP Address][end]                OK
+[2014-08-21 13:37:45,618] main.py(beginTesting:49)[INFO] [TP-Add Device][begin]
+[2014-08-21 13:37:45,618] TestDeviceManagementServer.py(testAddDevice:38)[DEBUG] test add device
+[2014-08-21 13:37:45,796] TestDeviceManagementServer.py(testAddDevice:41)[DEBUG] add device=DeviceDetails(alertFlag=None, eventSettings=None, functionalityId=None, alive=None, lng='116', id='', accountId='3', currentPositionId=None, port='80', liveview=None, snapshotRecordingInterval='5', deviceServerUrls='', modelId='111', host='192.168.200.110', key='', address='Beijing', lat='40', password='', name='MegaPixel', snapshotRecordingEnabled='false', cloudRecordingEnabled='true', action=None, login='admin', statusId=None),result=1
+[2014-08-21 13:37:45,803] TestDeviceManagementServer.py(testAddDevice:45)[DEBUG] add device success
+[2014-08-21 13:37:45,803] main.py(beginTesting:52)[INFO] call addDevice                OK
+[2014-08-21 13:37:45,805] TestMysqlDataVerifier.py(testCorrectnessInDevices:33)[DEBUG] test if device added to table devices
+[2014-08-21 13:37:45,858] TestMysqlDataVerifier.py(testCorrectnessInDevices:36)[DEBUG] devices=((1L, 'MegaPixel', 'core-generated-1', '192.168.200.110', 40L, 40L, 111L, None, '{"port":"80","login":"admin","password":"","address":"Beijing"}', '', 0L, 5L, 1L),)
+[2014-08-21 13:37:45,858] TestMysqlDataVerifier.py(testCorrectnessInDevices:39)[DEBUG] device name in devices=MegaPixel
+[2014-08-21 13:37:45,858] TestMysqlDataVerifier.py(testCorrectnessInDevices:44)[DEBUG] added to devices correctly/success
+[2014-08-21 13:37:45,858] main.py(testIsAddDeviceSuccess:180)[INFO] is device in table Devices                OK
+[2014-08-21 13:37:45,858] TestMysqlDataVerifier.py(testCorrectnessInDsDeviceInfo:55)[DEBUG] test if device added to ds_device_info
+[2014-08-21 13:37:45,891] TestMysqlDataVerifier.py(testCorrectnessInDsDeviceInfo:61)[DEBUG] ds_device_info=((1L, 'core-generated-1', '{"num-channels":1,"port":"80","servertype":"amtk-ipc","cloud_recording_enabled":1,"username":"admin","host":"192.168.200.110","snapshot_recording_interval":5,"address":"Beijing","name":"MegaPixel","device_url":"http://#{device:host}:#{device:misc:port}/","password":"","snapshot_recording_enabled":0}', 0, -1L),)
+[2014-08-21 13:37:45,891] TestMysqlDataVerifier.py(testCorrectnessInDsDeviceInfo:67)[DEBUG] device name in ds_device_info={"num-channels":1,"port":"80","servertype":"amtk-ipc","cloud_recording_enabled":1,"username":"admin","host":"192.168.200.110","snapshot_recording_interval":5,"address":"Beijing","name":"MegaPixel","device_url":"http://#{device:host}:#{device:misc:port}/","password":"","snapshot_recording_enabled":0}
+[2014-08-21 13:37:45,891] TestMysqlDataVerifier.py(testCorrectnessInDsDeviceInfo:68)[DEBUG] added to dsDeviceInfo correctly/success!
+[2014-08-21 13:37:45,891] main.py(testIsAddDeviceSuccess:186)[INFO] is device in table ds_device_info            OK
+[2014-08-21 13:37:45,891] TestMysqlDataVerifier.py(testIfDeviceAddedToDs:82)[DEBUG] test if device added to a DS
+[2014-08-21 13:37:45,891] TestMysqlDataVerifier.py(testIfDeviceAddedToDs:84)[DEBUG] sleep 40 seconds to wait DS register
+[2014-08-21 13:38:25,937] TestMysqlDataVerifier.py(testIfDeviceAddedToDs:90)[DEBUG] ds_device_info=((1L, 'core-generated-1', '{"num-channels":1,"port":"80","servertype":"amtk-ipc","cloud_recording_enabled":1,"username":"admin","host":"192.168.200.110","snapshot_recording_interval":5,"address":"Beijing","name":"MegaPixel","device_url":"http://#{device:host}:#{device:misc:port}/","password":"","snapshot_recording_enabled":0}', 2, 21L),)
+[2014-08-21 13:38:25,937] main.py(testIsAddDeviceSuccess:192)[INFO] is device added to a DS                OK
+[2014-08-21 13:38:28,937] TestDeviceServerService.py(__init__:21)[DEBUG] ************DeviceServerServiceClient init come in*******************
+[2014-08-21 13:38:28,974] TestDeviceServerService.py(__init__:31)[DEBUG] ************DeviceServerServiceClient init End*******************
+[2014-08-21 13:38:28,976] TestDeviceServerService.py(testDeviceisinDs:44)[DEBUG] <DeviceCommsAPI.DeviceServerService.Client instance at 0x02AB7AD0>
+[2014-08-21 13:38:28,977] TestDeviceServerService.py(testDeviceisinDs:46)[DEBUG] 1
+[2014-08-21 13:38:28,979] TestDeviceServerService.py(testDeviceisinDs:52)[DEBUG] the device number in DS : 1
+[2014-08-21 13:38:28,979] TestDeviceServerService.py(testDeviceisinDs:54)[DEBUG] this device in DS
+[2014-08-21 13:38:28,980] main.py(testIsAddDeviceSuccess:202)[INFO] does device exists in DS                OK
+[2014-08-21 13:38:28,980] main.py(beginTesting:55)[INFO] [TP-Add Device][end]                OK
+[2014-08-21 13:38:28,980] main.py(beginTesting:57)[INFO] [TP-Liveview][begin]
+[2014-08-21 13:38:28,980] TestStreamControlServer.py(testLiveViewResultUrl:35)[DEBUG] test begin liveview
+[2014-08-21 13:38:29,311] TestStreamControlServer.py(getUrlList:66)[DEBUG] ['rtmp://192.168.200.18:1935/flvplayback/live1-0']
+[2014-08-21 13:38:29,311] TestStreamControlServer.py(testLiveViewResultUrl:43)[DEBUG] liveview,deviceId=1, urls=['rtmp://192.168.200.18:1935/flvplayback/live1-0'], url=rtmp://192.168.200.18:1935/flvplayback/live1-0
+[2014-08-21 13:38:29,328] TestMysqlDataVerifier.py(testIfAddedToStreamSessionInfo:200)[DEBUG] streamSessionInfo=(('6124124f-28f5-11e4-b7ac-005056c00008', 'rtmp/h264', 120000L, 1L, 0, 1408599509294L, 0L, 0L),)
+[2014-08-21 13:38:29,328] TestMysqlDataVerifier.py(testIfAddedToStreamSessionInfo:202)[DEBUG] add to stream_session_info success.
+[2014-08-21 13:38:29,331] TestMysqlDataVerifier.py(testIfDelFromStreamSessionInfo:215)[DEBUG] sleep 130 seconds before test delete stream_session_info
+[2014-08-21 13:40:39,405] TestMysqlDataVerifier.py(testIfDelFromStreamSessionInfo:219)[DEBUG] streamSessionInfo=()
+[2014-08-21 13:40:39,405] TestMysqlDataVerifier.py(testIfDelFromStreamSessionInfo:221)[DEBUG] delete stream_session_info success.
+[2014-08-21 13:40:39,405] main.py(testLiveViewAndFrameRate:214)[INFO] liveview URL                OK
+[2014-08-21 13:40:39,407] TestDeviceServerService.py(testDeviceFrameRate:69)[DEBUG] this test is test frame-rate vs rated-frames
+[2014-08-21 13:40:39,522] TestDeviceServerService.py(testDeviceFrameRate:79)[DEBUG] this frame-rate:29.4827586207 is true,the Device video is true
+[2014-08-21 13:40:39,522] main.py(testLiveViewAndFrameRate:219)[INFO] liveview frame rate                OK
+[2014-08-21 13:40:39,522] main.py(beginTesting:63)[INFO] [TP-Liveview][end]                OK
+[2014-08-21 13:40:39,523] main.py(beginTesting:64)[INFO] [TP-Device Online][begin]
+[2014-08-21 13:40:39,552] main.py(testGetDeviceStatus:230)[INFO] Device Online				OK
+[2014-08-21 13:40:39,552] main.py(beginTesting:70)[INFO] [TP-Device Online][end]                OK
+[2014-08-21 13:40:39,552] main.py(beginTesting:71)[INFO] [TP-Handle Session][begin]
+[2014-08-21 13:40:39,582] TestStreamControlServer.py(getUrlList:66)[DEBUG] ['rtmp://192.168.200.18:1935/flvplayback/live1-0']
+[2014-08-21 13:42:34,684] TestStreamControlServer.py(controlSession:87)[INFO] keepSession                OK
+[2014-08-21 13:42:39,799] TestStreamControlServer.py(controlSession:92)[INFO] endSession                OK
+[2014-08-21 13:42:39,799] main.py(beginTesting:77)[INFO] [TP-Handle Session][end]            OK
+[2014-08-21 13:42:39,801] main.py(beginTesting:78)[INFO] [TP-UpdateChunkSize][begin]
+[2014-08-21 13:42:39,801] TestConfigControlService.py(testSetChunkSize:43)[DEBUG] test setChunkSize
+[2014-08-21 13:42:39,826] TestConfigControlService.py(testSetChunkSize:49)[DEBUG] this function set chunk-size is success!
+[2014-08-21 13:42:39,826] main.py(beginTesting:84)[INFO] [TP-Update ChunkSize][end]            OK
+[2014-08-21 13:42:39,826] main.py(beginTesting:85)[INFO] [TP-Set Storage Space][begin]
+[2014-08-21 13:42:39,878] TestDeviceManagementServer.py(updateCloud:60)[DEBUG] open the video store result : True
+[2014-08-21 13:42:39,878] main.py(testStreamStorageLimitZero:241)[DEBUG] begin_local_time : 21082014134239
+[2014-08-21 13:43:19,924] TestConfigControlService.py(testSetStreamLimit:61)[DEBUG] testSetStreamLimit result : True
+[2014-08-21 13:43:19,926] main.py(streamStorageLimitStrategy:269)[DEBUG] True
+[2014-08-21 13:43:19,926] main.py(streamStorageLimitStrategy:271)[INFO] set storage space is 0M				OK
+[2014-08-21 13:45:19,927] main.py(streamStorageLimitStrategy:274)[DEBUG] end_local_time : 21082014134519
+[2014-08-21 13:45:19,993] TestDeviceManagementServer.py(closeVideoRecord:67)[DEBUG] close the video store result : True
+[2014-08-21 13:45:19,993] main.py(streamStorageLimitStrategy:277)[DEBUG] close video time :
+[2014-08-21 13:48:19,993] main.py(streamStorageLimitStrategy:279)[DEBUG] RecordingServerService : <arbiter.TestRecordingServerService.RecordingServerServiceClient instance at 0x02ABA080>
+[2014-08-21 13:48:19,999] TestRecordingServerService.py(getVideoStreamList_FirstValue:41)[DEBUG] []
+[2014-08-21 13:48:20,000] main.py(streamStorageLimitStrategy:284)[INFO] test storage space is 0M				OK
+[2014-08-21 13:48:20,086] TestDeviceManagementServer.py(updateCloud:60)[DEBUG] open the video store result : True
+[2014-08-21 13:48:20,086] main.py(testStreamStorageLimitOther:254)[DEBUG] begin_local_time : 21082014134820
+[2014-08-21 13:49:00,105] TestConfigControlService.py(testSetStreamLimit:61)[DEBUG] testSetStreamLimit result : True
+[2014-08-21 13:49:00,105] main.py(streamStorageLimitStrategy:269)[DEBUG] True
+[2014-08-21 13:49:00,107] main.py(streamStorageLimitStrategy:271)[INFO] set storage space is 10M				OK
+[2014-08-21 13:51:10,107] main.py(streamStorageLimitStrategy:274)[DEBUG] end_local_time : 21082014135110
+[2014-08-21 13:51:10,111] TestRecordingServerService.py(getVideoStreamList_FirstValue:41)[DEBUG] ['{"from":"20140821134820","to":"20140821134959","dur":"99.92","fn":"2961","fps":"29.63","size":"2059264"}']
+[2014-08-21 13:51:10,112] TestRecordingServerService.py(getVideoStreamList_FirstValue:43)[DEBUG] The first value : {"from":"20140821134820","to":"20140821134959","dur":"99.92","fn":"2961","fps":"29.63","size":"2059264"}
+[2014-08-21 13:51:10,112] main.py(streamStorageLimitStrategy:292)[DEBUG] first_video_begin :20140821134820
+[2014-08-21 13:54:30,119] TestRecordingServerService.py(getVideoStreamList_FirstValue:41)[DEBUG] ['{"from":"20140821135000","to":"20140821135159","dur":"119.99","fn":"3529","fps":"29.41","size":"3954688"}', '{"from":"20140821135200","to":"20140821135359","dur":"119.97","fn":"3500","fps":"29.17","size":"3471360"}']
+[2014-08-21 13:54:30,119] TestRecordingServerService.py(getVideoStreamList_FirstValue:43)[DEBUG] The first value : {"from":"20140821135000","to":"20140821135159","dur":"119.99","fn":"3529","fps":"29.41","size":"3954688"}
+[2014-08-21 13:54:30,119] main.py(streamStorageLimitStrategy:296)[DEBUG] second_video_begin : 20140821135000
+[2014-08-21 13:54:30,121] main.py(streamStorageLimitStrategy:298)[INFO] test storage space is 10M				OK
+[2014-08-21 13:54:30,121] main.py(testStreamStorageLimitOther:257)[DEBUG] message: next will wait time 330s for test 10M
+[2014-08-21 13:54:30,148] TestConfigControlService.py(testSetStreamLimit:61)[DEBUG] testSetStreamLimit result : True
+[2014-08-21 13:54:30,148] main.py(streamStorageLimitStrategy:269)[DEBUG] True
+[2014-08-21 13:54:30,148] main.py(streamStorageLimitStrategy:271)[INFO] set storage space is 30M				OK
+[2014-08-21 13:54:30,148] main.py(streamStorageLimitStrategy:274)[DEBUG] end_local_time : 21082014135430
+[2014-08-21 13:54:30,154] TestRecordingServerService.py(getVideoStreamList_FirstValue:41)[DEBUG] ['{"from":"20140821135000","to":"20140821135159","dur":"119.99","fn":"3529","fps":"29.41","size":"3954688"}', '{"from":"20140821135200","to":"20140821135359","dur":"119.97","fn":"3500","fps":"29.17","size":"3471360"}']
+[2014-08-21 13:54:30,154] TestRecordingServerService.py(getVideoStreamList_FirstValue:43)[DEBUG] The first value : {"from":"20140821135000","to":"20140821135159","dur":"119.99","fn":"3529","fps":"29.41","size":"3954688"}
+[2014-08-21 13:54:30,154] main.py(streamStorageLimitStrategy:292)[DEBUG] first_video_begin :20140821135000
+[2014-08-21 13:57:00,167] TestRecordingServerService.py(getVideoStreamList_FirstValue:41)[DEBUG] ['{"from":"20140821135000","to":"20140821135159","dur":"119.99","fn":"3529","fps":"29.41","size":"3954688"}', '{"from":"20140821135200","to":"20140821135359","dur":"119.97","fn":"3500","fps":"29.17","size":"3471360"}', '{"from":"20140821135400","to":"20140821135559","dur":"119.98","fn":"3530","fps":"29.42","size":"4110336"}']
+[2014-08-21 13:57:00,167] TestRecordingServerService.py(getVideoStreamList_FirstValue:43)[DEBUG] The first value : {"from":"20140821135000","to":"20140821135159","dur":"119.99","fn":"3529","fps":"29.41","size":"3954688"}
+[2014-08-21 13:57:00,167] main.py(streamStorageLimitStrategy:296)[DEBUG] second_video_begin : 20140821135000
+[2014-08-21 13:57:00,167] main.py(streamStorageLimitStrategy:301)[INFO] test storage space is 30M				False
+[2014-08-21 13:57:00,168] main.py(testStreamStorageLimitOther:259)[DEBUG] message:next will wait time  150s for test 30M
+[2014-08-21 13:57:00,168] main.py(beginTesting:90)[INFO] [TP-Set Storage Space][end]            False
+[2014-08-21 13:57:00,168] main.py(beginTesting:93)[INFO] [TP-Video Recording][begin]
+[2014-08-21 13:57:00,170] TestDeviceManagementServer.py(TestVideoStrategy:73)[DEBUG] The Test Strategy
+[2014-08-21 13:57:00,200] TestDeviceManagementServer.py(updateCloud:60)[DEBUG] open the video store result : True
+[2014-08-21 13:58:00,006] TestDeviceManagementServer.py(TestVideoStrategy:90)[DEBUG] msg:the next will sleep 2*60*3s~
+[2014-08-21 14:03:00,124] TestDeviceManagementServer.py(TestVideoStrategy:104)[DEBUG] msg:one cycle end time
+[2014-08-21 14:04:00,000] TestDeviceManagementServer.py(TestVideoStrategy:90)[DEBUG] msg:the next will sleep 2*60*3s~
+[2014-08-21 14:09:00,230] TestDeviceManagementServer.py(TestVideoStrategy:104)[DEBUG] msg:one cycle end time
+[2014-08-21 14:09:00,230] TestDeviceManagementServer.py(TestVideoStrategy:105)[DEBUG] TestVideoStrategy success!
+[2014-08-21 14:09:00,230] main.py(testVideoStore:331)[INFO] execute video recording strategy                OK
+[2014-08-21 14:09:15,273] TestStreamControlServer.py(getUrlList:66)[DEBUG] ['rtmp://192.168.200.18/flvplayback/ad979e00-28f9-11e4-b3ed-005056c00008.playlist']
+[2014-08-21 14:09:15,273] TestStreamControlServer.py(checkVideoListSize:111)[DEBUG] urls:['rtmp://192.168.200.18/flvplayback/ad979e00-28f9-11e4-b3ed-005056c00008.playlist']
+[2014-08-21 14:09:15,273] TestStreamControlServer.py(checkVideoListSize:113)[DEBUG] the result is success
+[2014-08-21 14:09:15,273] main.py(testVideoStore:335)[INFO] video recording URL            OK
+[2014-08-21 14:09:15,283] TestRecordingServerService.py(testGetVideoStreamList:62)[DEBUG] {"storage-type": "video-recording", "begin": "21082014135800", "end": "21082014140800", "stream-type": "http/h264"}
+[2014-08-21 14:09:15,289] TestRecordingServerService.py(testGetVideoStreamList:64)[DEBUG] ['{"from":"20140821135800","to":"20140821135959","dur":"119.98","fn":"3530","fps":"29.42","size":"2264064"}', '{"from":"20140821140000","to":"20140821140159","dur":"120.00","fn":"3527","fps":"29.39","size":"3165184"}', '{"from":"20140821140400","to":"20140821140559","dur":"119.75","fn":"3536","fps":"29.53","size":"2590720"}', '{"from":"20140821140600","to":"20140821140759","dur":"120.00","fn":"3527","fps":"29.39","size":"2954240"}']
+[2014-08-21 14:09:15,289] TestRecordingServerService.py(testGetVideoStreamList:66)[DEBUG] *********************
+[2014-08-21 14:09:15,289] TestRecordingServerService.py(testGetVideoStreamList:75)[DEBUG] fps:29.42
+[2014-08-21 14:09:15,289] TestRecordingServerService.py(testGetVideoStreamList:77)[DEBUG] this video from 20140821135800 to 20140821135959 is success
+[2014-08-21 14:09:15,290] TestRecordingServerService.py(testGetVideoStreamList:66)[DEBUG] *********************
+[2014-08-21 14:09:15,290] TestRecordingServerService.py(testGetVideoStreamList:75)[DEBUG] fps:29.39
+[2014-08-21 14:09:15,290] TestRecordingServerService.py(testGetVideoStreamList:77)[DEBUG] this video from 20140821140000 to 20140821140159 is success
+[2014-08-21 14:09:15,292] TestRecordingServerService.py(testGetVideoStreamList:66)[DEBUG] *********************
+[2014-08-21 14:09:15,292] TestRecordingServerService.py(testGetVideoStreamList:75)[DEBUG] fps:29.53
+[2014-08-21 14:09:15,292] TestRecordingServerService.py(testGetVideoStreamList:77)[DEBUG] this video from 20140821140400 to 20140821140559 is success
+[2014-08-21 14:09:15,292] TestRecordingServerService.py(testGetVideoStreamList:66)[DEBUG] *********************
+[2014-08-21 14:09:15,292] TestRecordingServerService.py(testGetVideoStreamList:75)[DEBUG] fps:29.39
+[2014-08-21 14:09:15,293] TestRecordingServerService.py(testGetVideoStreamList:77)[DEBUG] this video from 20140821140600 to 20140821140759 is success
+[2014-08-21 14:09:15,293] main.py(testVideoStore:343)[INFO] video recording frateRate/duration                OK
+[2014-08-21 14:09:15,293] main.py(beginTesting:99)[INFO] [TP-Video Recording][end]                OK
+[2014-08-21 14:09:15,295] main.py(beginTesting:100)[INFO] [TP-Image Recording][begin]
+[2014-08-21 14:09:15,295] TestDeviceManagementServer.py(testPhotoStrategy:115)[DEBUG] The Test Strategy
+[2014-08-21 14:09:15,410] TestDeviceManagementServer.py(testPhotoStrategy:120)[DEBUG] result:True
+[2014-08-21 14:10:00,006] TestDeviceManagementServer.py(testPhotoStrategy:135)[DEBUG] msg:sleep 60s
+[2014-08-21 14:11:00,132] TestDeviceManagementServer.py(testPhotoStrategy:141)[DEBUG] msg:sleep 60s
+[2014-08-21 14:12:00,134] TestDeviceManagementServer.py(testPhotoStrategy:143)[DEBUG] waiting  next~
+[2014-08-21 14:12:05,171] TestDeviceManagementServer.py(testPhotoStrategy:135)[DEBUG] msg:sleep 60s
+[2014-08-21 14:13:05,263] TestDeviceManagementServer.py(testPhotoStrategy:148)[DEBUG] testPhotoStrategy success!
+[2014-08-21 14:13:05,265] main.py(testPhotoStore:361)[INFO] execute image recording strategy               OK
+[2014-08-21 14:13:05,289] TestStreamControlServer.py(getUrlList:66)[DEBUG] ['http://192.168.200.18:18080/storage-image/1/0/2014-08-21/20140821141002.jpg', 'http://192.168.200.18:18080/storage-image/1/0/2014-08-21/20140821141008.jpg', 'http://192.168.200.18:18080/storage-image/1/0/2014-08-21/20140821141014.jpg', 'http://192.168.200.18:18080/storage-image/1/0/2014-08-21/20140821141020.jpg', 'http://192.168.200.18:18080/storage-image/1/0/2014-08-21/20140821141026.jpg', 'http://192.168.200.18:18080/storage-image/1/0/2014-08-21/20140821141032.jpg', 'http://192.168.200.18:18080/storage-image/1/0/2014-08-21/20140821141038.jpg', 'http://192.168.200.18:18080/storage-image/1/0/2014-08-21/20140821141044.jpg', 'http://192.168.200.18:18080/storage-image/1/0/2014-08-21/20140821141050.jpg', 'http://192.168.200.18:18080/storage-image/1/0/2014-08-21/20140821141056.jpg', 'http://192.168.200.18:18080/storage-image/1/0/2014-08-21/20140821141207.jpg', 'http://192.168.200.18:18080/storage-image/1/0/2014-08-21/20140821141213.jpg', 'http://192.168.200.18:18080/storage-image/1/0/2014-08-21/20140821141219.jpg', 'http://192.168.200.18:18080/storage-image/1/0/2014-08-21/20140821141225.jpg', 'http://192.168.200.18:18080/storage-image/1/0/2014-08-21/20140821141231.jpg', 'http://192.168.200.18:18080/storage-image/1/0/2014-08-21/20140821141237.jpg', 'http://192.168.200.18:18080/storage-image/1/0/2014-08-21/20140821141243.jpg', 'http://192.168.200.18:18080/storage-image/1/0/2014-08-21/20140821141249.jpg', 'http://192.168.200.18:18080/storage-image/1/0/2014-08-21/20140821141255.jpg', 'http://192.168.200.18:18080/storage-image/1/0/2014-08-21/20140821141301.jpg']
+[2014-08-21 14:13:05,289] TestStreamControlServer.py(checkPhotoUrlSize:130)[DEBUG] urls size:20
+[2014-08-21 14:13:05,289] TestStreamControlServer.py(checkPhotoUrlSize:132)[DEBUG] the result is success
+[2014-08-21 14:13:05,289] main.py(testPhotoStore:364)[INFO] image recording URL                OK
+[2014-08-21 14:13:05,296] TestRecordingServerService.py(testGetPhotoStreamList:108)[DEBUG] the time:20140821141002 add a picture successed
+[2014-08-21 14:13:05,296] TestRecordingServerService.py(testGetPhotoStreamList:108)[DEBUG] the time:20140821141008 add a picture successed
+[2014-08-21 14:13:05,298] TestRecordingServerService.py(testGetPhotoStreamList:108)[DEBUG] the time:20140821141014 add a picture successed
+[2014-08-21 14:13:05,298] TestRecordingServerService.py(testGetPhotoStreamList:108)[DEBUG] the time:20140821141020 add a picture successed
+[2014-08-21 14:13:05,299] TestRecordingServerService.py(testGetPhotoStreamList:108)[DEBUG] the time:20140821141026 add a picture successed
+[2014-08-21 14:13:05,299] TestRecordingServerService.py(testGetPhotoStreamList:108)[DEBUG] the time:20140821141032 add a picture successed
+[2014-08-21 14:13:05,299] TestRecordingServerService.py(testGetPhotoStreamList:108)[DEBUG] the time:20140821141038 add a picture successed
+[2014-08-21 14:13:05,299] TestRecordingServerService.py(testGetPhotoStreamList:108)[DEBUG] the time:20140821141044 add a picture successed
+[2014-08-21 14:13:05,299] TestRecordingServerService.py(testGetPhotoStreamList:108)[DEBUG] the time:20140821141050 add a picture successed
+[2014-08-21 14:13:05,299] TestRecordingServerService.py(testGetPhotoStreamList:108)[DEBUG] the time:20140821141056 add a picture successed
+[2014-08-21 14:13:05,301] TestRecordingServerService.py(testGetPhotoStreamList:108)[DEBUG] the time:20140821141207 add a picture successed
+[2014-08-21 14:13:05,301] TestRecordingServerService.py(testGetPhotoStreamList:108)[DEBUG] the time:20140821141213 add a picture successed
+[2014-08-21 14:13:05,301] TestRecordingServerService.py(testGetPhotoStreamList:108)[DEBUG] the time:20140821141219 add a picture successed
+[2014-08-21 14:13:05,302] TestRecordingServerService.py(testGetPhotoStreamList:108)[DEBUG] the time:20140821141225 add a picture successed
+[2014-08-21 14:13:05,302] TestRecordingServerService.py(testGetPhotoStreamList:108)[DEBUG] the time:20140821141231 add a picture successed
+[2014-08-21 14:13:05,302] TestRecordingServerService.py(testGetPhotoStreamList:108)[DEBUG] the time:20140821141237 add a picture successed
+[2014-08-21 14:13:05,302] TestRecordingServerService.py(testGetPhotoStreamList:108)[DEBUG] the time:20140821141243 add a picture successed
+[2014-08-21 14:13:05,302] TestRecordingServerService.py(testGetPhotoStreamList:108)[DEBUG] the time:20140821141249 add a picture successed
+[2014-08-21 14:13:05,303] TestRecordingServerService.py(testGetPhotoStreamList:108)[DEBUG] the time:20140821141255 add a picture successed
+[2014-08-21 14:13:05,303] TestRecordingServerService.py(testGetPhotoStreamList:108)[DEBUG] the time:20140821141301 add a picture successed
+[2014-08-21 14:13:05,305] main.py(<module>:441)[ERROR] exception, global name 'ending' is not defined
+[2014-08-21 14:13:05,305] main.py(__init__:27)[DEBUG] ******** Main init begin**********
+[2014-08-21 14:13:05,329] main.py(__init__:34)[DEBUG] ******** Main init end**********
+[2014-08-21 14:13:05,334] TestDeviceManagementServer.py(testDeleteDevice:157)[DEBUG] test delete device
+[2014-08-21 14:13:05,372] TestDeviceManagementServer.py(testDeleteDevice:160)[DEBUG] remove device=1,result=True
+[2014-08-21 14:13:05,374] TestDeviceManagementServer.py(testDeleteDevice:163)[DEBUG] delete device success
+[2014-08-21 14:13:05,388] TestMysqlDataVerifier.py(cleanDeviceInfo:189)[DEBUG] deleted device=()
+[2014-08-21 14:13:05,407] TestMysqlDataVerifier.py(cleanDeviceInfo:192)[DEBUG] clean device, result=()

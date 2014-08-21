@@ -20,8 +20,7 @@ class MysqlDataVerifier():
     con = None
     def __init__(self):
         #connect to DB
-        self.con = MysqlConnector.getConnection()
-        
+        pass
     def tearDown(self):
         #close DB connection
         MysqlConnector.closeConnection()
@@ -33,7 +32,7 @@ class MysqlDataVerifier():
         try:
             log.debug("test if device added to table devices")
             #select from devices to verify if there is a device named "unittest-amtk"
-            device = Mysql(self.con).getDevice()
+            device = Mysql().getDevice()
             log.debug("devices=%s", device)
             #the second one is device name
             deviceName = device[0][1]
@@ -55,10 +54,10 @@ class MysqlDataVerifier():
         try:
             log.debug("test if device added to ds_device_info")
             #get device's id whose name is "unittest-amtk" 
-            device = Mysql(self.con).getDevice()
+            device = Mysql().getDevice()
             deviceId = device[0][0]#the first filed in devices is deviceId
             #select from ds_device_info to verify if there is a device named "unittest-amtk"        
-            dsDeviceInfo = Mysql(self.con).getDsDeviceInfo(deviceId)
+            dsDeviceInfo = Mysql().getDsDeviceInfo(deviceId)
             log.debug("ds_device_info=%s", dsDeviceInfo)
             #the second one is device_info which contains deviceName
             deviceInfo = dsDeviceInfo[0][2]
@@ -84,9 +83,9 @@ class MysqlDataVerifier():
             #sleep some time to wait the device added to DS
             log.debug("sleep 40 seconds to wait DS register")
             time.sleep(40)
-            device = Mysql(self.con).getDevice()
+            device = Mysql().getDevice()
             deviceId = device[0][0]#the first filed in devices is deviceId
-            dsDeviceInfo = Mysql(self.con).getDsDeviceInfo(deviceId)
+            dsDeviceInfo = Mysql().getDsDeviceInfo(deviceId)
             dsId = dsDeviceInfo[0][4]
             log.debug("ds_device_info=%s", dsDeviceInfo)
             if dsId == -1:
@@ -102,12 +101,12 @@ class MysqlDataVerifier():
         See if the matchup in channel_device_map is correct
         '''
         try:
-            device = Mysql(self.con).getDevice()
+            device = Mysql().getDevice()
             deviceId = device[0][0]
             
             #on Kai-node, check the channel_device matchup
             log.debug("test channel_device_map")
-            map = Mysql(self.con).getChannelDeviceMap()
+            map = Mysql().getChannelDeviceMap()
             log.debug("channel-device-map=%s",map)
             #if there is device_id in the channel_device_map, then the map is correct
             if len(map) != 0:
@@ -130,7 +129,7 @@ class MysqlDataVerifier():
         try:
             log.debug("test if device updated correctly")
             #get device's id whose name is "unittest-amtk" 
-            device = Mysql(self.con).getDevice()
+            device = Mysql().getDevice()
             deviceId = device[0][0]#the first filed in devices is deviceId
             updatedHost = device[0][3]
             log.debug("updated host=%s", updatedHost)
@@ -143,7 +142,7 @@ class MysqlDataVerifier():
                 hostUpdatedInDevices = True
             
             #select from ds_device_info to verify if the device's host updated successfully        
-            dsDeviceInfo = Mysql(self.con).getDsDeviceInfo(deviceId)
+            dsDeviceInfo = Mysql().getDsDeviceInfo(deviceId)
             log.debug("ds_device_info=%s",dsDeviceInfo)
             #the second one is device_info which contains device's host
             deviceInfo = dsDeviceInfo[0][2]
@@ -169,10 +168,10 @@ class MysqlDataVerifier():
         try:
             log.debug("test if device deleted correctly")
             #get device's id whose name is "unittest-amtk" 
-            device = Mysql(self.con).getDevice()
+            device = Mysql().getDevice()
             log.debug("deleted device=%s",device)
             deviceId = Config().getFromConfigs(Constants.deleteDevice, "device-id")
-            dsDeviceInfo = Mysql(self.con).getDsDeviceInfo(deviceId)
+            dsDeviceInfo = Mysql().getDsDeviceInfo(deviceId)
             log.debug("deleted dsDeviceInfo=%s",dsDeviceInfo)
             log.debug("len-device=" + (str)(len(device)) + ",len-dsDevice_info=" + (str)(len(dsDeviceInfo)) )
             if (len(device) == 0) & (len(dsDeviceInfo) == 0):
@@ -186,10 +185,10 @@ class MysqlDataVerifier():
             return False
         
     def cleanDeviceInfo(self):
-        device = Mysql(self.con).getDevice()
+        device = Mysql().getDevice()
         log.debug("deleted device=%s",device)
         deviceId = Config().getFromConfigs(Constants.deleteDevice, "device-id")
-        result = Mysql(self.con).cleanDeviceInfo(deviceId)
+        result = Mysql().cleanDeviceInfo(deviceId)
         log.debug("clean device, result=%s",result)
     
     def testIfAddedToStreamSessionInfo(self):
@@ -197,7 +196,7 @@ class MysqlDataVerifier():
         check if added to stream_session_info correctly
         '''
         deviceId = Config().getFromConfigs(Constants.deleteDevice, "device-id")
-        streamSessionInfo = Mysql(self.con).getStreamSessionInfo(deviceId)
+        streamSessionInfo = Mysql().getStreamSessionInfo(deviceId)
         log.debug("streamSessionInfo=%s",streamSessionInfo)
         if streamSessionInfo != None:
             log.debug("add to stream_session_info success.")
@@ -213,10 +212,10 @@ class MysqlDataVerifier():
         #sleep sometime between check the streamSessionInfo
         ttl = Config().getFromConfigs(Constants.streamControl, "ttl")
         timeToSleep = int(ttl) + 10
-        time.sleep(timeToSleep)
         log.debug("sleep %s seconds before test delete stream_session_info", timeToSleep)
+        time.sleep(timeToSleep)
         deviceId = Config().getFromConfigs(Constants.deleteDevice, "device-id")
-        streamSessionInfo = Mysql(self.con).getStreamSessionInfo(deviceId)
+        streamSessionInfo = Mysql().getStreamSessionInfo(deviceId)
         log.debug("streamSessionInfo=%s",streamSessionInfo)
         if len(streamSessionInfo) == 0:
             log.debug("delete stream_session_info success.")
@@ -228,7 +227,7 @@ class MysqlDataVerifier():
     def testConfigurationsHavKUP(self):
         name = "kup-arbiter-host"
         value = Config().getFromConfigs(Constants.configControl,"kup-arbiter-host")
-        configurations = Mysql(self.con).getConfigurationsInfo(name,value)
+        configurations = Mysql().getConfigurationsInfo(name,value)
         if len(configurations)!=0:
             log.debug('msg:KUP add success')
             return True

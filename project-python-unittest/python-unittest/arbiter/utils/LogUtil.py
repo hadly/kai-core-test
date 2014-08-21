@@ -33,13 +33,13 @@ debug.setLevel(logging.DEBUG)
 debug.setFormatter(formatter)
 logging.getLogger('').addHandler(debug)
 #################################################################################################
-
+forma = logging.Formatter('[%(asctime)s]   %(message)s')
 #################################################################################################
 #INFO and the above level output
 info = logging.FileHandler(logPath + "core-test-info.log","w")
 #Will only print INFO and the above level log, such as ERROR log. Will not print DEBUG log.
 info.setLevel(logging.INFO)
-info.setFormatter(formatter)
+info.setFormatter(forma)
 logging.getLogger('').addHandler(info)
 #################################################################################################
 
