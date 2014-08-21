@@ -58,9 +58,9 @@ class MainClass(object):
                     liveviewRes = self.testLiveViewAndFrameRate() #-1/1
                     if liveviewRes==-1:
                         fail += 1
-                        log.info("[TP-Liveview][end]                False")
+                        log.info("[TP-Liveview][end]                    False")
                     else:
-                        log.info("[TP-Liveview][end]                OK")
+                        log.info("[TP-Liveview][end]                    OK")
                     log.info("[TP-Device Online][begin]")
                     getDeviceStatus = self.testGetDeviceStatus()
                     if getDeviceStatus == -1:
@@ -72,16 +72,16 @@ class MainClass(object):
                     sessionResult = self.scs.controlSession()
                     if sessionResult == -1:
                         fail += 1
-                        log.info("[TP-Handle Session][end]            False")
+                        log.info("[TP-Handle Session][end]               False")
                     else:
-                        log.info("[TP-Handle Session][end]            OK")
+                        log.info("[TP-Handle Session][end]               OK")
                     log.info("[TP-UpdateChunkSize][begin]")
                     chunksizeResult = self.testChunkSize() #-1/1
                     if chunksizeResult == -1:
                         fail += 1
-                        log.info("[TP-Update ChunkSize][end]            False")
+                        log.info("[TP-Update ChunkSize][end]             False")
                     else:
-                        log.info("[TP-Update ChunkSize][end]            OK")
+                        log.info("[TP-Update ChunkSize][end]             OK")
                     log.info("[TP-Set Storage Space][begin]")
                     if self.testStreamStorageLimitZero() == 1:
                         if self.testStreamStorageLimitOther() == 1:
@@ -89,7 +89,7 @@ class MainClass(object):
                         else:
                             log.info("[TP-Set Storage Space][end]            False")
                     else:
-                        log.info("[TP-Set Storage Space][end]            False")
+                        log.info("[TP-Set Storage Space][end]             False")
                     log.info("[TP-Video Recording][begin]")
                     videoStorageRes = self.testVideoStore()#-1/1
                     if videoStorageRes == -1:
@@ -109,25 +109,25 @@ class MainClass(object):
                     eventVideoRes = self.testVideoEvent()#-1/1
                     if eventVideoRes == -1:
                         fail += 1
-                        log.info("[TP-Event Video Recording][end]                False")
+                        log.info("[TP-Event Video Recording][end]            False")
                     else:
-                        log.info("[TP-Event Video Recording][end]                OK")
+                        log.info("[TP-Event Video Recording][end]            OK")
                     log.info("we will test updateDevice£¬please wait")
                     log.info("[TP-Update Device][begin]")
                     updateDeviceRes = self.testUpdateDevice()
                     if updateDeviceRes==-1:
                         fail += 1
-                        log.info("[TP-Update Device][end]                False")
+                        log.info("[TP-Update Device][end]                    False")
                     else:
-                        log.info("[TP-Update Device][end]                OK")                  
+                        log.info("[TP-Update Device][end]                    OK")                  
                     log.info("[TP-Delete Device][begin]")
                     delDeviceRes = self.dms.testDeleteDevice()
                     isSuccess = self.dataVerifier.testIfDeviceDeleted()
                     if delDeviceRes and isSuccess:
-                        log.info("[TP-Delete Device][end]                OK")
+                        log.info("[TP-Delete Device][end]                    OK")
                     else:
                         fail += 1
-                        log.info("[TP-Delete Device][end]                False")
+                        log.info("[TP-Delete Device][end]                    False")
                 else:
                     fail += 1
                     log.info("[TP-Add Device][end]                False")
@@ -160,15 +160,15 @@ class MainClass(object):
             log.info("call updateDevice                OK")
             result = self.testIsAddDeviceSuccess()
             if result:
-                log.info("is device correct in DB and DS                 OK")
+                log.info("is device correct in DB and DS          OK")
                 if self.testLiveViewAndFrameRate()==1:
-                    log.info("is liveview correct                 OK")
+                    log.info("is liveview correct                    OK")
                     return 1
                 else:
-                    log.info("is liveview correct                 False")
+                    log.info("is liveview correct                    False")
                     return -1
             else:
-                log.info("is device correct in DB and DS                 False")
+                log.info("is device correct in DB and DS          False")
                 return -1
         else:
             log.info("call updateDevice                False")
@@ -177,15 +177,15 @@ class MainClass(object):
     def testIsAddDeviceSuccess(self):
         isInDevices = self.dataVerifier.testCorrectnessInDevices()
         if isInDevices:
-            log.info("is device in table Devices                OK")
+            log.info("is device in table Devices            OK")
         else:
-            log.info("is device in table Devices                False")
+            log.info("is device in table Devices            False")
         
         isInDsDevInfo = self.dataVerifier.testCorrectnessInDsDeviceInfo()
         if isInDsDevInfo:
-            log.info("is device in table ds_device_info            OK")
+            log.info("is device in table ds_device_info       OK")
         else:
-            log.info("is device in table ds_device_info            False")
+            log.info("is device in table ds_device_info       False")
         
         isAddedToDS = self.dataVerifier.testIfDeviceAddedToDs()
         if isAddedToDS:
