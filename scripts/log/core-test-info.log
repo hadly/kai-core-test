@@ -1,41 +1,78 @@
-[2014-08-21 13:37:45,073]   [TP-Set KUP Address][begin]
-[2014-08-21 13:37:45,095]   set KUP address                OK
-[2014-08-21 13:37:45,618]   is KUP address in table Configurations                OK
-[2014-08-21 13:37:45,618]   [TP-Set KUP Address][end]                OK
-[2014-08-21 13:37:45,618]   [TP-Add Device][begin]
-[2014-08-21 13:37:45,803]   call addDevice                OK
-[2014-08-21 13:37:45,858]   is device in table Devices                OK
-[2014-08-21 13:37:45,891]   is device in table ds_device_info            OK
-[2014-08-21 13:38:25,937]   is device added to a DS                OK
-[2014-08-21 13:38:28,980]   does device exists in DS                OK
-[2014-08-21 13:38:28,980]   [TP-Add Device][end]                OK
-[2014-08-21 13:38:28,980]   [TP-Liveview][begin]
-[2014-08-21 13:40:39,405]   liveview URL                OK
-[2014-08-21 13:40:39,522]   liveview frame rate                OK
-[2014-08-21 13:40:39,522]   [TP-Liveview][end]                OK
-[2014-08-21 13:40:39,523]   [TP-Device Online][begin]
-[2014-08-21 13:40:39,552]   Device Online				OK
-[2014-08-21 13:40:39,552]   [TP-Device Online][end]                OK
-[2014-08-21 13:40:39,552]   [TP-Handle Session][begin]
-[2014-08-21 13:42:34,684]   keepSession                OK
-[2014-08-21 13:42:39,799]   endSession                OK
-[2014-08-21 13:42:39,799]   [TP-Handle Session][end]            OK
-[2014-08-21 13:42:39,801]   [TP-UpdateChunkSize][begin]
-[2014-08-21 13:42:39,826]   [TP-Update ChunkSize][end]            OK
-[2014-08-21 13:42:39,826]   [TP-Set Storage Space][begin]
-[2014-08-21 13:43:19,926]   set storage space is 0M				OK
-[2014-08-21 13:48:20,000]   test storage space is 0M				OK
-[2014-08-21 13:49:00,107]   set storage space is 10M				OK
-[2014-08-21 13:54:30,121]   test storage space is 10M				OK
-[2014-08-21 13:54:30,148]   set storage space is 30M				OK
-[2014-08-21 13:57:00,167]   test storage space is 30M				False
-[2014-08-21 13:57:00,168]   [TP-Set Storage Space][end]            False
-[2014-08-21 13:57:00,168]   [TP-Video Recording][begin]
-[2014-08-21 14:09:00,230]   execute video recording strategy                OK
-[2014-08-21 14:09:15,273]   video recording URL            OK
-[2014-08-21 14:09:15,293]   video recording frateRate/duration                OK
-[2014-08-21 14:09:15,293]   [TP-Video Recording][end]                OK
-[2014-08-21 14:09:15,295]   [TP-Image Recording][begin]
-[2014-08-21 14:13:05,265]   execute image recording strategy               OK
-[2014-08-21 14:13:05,289]   image recording URL                OK
-[2014-08-21 14:13:05,305]   exception, global name 'ending' is not defined
+[2014-08-21 17:24:58,299]   [TP-Set KUP Address][begin]
+[2014-08-21 17:24:58,334]   set KUP address                         OK
+[2014-08-21 17:24:58,414]   is KUP address in table Configurations  OK
+[2014-08-21 17:24:58,414]   [TP-Set KUP Address][end]               OK
+[2014-08-21 17:24:58,414]   [TP-Add Device][begin]
+[2014-08-21 17:24:58,470]   call addDevice                          OK
+[2014-08-21 17:24:58,516]   is device in table Devices              OK
+[2014-08-21 17:24:58,561]   is device in table ds_device_info       OK
+[2014-08-21 17:25:38,608]   is device added to a DS                 OK
+[2014-08-21 17:25:41,638]   does device exists in DS                OK
+[2014-08-21 17:25:41,640]   [TP-Add Device][end]                    OK
+[2014-08-21 17:25:41,640]   [TP-Liveview][begin]
+[2014-08-21 17:27:51,864]   liveview URL                            OK
+[2014-08-21 17:27:51,878]   liveview frame rate                     OK
+[2014-08-21 17:27:51,878]   [TP-Liveview][end]                      OK
+[2014-08-21 17:27:51,878]   [TP-Device Online][begin]
+[2014-08-21 17:27:51,890]   Device Online            				OK
+[2014-08-21 17:27:51,890]   [TP-Device Online][end]                 OK
+[2014-08-21 17:27:51,890]   [TP-Handle Session][begin]
+[2014-08-21 17:29:47,095]   keepSession                             OK
+[2014-08-21 17:29:52,244]   endSession                              OK
+[2014-08-21 17:29:52,244]   [TP-Handle Session][end]                OK
+[2014-08-21 17:29:52,246]   [TP-UpdateChunkSize][begin]
+[2014-08-21 17:29:52,257]   [TP-Update ChunkSize][end]              OK
+[2014-08-21 17:29:52,257]   [TP-Set Storage Space][begin]
+[2014-08-21 17:30:32,415]   set storage space is 0M				OK
+[2014-08-21 17:35:32,562]   test storage space is 0M				OK
+[2014-08-21 17:36:12,701]   set storage space is 10M				OK
+[2014-08-21 17:41:42,720]   test storage space is 10M				False
+[2014-08-21 17:41:42,734]   set storage space is 30M				OK
+[2014-08-21 17:44:12,759]   test storage space is 30M                OK
+[2014-08-21 17:44:12,926]   [TP-Set Storage Space][end]             False
+[2014-08-21 17:44:12,926]   [TP-Video Recording][begin]
+[2014-08-21 17:56:00,329]   execute video recording strategy        OK
+[2014-08-21 17:56:15,377]   video recording URL                     OK
+[2014-08-21 17:56:15,395]   video recording frateRate/duration      OK
+[2014-08-21 17:56:15,397]   [TP-Video Recording][end]               OK
+[2014-08-21 17:56:15,397]   [TP-Image Recording][begin]
+[2014-08-21 18:00:05,283]   execute image recording strategy        OK
+[2014-08-21 18:00:05,309]   image recording URL                     OK
+[2014-08-21 18:00:05,325]   image recording content check           OK
+[2014-08-21 18:00:05,325]   [TP-Image Recording][end]               OK
+[2014-08-21 18:00:05,325]   [TP-Event Video Recording][begin]
+[2014-08-21 18:00:45,375]   the 0nd times event video recording...
+[2014-08-21 18:00:45,411]   send event video to Arbiter             OK
+[2014-08-21 18:00:55,424]   event video content check               OK
+[2014-08-21 18:00:55,424]   the 1nd times event video recording...
+[2014-08-21 18:00:55,447]   send event video to Arbiter             OK
+[2014-08-21 18:01:05,464]   event video content check                OK
+[2014-08-21 18:01:05,464]   the 2nd times event video recording...
+[2014-08-21 18:01:05,492]   send event video to Arbiter                OK
+[2014-08-21 18:01:15,503]   event video content check                OK
+[2014-08-21 18:01:15,503]   the 3nd times event video recording...
+[2014-08-21 18:01:15,519]   send event video to Arbiter                OK
+[2014-08-21 18:01:25,533]   event video content check                OK
+[2014-08-21 18:01:25,533]   the 4nd times event video recording...
+[2014-08-21 18:01:25,549]   send event video to Arbiter                OK
+[2014-08-21 18:01:35,737]   event video content check                OK
+[2014-08-21 18:01:35,737]   the 5nd times event video recording...
+[2014-08-21 18:01:35,759]   send event video to Arbiter                OK
+[2014-08-21 18:01:45,780]   event video content check                OK
+[2014-08-21 18:01:45,780]   [TP-Event Video Recording][end]         OK
+[2014-08-21 18:01:45,782]   we will test updateDevice£¬please wait
+[2014-08-21 18:01:45,782]   [TP-Update Device][begin]
+[2014-08-21 18:01:45,845]   call updateDevice                OK
+[2014-08-21 18:01:45,861]   is device in table Devices            OK
+[2014-08-21 18:01:45,894]   is device in table ds_device_info     OK
+[2014-08-21 18:02:25,940]   is device added to a DS                 OK
+[2014-08-21 18:02:28,980]   does device exists in DS                OK
+[2014-08-21 18:02:28,982]   is device correct in DB and DS          OK
+[2014-08-21 18:04:39,092]   liveview URL                            OK
+[2014-08-21 18:04:39,154]   the frame rate from DS is 14.7586206897, expected rate is 30, something is wrong. False
+[2014-08-21 18:04:39,154]   liveview frame rate                     False
+[2014-08-21 18:04:39,155]   is liveview correct                     False
+[2014-08-21 18:04:39,155]   [TP-Update Device][end]                 False
+[2014-08-21 18:04:39,155]   [TP-Delete Device][begin]
+[2014-08-21 18:04:39,292]   [TP-Delete Device][end]                 OK
+[2014-08-21 18:04:39,292]   something wrong during this test, please refer to the log above, and search for 'False' to locate the errors.

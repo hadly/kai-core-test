@@ -84,18 +84,18 @@ class StreamControlServerClient():
             time.sleep(65)
             keepresult = Mysql().getStreamSessionInfoBySessionId(sessionId)
             if len(keepresult) > 0:
-                log.info("keepSession                OK")
+                log.info("keepSession                             OK")
                 self.client.endStreamSession(sessionId)
                 time.sleep(5)
                 endresult = Mysql().getStreamSessionInfoBySessionId(sessionId)
                 if len(endresult) == 0:
-                    log.info("endSession                OK")
+                    log.info("endSession                              OK")
                     return 1
                 else:
-                    log.info("endSession                False")
+                    log.info("endSession                              False")
                     return -1
             else:
-                log.info("keepSession                False")
+                log.info("keepSession                             False")
                 return -1
         except Exception,e:
             log.error('Error:%s',e)

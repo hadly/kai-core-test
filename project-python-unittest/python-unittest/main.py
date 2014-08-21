@@ -42,95 +42,95 @@ class MainClass(object):
         setKupResult = self.testSetKUP()
         if setKupResult == -1:
             fail += 1
-            log.info("[TP-Set KUP Address][end]                False")
+            log.info("[TP-Set KUP Address][end]               False")
         else:
-            log.info("[TP-Set KUP Address][end]                OK")
+            log.info("[TP-Set KUP Address][end]               OK")
             
             log.info("[TP-Add Device][begin]")
             result = self.dms.testAddDevice()
             if result:
-                log.info("call addDevice                OK")
+                log.info("call addDevice                          OK")
                 addResult = self.testIsAddDeviceSuccess()
                 if addResult:
-                    log.info("[TP-Add Device][end]                OK")
+                    log.info("[TP-Add Device][end]                    OK")
 #                    time.sleep(90)
                     log.info("[TP-Liveview][begin]")
                     liveviewRes = self.testLiveViewAndFrameRate() #-1/1
                     if liveviewRes==-1:
                         fail += 1
-                        log.info("[TP-Liveview][end]                    False")
+                        log.info("[TP-Liveview][end]                      False")
                     else:
-                        log.info("[TP-Liveview][end]                    OK")
+                        log.info("[TP-Liveview][end]                      OK")
                     log.info("[TP-Device Online][begin]")
                     getDeviceStatus = self.testGetDeviceStatus()
                     if getDeviceStatus == -1:
                         fail += 1
-                        log.info("[TP-Device Online][end]                False")
+                        log.info("[TP-Device Online][end]                 False")
                     else:
-                        log.info("[TP-Device Online][end]                OK")
+                        log.info("[TP-Device Online][end]                 OK")
                     log.info("[TP-Handle Session][begin]")
                     sessionResult = self.scs.controlSession()
                     if sessionResult == -1:
                         fail += 1
-                        log.info("[TP-Handle Session][end]               False")
+                        log.info("[TP-Handle Session][end]                False")
                     else:
-                        log.info("[TP-Handle Session][end]               OK")
+                        log.info("[TP-Handle Session][end]                OK")
                     log.info("[TP-UpdateChunkSize][begin]")
                     chunksizeResult = self.testChunkSize() #-1/1
                     if chunksizeResult == -1:
                         fail += 1
-                        log.info("[TP-Update ChunkSize][end]             False")
+                        log.info("[TP-Update ChunkSize][end]              False")
                     else:
-                        log.info("[TP-Update ChunkSize][end]             OK")
+                        log.info("[TP-Update ChunkSize][end]              OK")
                     log.info("[TP-Set Storage Space][begin]")
                     if self.testStreamStorageLimitZero() == 1:
                         if self.testStreamStorageLimitOther() == 1:
-                            log.info("[TP-Set Storage Space][end]            OK")
+                            log.info("[TP-Set Storage Space][end]             OK")
                         else:
-                            log.info("[TP-Set Storage Space][end]            False")
+                            log.info("[TP-Set Storage Space][end]             False")
                     else:
                         log.info("[TP-Set Storage Space][end]             False")
                     log.info("[TP-Video Recording][begin]")
                     videoStorageRes = self.testVideoStore()#-1/1
                     if videoStorageRes == -1:
                         fail += 1
-                        log.info("[TP-Video Recording][end]                False")
+                        log.info("[TP-Video Recording][end]               False")
                     else:
-                        log.info("[TP-Video Recording][end]                OK")
+                        log.info("[TP-Video Recording][end]               OK")
                     log.info("[TP-Image Recording][begin]")
                     imageStorageRes = self.testPhotoStore()#-1/1
                     if imageStorageRes == -1:
                         fail += 1
-                        log.info("[TP-Image Recording][end]                False")
+                        log.info("[TP-Image Recording][end]               False")
                     else:
-                        log.info("[TP-Image Recording][end]                OK")
+                        log.info("[TP-Image Recording][end]               OK")
                     
                     log.info("[TP-Event Video Recording][begin]")
                     eventVideoRes = self.testVideoEvent()#-1/1
                     if eventVideoRes == -1:
                         fail += 1
-                        log.info("[TP-Event Video Recording][end]            False")
+                        log.info("[TP-Event Video Recording][end]         False")
                     else:
-                        log.info("[TP-Event Video Recording][end]            OK")
+                        log.info("[TP-Event Video Recording][end]         OK")
                     log.info("we will test updateDevice£¨please wait")
                     log.info("[TP-Update Device][begin]")
                     updateDeviceRes = self.testUpdateDevice()
                     if updateDeviceRes==-1:
                         fail += 1
-                        log.info("[TP-Update Device][end]                    False")
+                        log.info("[TP-Update Device][end]                 False")
                     else:
-                        log.info("[TP-Update Device][end]                    OK")                  
+                        log.info("[TP-Update Device][end]                 OK")                  
                     log.info("[TP-Delete Device][begin]")
                     delDeviceRes = self.dms.testDeleteDevice()
                     isSuccess = self.dataVerifier.testIfDeviceDeleted()
                     if delDeviceRes and isSuccess:
-                        log.info("[TP-Delete Device][end]                    OK")
+                        log.info("[TP-Delete Device][end]                 OK")
                     else:
                         fail += 1
-                        log.info("[TP-Delete Device][end]                    False")
+                        log.info("[TP-Delete Device][end]                 False")
                 else:
                     fail += 1
-                    log.info("[TP-Add Device][end]                False")
+                    log.info("[TP-Add Device][end]               False")
         
         if fail==0:
             log.info("Congratulations!!! Your testing is successful.")
@@ -140,14 +140,14 @@ class MainClass(object):
     def testSetKUP(self):
         result = self.ccs.testSetCloudServer()
         if result:
-            log.info("set KUP address                OK")
+            log.info("set KUP address                         OK")
         else:
-            log.info("set KUP address                False")
+            log.info("set KUP address                         False")
         dbResult = self.dataVerifier.testConfigurationsHavKUP()
         if dbResult:
-            log.info("is KUP address in table Configurations                OK")
+            log.info("is KUP address in table Configurations  OK")
         else:
-            log.info("is KUP address in table Configurations                False")
+            log.info("is KUP address in table Configurations  False")
         if result and dbResult:
             return 1
         else:
@@ -157,29 +157,29 @@ class MainClass(object):
         #update Device
         upDeviceRes = self.dms.testUpdateDevice()
         if upDeviceRes:
-            log.info("call updateDevice                OK")
+            log.info("call updateDevice                       OK")
             result = self.testIsAddDeviceSuccess()
             if result:
                 log.info("is device correct in DB and DS          OK")
                 if self.testLiveViewAndFrameRate()==1:
-                    log.info("is liveview correct                    OK")
+                    log.info("is liveview correct                     OK")
                     return 1
                 else:
-                    log.info("is liveview correct                    False")
+                    log.info("is liveview correct                     False")
                     return -1
             else:
                 log.info("is device correct in DB and DS          False")
                 return -1
         else:
-            log.info("call updateDevice                False")
+            log.info("call updateDevice                       False")
             return -1
         
     def testIsAddDeviceSuccess(self):
         isInDevices = self.dataVerifier.testCorrectnessInDevices()
         if isInDevices:
-            log.info("is device in table Devices            OK")
+            log.info("is device in table Devices              OK")
         else:
-            log.info("is device in table Devices            False")
+            log.info("is device in table Devices              False")
         
         isInDsDevInfo = self.dataVerifier.testCorrectnessInDsDeviceInfo()
         if isInDsDevInfo:
@@ -189,9 +189,9 @@ class MainClass(object):
         
         isAddedToDS = self.dataVerifier.testIfDeviceAddedToDs()
         if isAddedToDS:
-            log.info("is device added to a DS                OK")
+            log.info("is device added to a DS                 OK")
         else:
-            log.info("is device added to a DS                False")
+            log.info("is device added to a DS                 False")
         #dataVerifier.testMatchUpInChannelDeviceMap()        
         #is this device in DS by calling getDevices()
         time.sleep(3)
@@ -211,14 +211,14 @@ class MainClass(object):
     def testLiveViewAndFrameRate(self):
         viewRes = self.testLiveView(self.scs, self.dataVerifier)
         if viewRes:
-            log.info("liveview URL                OK")
+            log.info("liveview URL                            OK")
         else:
-            log.info("liveview URL                False")        
+            log.info("liveview URL                            False")        
         rateRes = ds.testDeviceFrameRate()#≤‚ ‘÷°¬ 
         if rateRes:
-            log.info("liveview frame rate                OK")
+            log.info("liveview frame rate                     OK")
         else:
-            log.info("liveview frame rate                False")
+            log.info("liveview frame rate                     False")
         if viewRes and rateRes:
             return 1
         else:
@@ -227,10 +227,10 @@ class MainClass(object):
     def testGetDeviceStatus(self):
         result = self.dcs.judgeDeviceStatus()
         if result == "online":
-            log.info("Device Online				OK")
+            log.info("Device Online            				OK")
             return 1
         else:
-            log.info("Device Online				False")
+            log.info("Device Online            				False")
             return -1
         
     def testStreamStorageLimitZero(self):
@@ -253,10 +253,10 @@ class MainClass(object):
             begin_local_time = time.strftime("%d%m%Y%H%M%S",time.localtime(time.time()))
             log.debug('begin_local_time : %s',begin_local_time)
             time.sleep(40)
-            one_result = self.streamStorageLimitStrategy(10, 130, 200, begin_local_time,1)
             log.debug('message: next will wait time 330s for test 10M')
-            two_result = self.streamStorageLimitStrategy(30, 0, 150, begin_local_time,2)
+            one_result = self.streamStorageLimitStrategy(10, 130, 210, begin_local_time,1)
             log.debug('message:next will wait time  150s for test 30M')
+            two_result = self.streamStorageLimitStrategy(30, 0, 150, begin_local_time,2)
             if one_result and two_result:
                 return 1
             else:
@@ -328,28 +328,28 @@ class MainClass(object):
         '''
         result = self.dms.TestVideoStrategy()
         if result:
-            log.info("execute video recording strategy                OK")
+            log.info("execute video recording strategy        OK")
             time.sleep(15)
             videoUrlOK = self.scs.checkVideoListSize()
             if videoUrlOK:
-                log.info("video recording URL            OK")
+                log.info("video recording URL                     OK")
             else:
-                log.info("video recording URL            False")
+                log.info("video recording URL                     False")
             
 #             global rss
 #             rss = RecordingServerServiceClient()
             videoContentOK = rss.testGetVideoStreamList()
             if videoContentOK:
-                log.info("video recording frateRate/duration                OK")
+                log.info("video recording frateRate/duration      OK")
             else:
-                log.info("video recording frateRate/duration                False")
+                log.info("video recording frateRate/duration      False")
             
             if videoUrlOK and videoContentOK:
                 return 1
             else:
                 return -1
         else:
-            log.info("execute video recording strategy                False")
+            log.info("execute video recording strategy        False")
             return -1 
         
     def testPhotoStore(self):
@@ -358,24 +358,24 @@ class MainClass(object):
         '''
         result = self.dms.testPhotoStrategy()
         if result:
-            log.info("execute image recording strategy               OK")
+            log.info("execute image recording strategy        OK")
             imageUrlOK = self.scs.checkPhotoUrlSize()
             if imageUrlOK:
-                log.info("image recording URL                OK")
+                log.info("image recording URL                     OK")
             else:
-                log.info("image recording URL                False")
+                log.info("image recording URL                     False")
             
             imageContentOK = rss.testGetPhotoStreamList()
             if imageContentOK:
-                log.info("image recording content check                OK")
+                log.info("image recording content check           OK")
             else:
-                log.info("image recording content check                False")
+                log.info("image recording content check           False")
             if imageUrlOK and imageContentOK:
                 return 1
             else:
                 return -1
         else:
-            log.info("execute image recording strategy                False")
+            log.info("execute image recording strategy         False")
             return -1
     def testVideoEvent(self):
         '''
@@ -391,16 +391,16 @@ class MainClass(object):
             log.info('the %dnd times event video recording...',num)
             result = self.drs.sendEventToArbiter()
             if result:
-                log.info("send event video to Arbiter                OK")
+                log.info("send event video to Arbiter             OK")
                 time.sleep(10)
                 eventContentOK = rss.testGetEventStreamList()
                 if eventContentOK:
-                    log.info("event video content check                OK")
+                    log.info("event video content check               OK")
                     sum += 1
                 else:
-                    log.info("event video content check                False")
+                    log.info("event video content check               False")
             else:
-                log.info("send event video to Arbiter                False")
+                log.info("send event video to Arbiter             False")
             num = num + 1
             if num == 6:
                 isTrue = False
