@@ -36,11 +36,11 @@ class RecordingServerServiceClient():
         try:
             info = {"storage-type":"video-recording", "stream-type":"http/h264","begin":beginTime,"end":endTime}
             streamInfo = json.dumps(info)
-            log.debug(self.client)
+            log.debug('RS client=', self.client)
             if self.client is None:
                 self.__init__() 
             streamList = self.client.getStreamList((int)(self.deviceId),0,streamInfo)
-            log.debug(streamList)
+            log.debug('streamlist is=', streamList)
             if len(streamList) > 0:
                 log.debug('The first value : %s',streamList[0])
                 strJson = json.loads(streamList[0])
@@ -62,8 +62,10 @@ class RecordingServerServiceClient():
             info = {"storage-type":"video-recording", "stream-type":"http/h264","begin":beginTime,"end":endTime}
             streamInfo = json.dumps(info)
             log.debug(streamInfo) 
+            
             streamList = self.client.getStreamList((int)(self.deviceId),0,streamInfo)
             log.debug(streamList) 
+            
             for stream in streamList:
                 log.debug('*********************')
                 strJson = json.loads(stream)
@@ -83,6 +85,7 @@ class RecordingServerServiceClient():
                         log.info("from %s to %s, the video's frame rate is %s, the rate from DS is %s, differ big. False",begin,end,fps,frame_rate)
                 else:
                     log.debug('this video"size from %s to %s is fail',begin,end)
+            
             if num >= 2:
                 return True
             else:
@@ -100,6 +103,7 @@ class RecordingServerServiceClient():
             info = {"storage-type":"image-recording", "stream-type":"http/jpeg","begin":beginTime,"end":endTime}
             streamInfo = json.dumps(info)
             streamList = self.client.getStreamList((int)(self.deviceId),0,streamInfo)
+            
             for stream in streamList:
                 strJson = json.loads(stream)
                 start = strJson['time']
@@ -111,6 +115,7 @@ class RecordingServerServiceClient():
                     num += 1
                 else:
                     log.debug('the test add a picture have an error at %s',start)
+            
             if num >= 18:
                 return True
             else:
@@ -129,6 +134,7 @@ class RecordingServerServiceClient():
             log.debug('%s',self.client)
             streamList = self.client.getStreamList(int(self.deviceId),0,streamInfo)
             log.debug('streamList:%s',streamList)
+            
             for stream in streamList:
                 strJson = json.loads(stream)
                 dur = strJson['dur']

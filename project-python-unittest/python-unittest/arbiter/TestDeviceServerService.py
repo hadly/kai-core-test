@@ -50,6 +50,7 @@ class DeviceServerServiceClient():
                     if i-eval(self.deviceId)==0:
                         num = num + 1
                 log.debug('the device number in DS : %d',num)
+                
                 if num > 0:
                     log.debug('this device in DS')
                     return True
@@ -66,21 +67,21 @@ class DeviceServerServiceClient():
     #rated-frames --- 
     def testDeviceFrameRate(self):
         try:
-            log.debug('this test is test frame-rate vs rated-frames')
+            log.debug('this test is test frame_rate_in_ds vs rated-frames')
             device = self.client.getDeviceInfo((int)(self.deviceId))
             decondeJson = json.loads(device[0])
-            fra = decondeJson['frame-rate']
-            Config().writeToConfig(Constants.deviceFrameRate,"frame-rate",fra)
-            rate = Config().getFromConfigs(Constants.deviceFrameRate,"rated-frames")
+            frame_rate_in_ds = decondeJson['frame-rate']
+            Config().writeToConfig(Constants.deviceFrameRate,"frame-rate",frame_rate_in_ds)
+            rated_frames = Config().getFromConfigs(Constants.deviceFrameRate,"rated-frames")
             percent = Config().getFromConfigs(Constants.deviceFrameRate,"max-percent")
-            max = eval(rate)*(1+eval(percent))
-            min = eval(rate)*(1-eval(percent))
-            if fra <= max and fra >= min:
-                log.debug('this frame-rate:%s is true,the Device video is true',fra)
+            max = eval(rated_frames)*(1+eval(percent))
+            min = eval(rated_frames)*(1-eval(percent))
+            if frame_rate_in_ds <= max and frame_rate_in_ds >= min:
+                log.debug('this frame-rate:%s is true,the Device video is true',frame_rate_in_ds)
                 return True
             else:
-                log.debug('this frame-rate:%s is false~',fra)
-                log.info("the frame rate from DS is %s, expected rate is %s, something is wrong. False",fra,rate)
+                log.debug('this frame-rate:%s is false~',frame_rate_in_ds)
+                log.info("the frame rate from DS is %s, expected rate is %s, something is wrong. False",frame_rate_in_ds,rated_frames)
                 return False  
         except Exception,e:
             log.error('testDeviceFrameRate  exception=%s',e)

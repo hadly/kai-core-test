@@ -50,21 +50,21 @@ class DeviceManagementServer():
         except Exception,e:
             log.error('Error:%s',e)
             return False
-    def updateCloud(self):
+    def beginVideoRecording(self):
         '''
            start video  
         '''
         Config().writeToConfig(addDevice, "cloud-recording-enabled","true")
         deviceDetail = self.getDeviceDetails(updateDevice,False)
         result = self.client.updateDevice(deviceDetail)
-        log.debug("open the video store result : %s",result)
+        log.debug("begin video recording, result : %s",result)
         return result
     
-    def closeVideoRecord(self):
+    def stopVideoRecording(self):
         Config().writeToConfig(addDevice, "cloud-recording-enabled","false")
         deviceDetail = self.getDeviceDetails(updateDevice,False)
         result = self.client.updateDevice(deviceDetail)
-        log.debug("close the video store result : %s",result)
+        log.debug("stop video recording, result : %s",result)
         return result
     
     def TestVideoStrategy(self):
@@ -72,30 +72,35 @@ class DeviceManagementServer():
         try:
             log.debug('Test Video Strategy')
             chunk_size = Config().getFromConfigs(configControl,"chunk-size")
-            result = self.updateCloud()
+            result = self.beginVideoRecording()
             if result:
                 time.sleep(40)
+            
             istrue = True
             while istrue:
-                time_mrt = time.time()
-                births = time.localtime(time_mrt)
-                datess = time.strftime("%d%m%Y%H%M%S",time.gmtime(time_mrt))
-                timess = time.strftime("%d%m%Y%H%M%S",births)
-                tim_mins = time.strftime("%M",births)
-                tim_sec = time.strftime('%S',births)
-                if eval(tim_mins)%(int)(chunk_size)==0 and tim_sec=="00":
+                current_time_in_seconds = time.time()
+                localtime_in_seconds = time.localtime(current_time_in_seconds)
+                utc_time = time.strftime("%d%m%Y%H%M%S",time.gmtime(current_time_in_seconds))
+                localtime = time.strftime("%d%m%Y%H%M%S",localtime_in_seconds)
+                minutes = time.strftime("%M",localtime_in_seconds)
+                seconds = time.strftime('%S',localtime_in_seconds)
+                
+                if eval(minutes)%(int)(chunk_size)==0 and seconds=="00":
                     if sum==0:
-                        Config().writeToConfig(videoStrategy, "liveview-begin-time-UTC",datess)
-                        Config().writeToConfig(videoStrategy, "liveview-begin-time-local",timess)
-                    log.debug('msg:the next will sleep 2*60*3s~')
-                    if sum!=0:
+                        Config().writeToConfig(videoStrategy, "liveview-begin-time-UTC",utc_time)
+                        Config().writeToConfig(videoStrategy, "liveview-begin-time-local",localtime)
+                    else:
                         Config().writeToConfig(addDevice, "cloud-recording-enabled","true")
                         self.client.updateDevice(self.getDeviceDetails(updateDevice,False))
+                        
+                    log.debug('msg:the next will sleep 2*60*3s~')
+                    
                     sum = sum + 1
                     time.sleep(eval(chunk_size)*60*2)
                     Config().writeToConfig(addDevice, "cloud-recording-enabled","false")
                     deviceDetail2 = self.getDeviceDetails(updateDevice,False)
                     self.client.updateDevice(deviceDetail2)
+                    
                     if sum == 2:
                         Config().writeToConfig(videoStrategy, "liveview-end-time-UTC",time.strftime("%d%m%Y%H%M%S",time.gmtime()))
                         Config().writeToConfig(videoStrategy, "liveview-end-time-local",time.strftime("%d%m%Y%H%M%S",time.localtime()))
@@ -103,6 +108,8 @@ class DeviceManagementServer():
                     if sum == 1:
                         time.sleep(eval(chunk_size)*30)
                     log.debug('the %d cycle end',sum)
+            
+            #when the while end
             log.debug('TestVideoStrategy success!')
             return True
         except Exception,e:
@@ -119,22 +126,26 @@ class DeviceManagementServer():
             deviceDetail1 = self.getDeviceDetails(updateDevice,False)
             result = self.client.updateDevice(deviceDetail1)
             log.debug('result:%s',result)
+            
+            # sleep 40 seconds after begin image recording, waiting DS to register the device
             if result and sum==0:
                 time.sleep(40)
             istrue = True
             while istrue:
-                timess = time.time()
-                tim_sec = time.strftime('%S',time.localtime(timess))
-                if eval(str(timess))%eval(interval)==0 and eval(str(tim_sec))%eval(interval)==0:
+                current_time_in_seconds = time.time()
+                seconds = time.strftime('%S',time.localtime(current_time_in_seconds))
+                if eval(str(current_time_in_seconds))%eval(interval)==0 and eval(str(seconds))%eval(interval)==0:
                     if sum==0:
-                        Config().writeToConfig(photoStrategy, "photo-begin-time-local",time.strftime("%d%m%Y%H%M%S",time.localtime(timess)))
-                        Config().writeToConfig(photoStrategy, "photo-begin-time-UTC",time.strftime("%d%m%Y%H%M%S",time.gmtime(timess)))
-                    if sum!=0:
+                        Config().writeToConfig(photoStrategy, "photo-begin-time-local",time.strftime("%d%m%Y%H%M%S",time.localtime(current_time_in_seconds)))
+                        Config().writeToConfig(photoStrategy, "photo-begin-time-UTC",time.strftime("%d%m%Y%H%M%S",time.gmtime(current_time_in_seconds)))
+                    else:
                         Config().writeToConfig(addDevice, "snapshot-recording-enabled","true")
                         self.client.updateDevice(self.getDeviceDetails(updateDevice,False))
                     sum = sum + 1
                     log.debug('msg:sleep 60s')
                     time.sleep(eval(interval)*12)
+                    
+                    # stop image recording
                     Config().writeToConfig(addDevice, "snapshot-recording-enabled","false")
                     deviceDetail2 = self.getDeviceDetails(updateDevice,False)
                     result = self.client.updateDevice(deviceDetail2)
@@ -146,6 +157,8 @@ class DeviceManagementServer():
                         Config().writeToConfig(photoStrategy, "photo-end-time-UTC",time.strftime("%d%m%Y%H%M%S",time.gmtime()))
                         Config().writeToConfig(photoStrategy, "photo-end-time-local",time.strftime("%d%m%Y%H%M%S",time.localtime()))
                         istrue = False
+            
+            #when the while end
             log.debug('testPhotoStrategy success!')
             return True
         except Exception,e:
@@ -161,7 +174,8 @@ class DeviceManagementServer():
             log.debug("remove device=" + deviceId + ",result=" + (str)(result))            
             if result == False:
                 log.debug('delete device fail')
-            log.debug("delete device success")
+            else:
+                log.debug("delete device success")
             return result
         except Exception,e:
             log.error("delete device exception=%s", e)
@@ -181,8 +195,6 @@ class DeviceManagementServer():
         except Exception,e:
             log.error("update exception, %s", e)
             raise Exception("update device fail")
-    
-    
     
     #here are some auxiliary methods
     def getDeviceDetails(self, manipulate,ishost):
