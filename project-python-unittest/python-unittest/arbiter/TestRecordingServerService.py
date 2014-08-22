@@ -36,11 +36,11 @@ class RecordingServerServiceClient():
         try:
             info = {"storage-type":"video-recording", "stream-type":"http/h264","begin":beginTime,"end":endTime}
             streamInfo = json.dumps(info)
-            log.debug('RS client=', self.client)
+            log.debug('RS client=%s', self.client)
             if self.client is None:
                 self.__init__() 
             streamList = self.client.getStreamList((int)(self.deviceId),0,streamInfo)
-            log.debug('streamlist is=', streamList)
+            log.debug('streamlist is=%s', streamList)
             if len(streamList) > 0:
                 log.debug('The first value : %s',streamList[0])
                 strJson = json.loads(streamList[0])

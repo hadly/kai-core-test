@@ -63,7 +63,7 @@ class StreamControlServerClient():
             channelId = Config().getFromConfigs(Constants.streamControl, "channel-id")
             deviceId = Config().getFromConfigs(Constants.deleteDevice, "device-id")
             urls = self.client.beginStreamSession(sessionId, ttl, type,None,deviceId, channelId, beginTime, endTime)
-            log.debug('url list=', urls) 
+            log.debug('url list=%s', urls) 
             return urls
         except Exception,e:
             log.error('Error:%s',e)

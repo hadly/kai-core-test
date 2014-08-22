@@ -70,9 +70,9 @@ class MainClass(object):
                     getDeviceStatus = self.testGetDeviceStatus()
                     if getDeviceStatus == -1:
                         fail += 1
-                        log.info("[TP-Is Device Online][end]                 False \n")
+                        log.info("[TP-Is Device Online][end]                False \n")
                     else:
-                        log.info("[TP-Is Device Online][end]                 OK \n")
+                        log.info("[TP-Is Device Online][end]                OK \n")
                    
                     
                     log.info("[TP-Stream Session][begin]")
@@ -293,7 +293,7 @@ class MainClass(object):
             end_local_time = time.strftime("%d%m%Y%H%M%S",time.localtime(time.time()))
             log.debug('end_local_time : %s',end_local_time)
             if size == 0:
-                if self.dms.closeVideoRecord():
+                if self.dms.stopVideoRecording():
                     log.debug('close video time :')
                     time.sleep(twosleeptime)
                     log.debug('RecordingServerService : %s',rss)
@@ -329,7 +329,7 @@ class MainClass(object):
             
             if number == 2 and first_video_begin == second_video_begin:
                 log.info('test storage space is %sM                OK',size)
-                self.dms.closeVideoRecord()
+                self.dms.stopVideoRecording()
                 return True
             elif number == 2 and first_video_begin != second_video_begin:
                 log.info('test storage space is %sM                False',size)
