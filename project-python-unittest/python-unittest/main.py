@@ -286,7 +286,7 @@ class MainClass(object):
     
     def streamStorageLimitStrategy(self,size,onesleeptime,twosleeptime,begin_local_time,number):
         result = self.ccs.testSetStreamLimit(size)
-        log.debug('set stream list size, result=', result)
+        log.debug('set stream list size, result=%s', result)
         if result:
             log.info('set storage space is %dM                OK',size)
             time.sleep(onesleeptime)
