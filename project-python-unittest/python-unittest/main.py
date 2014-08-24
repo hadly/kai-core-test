@@ -1,4 +1,3 @@
-# -*- coding: GBK -*-
 '''
 Created on 2014-6-19
 
@@ -34,8 +33,10 @@ class MainClass(object):
         log.debug('******** Main init end**********')
     def beginTesting(self):
         '''
-        Note:在这个函数里面添加要进行的测试方法;
+        Note: Add testing functions here
         '''
+        
+        self.initConfigFile()
         
         fail = 0
         log.info("[TP-Set KUP Address][begin]")
@@ -54,7 +55,6 @@ class MainClass(object):
                 addResult = self.testIsAddDeviceSuccess()
                 if addResult:
                     log.info("[TP-Add Device][end]                    OK \n")
-#                    time.sleep(90)
                    
                     
                     log.info("[TP-Liveview][begin]")
@@ -157,6 +157,17 @@ class MainClass(object):
         else:
             log.warn("something wrong during this test, please refer to the log above, and search for 'False' to locate the errors.")
         
+    def initConfigFile(self):
+        '''
+        Sometimes when the last-round testing failed because of exceptions, the parameter values
+        in configuration.cfg will not be changed to the initial value, and this may cause problems.
+        E.g., if cloud-recording-enabled is true when exception happened, it will affect the next round testing.
+         
+        So we should reset some of the import parameters in configuration.cfg before each testing. 
+        '''
+        Config().writeToConfig(addDevice, "snapshot-recording-enabled", "false")
+        Config().writeToConfig(addDevice, "cloud-recording-enabled", "false")
+    
     def testSetKUP(self):
         result = self.ccs.testSetCloudServer()
         if result:
@@ -233,8 +244,8 @@ class MainClass(object):
         if viewRes:
             log.info("liveview URL                            OK")
         else:
-            log.info("liveview URL                            False")        
-        rateRes = ds.testDeviceFrameRate()#测试帧率
+            log.info("liveview URL                            False")
+        rateRes = ds.testDeviceFrameRate()
         if rateRes:
             log.info("liveview frame rate                     OK")
         else:
@@ -465,6 +476,6 @@ if __name__ == '__main__':
 #         log.debug("Congratulations!!! Your testing is successful.")
     except Exception,e:
         log.error("exception, %s", e)
-        #不管什么时候抛出异常,都要将添加的测试设备清除
+        #Whenever exception happens, we should remove the testing device
 #         log.debug("clean environment")
         MainClass().deleteDeviceAndCleanData()
